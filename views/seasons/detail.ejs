@@ -22,7 +22,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Team</th>
+          <th>Tm</th>
           <th>Played</th>
           <th>Won</th>
           <th>Lost</th>
@@ -173,7 +173,7 @@
     <div class="format-card stats-card">
       <h3>🏏 Top Run Scorers</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Runs</th><th>Avg</th><th>Best</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>Runs</th><th>Avg</th><th>Best</th></tr></thead>
         <tbody>
           <% if (runsList.length > 0) { runsList.map((p, i) => ({ p, i })).sort((a, b) => b.p.runs - a.p.runs).forEach(({ p, i }) => { %>
             <tr>
@@ -197,7 +197,7 @@
     <div class="format-card stats-card">
       <h3>📊 Best Batting Average</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Avg</th><th>Runs</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>Avg</th><th>Runs</th></tr></thead>
         <tbody>
           <% if (byAvg.length > 0) { byAvg.slice(0, 5).forEach((p, i) => { %>
             <tr>
@@ -220,7 +220,7 @@
     <div class="format-card stats-card">
       <h3>🎯 Top Wicket Takers</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Wkts</th><th>Best</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>W</th><th>Best</th></tr></thead>
         <tbody>
           <% if (wktsList.length > 0) { wktsList.map((p, i) => ({ p, i })).sort((a, b) => b.p.wickets - a.p.wickets).forEach(({ p, i }) => { %>
             <tr>
@@ -243,7 +243,7 @@
     <div class="format-card stats-card">
       <h3>4️⃣ Most Fours</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Fours</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>4s</th></tr></thead>
         <tbody>
           <% if (byFours.length > 0) { byFours.slice(0, 5).forEach((p, i) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.player) %></td><td class="team-name-cell"><%- teamCell(p.team) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.fours %></td></tr>
@@ -258,7 +258,7 @@
     <div class="format-card stats-card">
       <h3>💣 Most Sixes</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Sixes</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>6s</th></tr></thead>
         <tbody>
           <% if (bySixes.length > 0) { bySixes.slice(0, 5).forEach((p, i) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.player) %></td><td class="team-name-cell"><%- teamCell(p.team) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.sixes %></td></tr>
@@ -273,7 +273,7 @@
     <div class="format-card stats-card">
       <h3>⚡ Best Strike Rate</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>SR</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>SR</th></tr></thead>
         <tbody>
           <% if (bySr.length > 0) { bySr.slice(0, 5).forEach((p, i) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.player) %></td><td class="team-name-cell"><%- teamCell(p.team) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.sr %></td></tr>
@@ -288,7 +288,7 @@
     <div class="format-card stats-card">
       <h3>🏅 Best Bowling Figures</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Wkts</th><th>Best</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>W</th><th>Best</th></tr></thead>
         <tbody>
           <% if (byBowling.length > 0) { byBowling.slice(0, 5).forEach((p, i) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.player) %></td><td class="team-name-cell"><%- teamCell(p.team) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td><%= p.wickets %></td><td style="font-weight:700;color:var(--accent)"><%= p.best %></td></tr>
@@ -303,7 +303,7 @@
     <div class="format-card stats-card">
       <h3>🛡️ Best Economy Rate</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Eco</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>Eco</th></tr></thead>
         <tbody>
           <% if (byEco.length > 0) { byEco.slice(0, 5).forEach((p, i) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.player) %></td><td class="team-name-cell"><%- teamCell(p.team) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.eco %></td></tr>
@@ -318,7 +318,7 @@
     <div class="format-card stats-card">
       <h3>50️⃣ Most Fifties</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>50s</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>50s</th></tr></thead>
         <tbody>
           <% if (byFifties.length > 0) { byFifties.map((p, i) => ({ p, i })).forEach(({ p, i }) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.name) %></td><td class="team-name-cell"><%- teamCell(p.teamName) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.fifties %></td></tr>
@@ -333,7 +333,7 @@
     <div class="format-card stats-card">
       <h3>💯 Most Centuries</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>100s</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>100s</th></tr></thead>
         <tbody>
           <% if (byCenturies.length > 0) { byCenturies.map((p, i) => ({ p, i })).forEach(({ p, i }) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.name) %></td><td class="team-name-cell"><%- teamCell(p.teamName) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.centuries %></td></tr>
@@ -348,7 +348,7 @@
     <div class="format-card stats-card">
       <h3>🧤 Most Catches</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Innings</th><th>Catches</th></tr></thead>
+        <thead><tr><th>#</th><th>Pl</th><th>Tm</th><th>M</th><th>Inns</th><th>Ct</th></tr></thead>
         <tbody>
           <% if (byCatches.length > 0) { byCatches.map((p, i) => ({ p, i })).forEach(({ p, i }) => { %>
             <tr><td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td><td><%- playerLink(p.name) %></td><td class="team-name-cell"><%- teamCell(p.teamName) %></td><td><%= p.matches || 0 %></td><td><%= p.innings || 0 %></td><td style="font-weight:700;color:var(--accent)"><%= p.catches %></td></tr>

@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,14 +8,22 @@ const PORT = 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression());
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d', etag: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, 'data', 'data.json');
 
+let cachedData = null;
+let cachedMtime = 0;
+
 function loadData() {
-  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  const stat = fs.statSync(DATA_FILE);
+  if (cachedData && stat.mtimeMs === cachedMtime) return cachedData;
+  cachedData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  cachedMtime = stat.mtimeMs;
+  return cachedData;
 }
 
 // ==================== PUBLIC ROUTES ====================
@@ -64,6 +73,12 @@ app.get('/season/:id', (req, res) => {
 app.get('/format', (req, res) => {
   const data = loadData();
   res.render('format', { data });
+});
+
+app.get('/schedule', (req, res) => {
+  const data = loadData();
+  const season = data.seasons[data.seasons.length - 1];
+  res.render('schedule', { data, season });
 });
 
 app.get('/about', (req, res) => {

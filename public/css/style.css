@@ -247,7 +247,7 @@ a{text-decoration:none;color:inherit}
 @media(max-width:900px){
   .stats-grid{grid-template-columns:1fr}
 }
-.season-tabs{display:flex;justify-content:center;gap:0.5rem;padding:0.9rem 2rem;flex-wrap:wrap;background:rgba(26,26,46,0.97);border-bottom:1px solid var(--border);position:sticky;top:68px;z-index:900;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.season-tabs{display:flex;justify-content:center;gap:0.5rem;padding:0.9rem 2rem;flex-wrap:wrap;background:rgba(26,26,46,0.97);border-bottom:1px solid var(--border);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
 .season-tab{padding:0.7rem 1.6rem;border-radius:50px;font-size:0.9rem;font-weight:600;color:var(--text-light);cursor:pointer;transition:all 0.3s;border:1px solid var(--border)}
 .season-tab:hover{color:var(--text);border-color:var(--accent)}
 .season-tab.active{background:var(--gradient);color:#fff;border-color:transparent;box-shadow:0 4px 15px rgba(233,69,96,0.3)}
