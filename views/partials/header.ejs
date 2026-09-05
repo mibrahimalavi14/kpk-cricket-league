@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= data.tournament.name %> - <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Home' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+      <a href="/" class="nav-logo">
+        <img src="/Logos/KPK Cricket League.png" alt="KPK Cricket League" class="nav-logo-img">
+      </a>
+      <div class="nav-links">
+        <a href="/" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">Home</a>
+        <a href="/teams" class="<%= typeof active !== 'undefined' && active === 'teams' ? 'active' : '' %>">Teams</a>
+        <a href="/players" class="<%= typeof active !== 'undefined' && active === 'players' ? 'active' : '' %>">Players</a>
+        <a href="/seasons" class="<%= typeof active !== 'undefined' && active === 'seasons' ? 'active' : '' %>">Seasons</a>
+        <a href="/format" class="<%= typeof active !== 'undefined' && active === 'format' ? 'active' : '' %>">Format</a>
+        <div class="dropdown">
+          <button class="dropdown-toggle <%= typeof active !== 'undefined' && ['about','contact','faq'].indexOf(active) !== -1 ? 'active' : '' %>">More ▾</button>
+          <div class="dropdown-menu">
+            <a href="/about" class="<%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">About</a>
+            <a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">Contact</a>
+            <a href="/faq" class="<%= typeof active !== 'undefined' && active === 'faq' ? 'active' : '' %>">FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

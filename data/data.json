@@ -1,0 +1,499 @@
+{
+  "tournament": {
+    "name": "KPK Cricket League",
+    "season": "Season 1",
+    "year": 2026,
+    "overs": 3,
+    "format": "T3 - T3 Tournament",
+    "description": "The KPK Cricket League brings together the finest cricket talent from across Khyber Pakhtunkhwa. Each team fields one elite player in fast-paced 3-over matches."
+  },
+  "seasons": [
+    {
+      "id": 1,
+      "name": "Season 1",
+      "year": 2026,
+      "overs": 3,
+      "format": "T3",
+      "status": "Active",
+      "pointsTable": [
+        {
+          "team": "Haripur",
+          "played": 0,
+          "won": 0,
+          "lost": 0,
+          "tied": 0,
+          "nrr": "0.000",
+          "points": 0
+        },
+        {
+          "team": "Abbottabad",
+          "played": 0,
+          "won": 0,
+          "lost": 0,
+          "tied": 0,
+          "nrr": "0.000",
+          "points": 0
+        },
+        {
+          "team": "Khanpur",
+          "played": 0,
+          "won": 0,
+          "lost": 0,
+          "tied": 0,
+          "nrr": "0.000",
+          "points": 0
+        },
+        {
+          "team": "Balakot",
+          "played": 0,
+          "won": 0,
+          "lost": 0,
+          "tied": 0,
+          "nrr": "0.000",
+          "points": 0
+        },
+        {
+          "team": "Muzaffarabad",
+          "played": 0,
+          "won": 0,
+          "lost": 0,
+          "tied": 0,
+          "nrr": "0.000",
+          "points": 0
+        }
+      ],
+      "matches": [
+        {
+          "id": 1,
+          "match": "Match 1",
+          "team1": "Haripur",
+          "team2": "Abbottabad",
+          "date": "2026-09-10",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 2,
+          "match": "Match 2",
+          "team1": "Khanpur",
+          "team2": "Balakot",
+          "date": "2026-09-10",
+          "time": "18:00",
+          "result": ""
+        },
+        {
+          "id": 3,
+          "match": "Match 3",
+          "team1": "Muzaffarabad",
+          "team2": "Haripur",
+          "date": "2026-09-12",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 4,
+          "match": "Match 4",
+          "team1": "Abbottabad",
+          "team2": "Khanpur",
+          "date": "2026-09-12",
+          "time": "18:00",
+          "result": ""
+        },
+        {
+          "id": 5,
+          "match": "Match 5",
+          "team1": "Balakot",
+          "team2": "Muzaffarabad",
+          "date": "2026-09-14",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 6,
+          "match": "Match 6",
+          "team1": "Haripur",
+          "team2": "Khanpur",
+          "date": "2026-09-14",
+          "time": "18:00",
+          "result": ""
+        },
+        {
+          "id": 7,
+          "match": "Match 7",
+          "team1": "Abbottabad",
+          "team2": "Balakot",
+          "date": "2026-09-16",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 8,
+          "match": "Match 8",
+          "team1": "Khanpur",
+          "team2": "Muzaffarabad",
+          "date": "2026-09-16",
+          "time": "18:00",
+          "result": ""
+        },
+        {
+          "id": 9,
+          "match": "Match 9",
+          "team1": "Haripur",
+          "team2": "Balakot",
+          "date": "2026-09-18",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 10,
+          "match": "Match 10",
+          "team1": "Abbottabad",
+          "team2": "Muzaffarabad",
+          "date": "2026-09-18",
+          "time": "18:00",
+          "result": ""
+        }
+      ],
+      "playoff": [
+        {
+          "id": 1,
+          "match": "Qualifier 1",
+          "team1": "TBD",
+          "team2": "TBD",
+          "date": "2026-09-20",
+          "time": "14:00",
+          "result": ""
+        },
+        {
+          "id": 2,
+          "match": "Grand Final",
+          "team1": "TBD",
+          "team2": "TBD",
+          "date": "2026-09-22",
+          "time": "18:00",
+          "result": ""
+        }
+      ],
+      "stats": {
+        "topRunScorers": [
+          {
+            "player": "Muhammad Ibrahim Alavi",
+            "team": "Haripur",
+            "runs": 0,
+            "avg": "0.00",
+            "sr": "0.00",
+            "best": "0",
+            "fours": 0,
+            "sixes": 0
+          },
+          {
+            "player": "Muhammad Usman Waseem",
+            "team": "Abbottabad",
+            "runs": 0,
+            "avg": "0.00",
+            "sr": "0.00",
+            "best": "0",
+            "fours": 0,
+            "sixes": 0
+          },
+          {
+            "player": "Muhavia Usmani",
+            "team": "Khanpur",
+            "runs": 0,
+            "avg": "0.00",
+            "sr": "0.00",
+            "best": "0",
+            "fours": 0,
+            "sixes": 0
+          },
+          {
+            "player": "Muhammad Ali",
+            "team": "Balakot",
+            "runs": 0,
+            "avg": "0.00",
+            "sr": "0.00",
+            "best": "0",
+            "fours": 0,
+            "sixes": 0
+          },
+          {
+            "player": "Mahir Usmani",
+            "team": "Muzaffarabad",
+            "runs": 0,
+            "avg": "0.00",
+            "sr": "0.00",
+            "best": "0",
+            "fours": 0,
+            "sixes": 0
+          }
+        ],
+        "topWicketTakers": [
+          {
+            "player": "Muhammad Ibrahim Alavi",
+            "team": "Haripur",
+            "wickets": 0,
+            "avg": "0.00",
+            "eco": "0.00",
+            "best": "0/0"
+          },
+          {
+            "player": "Muhammad Usman Waseem",
+            "team": "Abbottabad",
+            "wickets": 0,
+            "avg": "0.00",
+            "eco": "0.00",
+            "best": "0/0"
+          },
+          {
+            "player": "Muhavia Usmani",
+            "team": "Khanpur",
+            "wickets": 0,
+            "avg": "0.00",
+            "eco": "0.00",
+            "best": "0/0"
+          },
+          {
+            "player": "Muhammad Ali",
+            "team": "Balakot",
+            "wickets": 0,
+            "avg": "0.00",
+            "eco": "0.00",
+            "best": "0/0"
+          },
+          {
+            "player": "Mahir Usmani",
+            "team": "Muzaffarabad",
+            "wickets": 0,
+            "avg": "0.00",
+            "eco": "0.00",
+            "best": "0/0"
+          }
+        ]
+      }
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Haripur",
+      "shortName": "Haripur",
+      "color": "#E74C3C",
+      "secondaryColor": "#C0392B",
+      "logo": "🦅",
+      "logoUrl": "/Logos/Haripur.png",
+      "captain": "Muhammad Ibrahim Alavi",
+      "homeGround": "Haripur",
+      "city": "Haripur",
+      "wins": 0,
+      "losses": 0,
+      "points": 0
+    },
+    {
+      "id": 2,
+      "name": "Abbottabad",
+      "shortName": "Abbottabad",
+      "color": "#2ECC71",
+      "secondaryColor": "#27AE60",
+      "logo": "🛡️",
+      "logoUrl": "/Logos/Abbottabad.png",
+      "captain": "Muhammad Usman Waseem",
+      "homeGround": "Abbottabad",
+      "city": "Abbottabad",
+      "wins": 0,
+      "losses": 0,
+      "points": 0
+    },
+    {
+      "id": 3,
+      "name": "Khanpur",
+      "shortName": "Khanpur",
+      "color": "#3498DB",
+      "secondaryColor": "#2980B9",
+      "logo": "👑",
+      "logoUrl": "/Logos/Khanpur.png",
+      "captain": "Muhavia Usmani",
+      "homeGround": "Khanpur",
+      "city": "Khanpur",
+      "wins": 0,
+      "losses": 0,
+      "points": 0
+    },
+    {
+      "id": 4,
+      "name": "Balakot",
+      "shortName": "Balakot",
+      "color": "#F39C12",
+      "secondaryColor": "#E67E22",
+      "logo": "💥",
+      "logoUrl": "/Logos/Balakot.png",
+      "captain": "Muhammad Ali",
+      "homeGround": "Balakot",
+      "city": "Balakot",
+      "wins": 0,
+      "losses": 0,
+      "points": 0
+    },
+    {
+      "id": 5,
+      "name": "Muzaffarabad",
+      "shortName": "Muzaffarabad",
+      "color": "#9B59B6",
+      "secondaryColor": "#8E44AD",
+      "logo": "⭐",
+      "logoUrl": "/Logos/Muzaffarabad.png",
+      "captain": "Mahir Usmani",
+      "homeGround": "Muzaffarabad",
+      "city": "Muzaffarabad",
+      "wins": 0,
+      "losses": 0,
+      "points": 0
+    }
+  ],
+  "players": [
+    {
+      "id": 1,
+      "name": "Muhammad Ibrahim Alavi",
+      "teamId": 1,
+      "teamName": "Haripur",
+      "teamColor": "#E74C3C",
+      "role": "All-Rounder",
+      "age": 24,
+      "battingStyle": "Right-Hand",
+      "bowlingStyle": "Right-Arm Medium",
+      "matches": 0,
+      "runs": 0,
+      "wickets": 0,
+      "average": "0.00",
+      "strikeRate": "0.00",
+      "bestScore": "0",
+      "bestBowling": "0/0",
+      "fours": 0,
+      "sixes": 0,
+      "centuries": 0,
+      "fifties": 0,
+      "highScore": "0",
+      "economyRate": "0.00",
+      "fiveWickets": 0,
+      "catches": 0,
+      "jerseyNo": 7,
+      "bio": "Muhammad Ibrahim Alavi is a dynamic all-rounder representing Haripur. Known for his aggressive batting and deceptive bowling, he is a key asset to his team.",
+      "image": "🏏"
+    },
+    {
+      "id": 2,
+      "name": "Muhammad Usman Waseem",
+      "teamId": 2,
+      "teamName": "Abbottabad",
+      "teamColor": "#2ECC71",
+      "role": "Batsman",
+      "age": 26,
+      "battingStyle": "Right-Hand",
+      "bowlingStyle": "N/A",
+      "matches": 0,
+      "runs": 0,
+      "wickets": 0,
+      "average": "0.00",
+      "strikeRate": "0.00",
+      "bestScore": "0",
+      "bestBowling": "0/0",
+      "fours": 0,
+      "sixes": 0,
+      "centuries": 0,
+      "fifties": 0,
+      "highScore": "0",
+      "economyRate": "0.00",
+      "fiveWickets": 0,
+      "catches": 0,
+      "jerseyNo": 9,
+      "bio": "Muhammad Usman Waseem is a prolific batsman for Abbottabad. His calm demeanor at the crease and ability to anchor innings makes him a formidable opponent.",
+      "image": "🏏"
+    },
+    {
+      "id": 3,
+      "name": "Muhavia Usmani",
+      "teamId": 3,
+      "teamName": "Khanpur",
+      "teamColor": "#3498DB",
+      "role": "Bowler",
+      "age": 23,
+      "battingStyle": "Left-Hand",
+      "bowlingStyle": "Left-Arm Orthodox",
+      "matches": 0,
+      "runs": 0,
+      "wickets": 0,
+      "average": "0.00",
+      "strikeRate": "0.00",
+      "bestScore": "0",
+      "bestBowling": "0/0",
+      "fours": 0,
+      "sixes": 0,
+      "centuries": 0,
+      "fifties": 0,
+      "highScore": "0",
+      "economyRate": "0.00",
+      "fiveWickets": 0,
+      "catches": 0,
+      "jerseyNo": 5,
+      "bio": "Muhavia Usmani is a crafty left-arm spinner representing Khanpur. His ability to turn the ball sharply makes him a wicket-taking threat in any conditions.",
+      "image": "🏏"
+    },
+    {
+      "id": 4,
+      "name": "Muhammad Ali",
+      "teamId": 4,
+      "teamName": "Balakot",
+      "teamColor": "#F39C12",
+      "role": "All-Rounder",
+      "age": 25,
+      "battingStyle": "Right-Hand",
+      "bowlingStyle": "Right-Arm Fast",
+      "matches": 0,
+      "runs": 0,
+      "wickets": 0,
+      "average": "0.00",
+      "strikeRate": "0.00",
+      "bestScore": "0",
+      "bestBowling": "0/0",
+      "fours": 0,
+      "sixes": 0,
+      "centuries": 0,
+      "fifties": 0,
+      "highScore": "0",
+      "economyRate": "0.00",
+      "fiveWickets": 0,
+      "catches": 0,
+      "jerseyNo": 3,
+      "bio": "Muhammad Ali is a genuine fast-bowling all-rounder for Balakot. His raw pace and powerful hitting make him one of the most exciting players in the league.",
+      "image": "🏏"
+    },
+    {
+      "id": 5,
+      "name": "Mahir Usmani",
+      "teamId": 5,
+      "teamName": "Muzaffarabad",
+      "teamColor": "#9B59B6",
+      "role": "Wicket-Keeper Batsman",
+      "age": 22,
+      "battingStyle": "Right-Hand",
+      "bowlingStyle": "N/A",
+      "matches": 0,
+      "runs": 0,
+      "wickets": 0,
+      "average": "0.00",
+      "strikeRate": "0.00",
+      "bestScore": "0",
+      "bestBowling": "0/0",
+      "fours": 0,
+      "sixes": 0,
+      "centuries": 0,
+      "fifties": 0,
+      "highScore": "0",
+      "economyRate": "0.00",
+      "fiveWickets": 0,
+      "catches": 0,
+      "jerseyNo": 1,
+      "bio": "Mahir Usmani is a rising talent serving as the wicket-keeper batsman for Muzaffarabad. His sharp reflexes behind the stumps and explosive batting at the top order make him invaluable.",
+      "image": "🏏"
+    }
+  ]
+}

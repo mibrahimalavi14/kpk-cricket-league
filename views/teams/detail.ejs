@@ -1,0 +1,60 @@
+<%- include('../partials/header', { active: 'teams', pageTitle: team.name }) %>
+
+<section class="detail-hero" style="background:linear-gradient(135deg,<%= team.color %>22 0%,transparent 60%),linear-gradient(135deg,#1a1a2e,#16213e)">
+  <div class="team-logo-big"><img src="<%= team.logoUrl %>" alt="<%= team.name %>" class="team-logo-img-big" onerror="this.style.display='none'"></div>
+  <h1><%= team.name %></h1>
+  <div class="subtitle">Home Ground: <%= team.homeGround %> | <%= team.city %></div>
+  <div class="detail-stats">
+    <div class="detail-stat"><div class="val"><%= team.wins %></div><div class="lbl">Wins</div></div>
+    <div class="detail-stat"><div class="val"><%= team.losses %></div><div class="lbl">Losses</div></div>
+    <div class="detail-stat"><div class="val"><%= team.points %></div><div class="lbl">Points</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>Player <span class="highlight">Profile</span></h2>
+  </div>
+  <% if (player) { %>
+    <a href="/player/<%= player.id %>" class="player-profile-card" style="display:block;text-align:center;max-width:600px;margin:0 auto;background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:3rem;transition:all 0.3s">
+      <div class="player-profile-avatar" style="border-color:<%= team.color %>"><%= player.image %></div>
+      <div class="player-profile-name"><%= player.name %></div>
+      <div class="player-profile-role" style="color:<%= team.color %>"><%= player.role %></div>
+      <div class="player-profile-team"><%= team.name %> - <%= team.city %></div>
+      <div style="color:var(--text-light);font-size:0.9rem">Click to view full profile</div>
+    </a>
+  <% } else { %>
+    <p style="text-align:center;color:var(--text-light)">No player registered yet.</p>
+  <% } %>
+</section>
+
+<section class="section" style="background:rgba(0,0,0,0.2)">
+  <div class="section-title">
+    <h2>Upcoming <span class="highlight">Matches</span></h2>
+  </div>
+  <div class="schedule-container">
+    <% const activeSeason = data.seasons.find(s => s.status === 'Active') || data.seasons[0]; %>
+    <% if (activeSeason && activeSeason.matches) { %>
+      <% activeSeason.matches.filter(m => (m.team1 === team.name || m.team2 === team.name) && !m.result).forEach(match => { %>
+        <div class="match-card">
+          <div class="match-info">
+            <div class="match-label"><%= match.match %></div>
+            <div class="match-teams"><%= match.team1 %> <span class="vs">vs</span> <%= match.team2 %></div>
+            <div class="match-meta">
+              <span>📅 <%= match.date %></span>
+              <span>⏰ <%= match.time %></span>
+            </div>
+          </div>
+          <span class="match-status status-upcoming">Upcoming</span>
+        </div>
+      <% }) %>
+      <% if (!activeSeason.matches.some(m => (m.team1 === team.name || m.team2 === team.name) && !m.result)) { %>
+        <p style="text-align:center;color:var(--text-light)">No upcoming matches scheduled.</p>
+      <% } %>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-light)">No season matches available.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

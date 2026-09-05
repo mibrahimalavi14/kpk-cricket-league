@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Players - Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players" class="active">⭐ Players</a>
+        <a href="/admin/seasons">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Manage Players</h1>
+        <a href="/players" class="btn btn-sm btn-outline">View Players Page</a>
+      </div>
+
+      <h2 style="margin-bottom:1rem;font-size:1.2rem">Player Profile</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Role</th>
+            <th>Age</th>
+            <th>Jersey</th>
+            <th>Batting</th>
+            <th>Bowling</th>
+            <th>Bio</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.players.forEach(player => { %>
+            <tr>
+              <td><input type="text" name="name" form="playerForm_<%= player.id %>" value="<%= player.name %>" style="width:160px"></td>
+              <td style="color:var(--text-light)"><%= player.teamName %></td>
+              <td><input type="text" name="role" form="playerForm_<%= player.id %>" value="<%= player.role %>" style="width:110px"></td>
+              <td><input type="number" name="age" form="playerForm_<%= player.id %>" value="<%= player.age %>" style="width:55px"></td>
+              <td><input type="number" name="jerseyNo" form="playerForm_<%= player.id %>" value="<%= player.jerseyNo %>" style="width:55px"></td>
+              <td><input type="text" name="battingStyle" form="playerForm_<%= player.id %>" value="<%= player.battingStyle %>" style="width:100px"></td>
+              <td><input type="text" name="bowlingStyle" form="playerForm_<%= player.id %>" value="<%= player.bowlingStyle %>" style="width:120px"></td>
+              <td><input type="text" name="bio" form="playerForm_<%= player.id %>" value="<%= player.bio %>" style="width:230px"></td>
+              <td>
+                <form id="playerForm_<%= player.id %>" action="/admin/players/<%= player.id %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <h2 style="margin:2rem 0 1rem;font-size:1.2rem">Player Batting Stats</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Matches</th>
+            <th>Runs</th>
+            <th>Average</th>
+            <th>Strike Rate</th>
+            <th>High Score</th>
+            <th>Fours</th>
+            <th>Sixes</th>
+            <th>50s</th>
+            <th>100s</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.players.forEach(player => { %>
+            <tr>
+              <td style="color:var(--gold)"><%= player.name %></td>
+              <td><input type="number" name="matches" form="statsForm_<%= player.id %>" value="<%= player.matches %>" style="width:55px"></td>
+              <td><input type="number" name="runs" form="statsForm_<%= player.id %>" value="<%= player.runs %>" style="width:60px"></td>
+              <td><input type="text" name="average" form="statsForm_<%= player.id %>" value="<%= player.average %>" style="width:55px"></td>
+              <td><input type="text" name="strikeRate" form="statsForm_<%= player.id %>" value="<%= player.strikeRate %>" style="width:60px"></td>
+              <td><input type="text" name="highScore" form="statsForm_<%= player.id %>" value="<%= player.highScore %>" style="width:55px"></td>
+              <td><input type="number" name="fours" form="statsForm_<%= player.id %>" value="<%= player.fours %>" style="width:50px"></td>
+              <td><input type="number" name="sixes" form="statsForm_<%= player.id %>" value="<%= player.sixes %>" style="width:50px"></td>
+              <td><input type="number" name="fifties" form="statsForm_<%= player.id %>" value="<%= player.fifties %>" style="width:50px"></td>
+              <td><input type="number" name="centuries" form="statsForm_<%= player.id %>" value="<%= player.centuries %>" style="width:50px"></td>
+              <td>
+                <form id="statsForm_<%= player.id %>" action="/admin/players/<%= player.id %>/stats" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <h2 style="margin:2rem 0 1rem;font-size:1.2rem">Player Bowling & Fielding Stats</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Wickets</th>
+            <th>Economy</th>
+            <th>Best Bowling</th>
+            <th>5-Wicket Hauls</th>
+            <th>Catches</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.players.forEach(player => { %>
+            <tr>
+              <td style="color:var(--gold)"><%= player.name %></td>
+              <td><input type="number" name="wickets" form="bowlForm_<%= player.id %>" value="<%= player.wickets %>" style="width:60px"></td>
+              <td><input type="text" name="economyRate" form="bowlForm_<%= player.id %>" value="<%= player.economyRate %>" style="width:60px"></td>
+              <td><input type="text" name="bestBowling" form="bowlForm_<%= player.id %>" value="<%= player.bestBowling %>" style="width:70px"></td>
+              <td><input type="number" name="fiveWickets" form="bowlForm_<%= player.id %>" value="<%= player.fiveWickets %>" style="width:50px"></td>
+              <td><input type="number" name="catches" form="bowlForm_<%= player.id %>" value="<%= player.catches %>" style="width:50px"></td>
+              <td>
+                <form id="bowlForm_<%= player.id %>" action="/admin/players/<%= player.id %>/stats" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

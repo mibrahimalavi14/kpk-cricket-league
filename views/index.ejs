@@ -1,0 +1,97 @@
+<%- include('partials/header', { active: 'home', pageTitle: 'Home' }) %>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🏏 <%= data.tournament.season %> - <%= data.tournament.year %> | T<%= data.tournament.overs %></div>
+    <h1>Welcome to <span class="highlight"><%= data.tournament.name %></span></h1>
+    <p><%= data.tournament.description %></p>
+    <div class="hero-buttons">
+      <a href="/seasons" class="btn btn-primary">View Seasons</a>
+      <a href="/teams" class="btn btn-outline">Meet the Teams</a>
+      <a href="/players" class="btn btn-gold">Star Players</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>Featured <span class="highlight">Teams</span></h2>
+    <p>Five powerhouse teams competing for the ultimate glory</p>
+  </div>
+  <div class="teams-grid">
+    <% const activeSeason = data.seasons.find(s => s.status === 'Active') || data.seasons[0]; %>
+    <% data.teams.forEach(team => {
+      const ptRow = activeSeason && activeSeason.pointsTable ? activeSeason.pointsTable.find(p => p.team === team.name) : null; %>
+      <a href="/team/<%= team.id %>" class="team-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= team.color %>"></div>
+        <div class="team-logo"><img src="<%= team.logoUrl %>" alt="<%= team.name %>" class="team-logo-img" onerror="this.style.display='none'"></div>
+        <h3><%= team.name %></h3>
+        <div class="team-city">📍 <%= team.city %></div>
+        <div class="team-captain">⭐ Captain: <%= team.captain %></div>
+        <div class="team-stats">
+          <div class="stat"><div class="stat-val"><%= ptRow ? ptRow.played : 0 %></div><div class="stat-label">Played</div></div>
+          <div class="stat"><div class="stat-val"><%= ptRow ? ptRow.won : 0 %></div><div class="stat-label">Won</div></div>
+          <div class="stat"><div class="stat-val"><%= ptRow ? ptRow.points : 0 %></div><div class="stat-label">Points</div></div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section" style="background:rgba(0,0,0,0.2)">
+  <div class="section-title">
+    <h2>Current Season <span class="highlight">Overview</span></h2>
+    <p><%= activeSeason.name %> - <%= activeSeason.year %> | T<%= activeSeason.overs %> format</p>
+  </div>
+  <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;max-width:1000px;margin:0 auto">
+    <div class="stat-card" style="text-align:center;min-width:180px">
+      <div class="sc-label">Teams</div>
+      <div class="sc-value"><%= data.teams.length %></div>
+      <div class="sc-sub">Competing for glory</div>
+    </div>
+    <div class="stat-card" style="text-align:center;min-width:180px">
+      <div class="sc-label">Overs per Match</div>
+      <div class="sc-value"><%= activeSeason.overs %></div>
+      <div class="sc-sub">Fast-paced T<%= activeSeason.overs %> action</div>
+    </div>
+    <div class="stat-card" style="text-align:center;min-width:180px">
+      <div class="sc-label">League Matches</div>
+      <div class="sc-value"><%= activeSeason.matches ? activeSeason.matches.length : 0 %></div>
+      <div class="sc-sub">Round-robin fixtures</div>
+    </div>
+    <div class="stat-card" style="text-align:center;min-width:180px">
+      <div class="sc-label">Players</div>
+      <div class="sc-value"><%= data.players.length %></div>
+      <div class="sc-sub">Elite athletes</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2rem">
+    <a href="/season/<%= activeSeason.id %>" class="btn btn-primary">View Season Details</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>All <span class="highlight">Seasons</span></h2>
+    <p>Every season of the KPK Cricket League</p>
+  </div>
+  <div class="teams-grid">
+    <% data.seasons.forEach(season => {
+      const seasonColor = season.status === 'Active' ? '#2ecc71' : season.status === 'Completed' ? '#3498db' : '#f39c12'; %>
+      <a href="/season/<%= season.id %>" class="team-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= seasonColor %>"></div>
+        <div class="team-logo"><%= season.status === 'Active' ? '🔥' : season.status === 'Completed' ? '🏆' : '📅' %></div>
+        <h3><%= season.name %></h3>
+        <div class="team-city"><%= season.year %> - T<%= season.overs %></div>
+        <div class="team-captain" style="color:<%= seasonColor %>;text-transform:uppercase;font-size:0.75rem"><%= season.status %></div>
+        <div class="team-stats">
+          <div class="stat"><div class="stat-val"><%= season.matches ? season.matches.length : 0 %></div><div class="stat-label">Matches</div></div>
+          <div class="stat"><div class="stat-val"><%= season.pointsTable ? season.pointsTable.length : 0 %></div><div class="stat-label">Teams</div></div>
+          <div class="stat"><div class="stat-val"><%= season.year %></div><div class="stat-label">Year</div></div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

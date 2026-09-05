@@ -1,0 +1,59 @@
+<%- include('partials/header', { active: 'format', pageTitle: 'Format' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">📋 Tournament Format</div>
+    <h1>How the League <span class="highlight">Works</span></h1>
+    <p>Fast-paced T<%= data.tournament.overs %> cricket - <%= data.tournament.overs %> overs per innings</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="format-section">
+    <div class="format-card">
+      <h3>🏟️ Season Structure</h3>
+      <ul>
+        <li>Every season has 5 teams in a round-robin league format</li>
+        <li>Each team plays every other team once</li>
+        <li>Total of 10 league matches per season</li>
+        <li>Top team qualifies directly for the Grand Final</li>
+        <li>2nd and 3rd placed teams play the Qualifier</li>
+        <li>Winner of the Qualifier meets the top team in the Grand Final</li>
+        <li>Each season has its own full points table, matches, playoffs and stats</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h3>⚡ Match Format</h3>
+      <ul>
+        <li><strong>T<%= data.tournament.overs %></strong> - <%= data.tournament.overs %> overs per innings, maximum fast-paced action</li>
+        <li>Each team fields <strong>1 player</strong></li>
+        <li>The player bats and bowls for their team</li>
+        <li>No powerplay restrictions</li>
+        <li>Highest team score wins the match</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h3>🏆 Points System</h3>
+      <ul>
+        <li><strong>Win:</strong> 2 points</li>
+        <li><strong>Loss:</strong> 0 points</li>
+        <li><strong>Tie:</strong> 1 point each</li>
+        <li><strong>Net Run Rate (NRR)</strong> is the tiebreaker</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h3>📊 Season Info</h3>
+      <ul>
+        <li>Format: T<%= data.tournament.overs %> (<%= data.tournament.format %>)</li>
+        <li>Current Season: <%= data.tournament.season %> (<%= data.tournament.year %>)</li>
+        <li>Total Seasons: <%= data.seasons.length %></li>
+        <li>Teams per season: <%= data.teams.length %></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

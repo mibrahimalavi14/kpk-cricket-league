@@ -1,0 +1,33 @@
+<%- include('../partials/header', { active: 'seasons', pageTitle: 'Seasons' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">🏆 All Seasons</div>
+    <h1>Cricket <span class="highlight">Seasons</span></h1>
+    <p>Every season of the KPK Cricket League</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="teams-grid">
+    <% data.seasons.forEach(season => {
+      const matchCount = (season.matches ? season.matches.length : 0) + (season.playoff ? season.playoff.length : 0);
+      const seasonColor = season.status === 'Active' ? '#2ecc71' : season.status === 'Completed' ? '#3498db' : '#f39c12';
+    %>
+      <a href="/season/<%= season.id %>" class="team-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= seasonColor %>"></div>
+        <div class="team-logo"><%= season.status === 'Active' ? '🔥' : season.status === 'Completed' ? '🏆' : '📅' %></div>
+        <h3><%= season.name %></h3>
+        <div class="team-city"><%= season.year %></div>
+        <div class="team-captain" style="color:<%= seasonColor %>;text-transform:uppercase;font-size:0.75rem"><%= season.status %></div>
+        <div class="team-stats">
+          <div class="stat"><div class="stat-val"><%= season.overs %></div><div class="stat-label">Overs</div></div>
+          <div class="stat"><div class="stat-val"><%= season.matches ? season.matches.length : 0 %></div><div class="stat-label">Matches</div></div>
+          <div class="stat"><div class="stat-val"><%= matchCount %></div><div class="stat-label">Fixtures</div></div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

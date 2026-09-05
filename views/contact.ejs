@@ -1,0 +1,60 @@
+<%- include('partials/header', { active: 'contact', pageTitle: 'Contact' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">📞 Contact Us</div>
+    <h1>Get in <span class="highlight">Touch</span></h1>
+    <p>We would love to hear from you</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="format-section">
+    <div class="format-card">
+      <h3>📬 Contact Information</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:1rem" class="contact-grid">
+        <a href="mailto:info@kpkcricketleague.com" class="contact-item" style="text-align:center;display:block;padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;transition:all 0.3s">
+          <div style="font-size:2rem;margin-bottom:0.8rem">✉️</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">Email</div>
+          <div style="color:var(--text-light);font-size:0.9rem">info@kpkcricketleague.com</div>
+        </a>
+        <div class="contact-item" style="text-align:center;display:block;padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:0.8rem">📱</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">Phone</div>
+          <div style="color:var(--text-light);font-size:0.9rem">+92 300 0000000</div>
+        </div>
+        <div class="contact-item" style="text-align:center;display:block;padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:0.8rem">📍</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">Headquarters</div>
+          <div style="color:var(--text-light);font-size:0.9rem">Haripur, Khyber Pakhtunkhwa</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <h3>💬 Send a Message</h3>
+      <form action="/contact" method="POST" style="margin-top:1rem">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" required placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label>Your Email</label>
+          <input type="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" rows="5" required placeholder="Write your message" style="width:100%;padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;resize:vertical"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+      <% if (typeof sent !== 'undefined' && sent) { %>
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.3);border-radius:8px;color:#2ecc71;text-align:center">
+          ✅ Thank you! Your message has been received. We will get back to you soon.
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

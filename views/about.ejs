@@ -1,0 +1,46 @@
+<%- include('partials/header', { active: 'about', pageTitle: 'About' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">ℹ️ About Us</div>
+    <h1>About the <span class="highlight">League</span></h1>
+    <p>Discover the story behind the KPK Cricket League</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="format-section">
+    <div class="format-card">
+      <h3>🏏 Our Mission</h3>
+      <p style="color:var(--text-light);line-height:1.8">
+        The KPK Cricket League was founded to bring the finest cricketing talent of Khyber Pakhtunkhwa onto one stage.
+        With a fast-paced T<%= data.tournament.overs %> format, we deliver maximum excitement in minimum time,
+        celebrating the passion of cricket across Haripur, Abbottabad, Khanpur, Balakot and Muzaffarabad.
+      </p>
+    </div>
+
+    <div class="format-card">
+      <h3>📊 Season <%= data.tournament.season %> (<%= data.tournament.year %>)</h3>
+      <p style="color:var(--text-light);line-height:1.8">
+        In <%= data.tournament.season %>, <%= data.teams.length %> teams battle it out in a thrilling round-robin league.
+        Each team fields one elite player, making every match a true contest of individual brilliance.
+        The season features <%= (data.seasons[0].matches || []).length %> league matches,
+        followed by the Qualifier and the grand finale at the prestigious Grand Final.
+      </p>
+    </div>
+
+    <div class="format-card" style="text-align:center">
+      <h3 style="text-align:center">👨‍💼 Chairman</h3>
+      <div class="player-profile-avatar" style="border-color:var(--gold);margin:0 auto 1rem;width:120px;height:120px;font-size:3rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,rgba(245,197,24,0.15),transparent)">🎩</div>
+      <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.3rem;color:var(--gold)">Muhammad Ibrahim Alavi</div>
+      <div style="font-size:1rem;margin-bottom:1rem">Chairman, <%= data.tournament.name %></div>
+      <div style="color:var(--text-light);max-width:600px;margin:0 auto;line-height:1.8">
+        Muhammad Ibrahim Alavi, the visionary Chairman of the KPK Cricket League, is also a star all-rounder
+        representing Haripur. His leadership and dedication to grassroots cricket have been the driving
+        force behind making the KPK Cricket League a premier T<%= data.tournament.overs %> tournament in the region.
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,18 @@
+{
+  "name": "kpk-cricket-league",
+  "version": "1.0.0",
+  "description": "KPK Cricket League Official Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "admin": "node admin-server.js",
+    "dev": "node server.js",
+    "dev:all": "start node server.js && start node admin-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "body-parser": "^1.20.2",
+    "express-session": "^1.17.3"
+  }
+}

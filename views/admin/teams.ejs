@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Teams - Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams" class="active">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Manage Teams</h1>
+        <a href="/teams" class="btn btn-sm btn-outline">View Teams Page</a>
+      </div>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Captain</th>
+            <th>Color</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.teams.forEach(team => { %>
+            <tr>
+              <td><input type="text" name="name" form="teamForm_<%= team.id %>" value="<%= team.name %>" style="width:180px"></td>
+              <td><input type="text" name="captain" form="teamForm_<%= team.id %>" value="<%= team.captain %>" style="width:180px"></td>
+              <td><input type="text" name="color" form="teamForm_<%= team.id %>" value="<%= team.color %>" style="width:80px"></td>
+              <td>
+                <form id="teamForm_<%= team.id %>" action="/admin/teams/<%= team.id %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

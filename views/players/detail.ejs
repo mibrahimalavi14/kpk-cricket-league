@@ -1,0 +1,48 @@
+<%- include('../partials/header', { active: 'players', pageTitle: player.name }) %>
+
+<section class="section section-pad">
+  <div class="player-hero">
+    <div class="player-hero-banner" style="--card-color:<%= player.teamColor %>">
+      <div style="position:absolute;top:0;left:0;right:0;height:6px;background:<%= player.teamColor %>"></div>
+      <div class="player-big-avatar" style="border-color:<%= player.teamColor %>;background:linear-gradient(135deg,<%= player.teamColor %>33,transparent)"><%= player.image %></div>
+      <div class="player-big-name"><%= player.name %></div>
+      <div class="player-big-role" style="color:<%= player.teamColor %>"><%= player.role %></div>
+      <div class="player-big-team">🔹 <a href="/team/<%= player.teamId %>" style="border-bottom:1px dashed var(--text-light)"><%= player.teamName %></a></div>
+      <div class="player-big-tags">
+        <span class="player-big-tag">Jersey #<%= player.jerseyNo %></span>
+        <span class="player-big-tag">🎂 Age: <%= player.age %></span>
+        <span class="player-big-tag">🏏 <%= player.battingStyle %></span>
+        <% if (player.bowlingStyle !== 'N/A') { %>
+          <span class="player-big-tag">🎯 <%= player.bowlingStyle %></span>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="player-profile-grid">
+    <div class="player-profile-stat"><div class="pp-val"><%= player.matches %></div><div class="pp-lbl">Matches</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.runs %></div><div class="pp-lbl">Runs</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.average %></div><div class="pp-lbl">Average</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.strikeRate %></div><div class="pp-lbl">Strike Rate</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.highScore %></div><div class="pp-lbl">High Score</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.fours %></div><div class="pp-lbl">Fours</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.sixes %></div><div class="pp-lbl">Sixes</div></div>
+  </div>
+
+  <div class="player-profile-grid" style="border-top:1px solid var(--border);padding-top:2rem;margin-top:0">
+    <div class="player-profile-stat"><div class="pp-val"><%= player.wickets %></div><div class="pp-lbl">Wickets</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.economyRate %></div><div class="pp-lbl">Economy</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.bestBowling %></div><div class="pp-lbl">Best Bowling</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.fiveWickets %></div><div class="pp-lbl">5-Wickets</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.catches %></div><div class="pp-lbl">Catches</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.centuries %></div><div class="pp-lbl">Centuries</div></div>
+    <div class="player-profile-stat"><div class="pp-val"><%= player.fifties %></div><div class="pp-lbl">Fifties</div></div>
+  </div>
+
+  <div class="player-bio-section">
+    <h3>About <%= player.name.split(' ')[0] %></h3>
+    <p><%= player.bio %></p>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

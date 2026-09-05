@@ -1,0 +1,37 @@
+<%- include('../partials/header', { active: 'teams', pageTitle: 'Teams' }) %>
+
+<section class="hero" style="min-height:50vh">
+  <div class="hero-content">
+    <div class="hero-badge">🛡️ All Teams</div>
+    <h1>Meet the <span class="highlight">Teams</span></h1>
+    <p>Five elite teams representing the finest cities of Khyber Pakhtunkhwa</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="teams-grid">
+    <% data.teams.forEach(team => {
+      const player = data.players.find(p => p.teamId === team.id);
+    %>
+      <a href="/team/<%= team.id %>" class="team-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= team.color %>"></div>
+        <div class="team-logo"><img src="<%= team.logoUrl %>" alt="<%= team.name %>" class="team-logo-img" onerror="this.style.display='none'"></div>
+        <h3><%= team.name %></h3>
+        <div class="team-city">📍 <%= team.homeGround %>, <%= team.city %></div>
+        <div class="team-captain">⭐ Captain: <%= team.captain %></div>
+        <% if (player) { %>
+          <div style="margin-top:0.8rem;font-size:0.85rem;color:var(--text-light)">
+            Squad (1 player)
+          </div>
+        <% } %>
+        <div class="team-stats">
+          <div class="stat"><div class="stat-val"><%= team.wins %></div><div class="stat-label">Wins</div></div>
+          <div class="stat"><div class="stat-val"><%= team.losses %></div><div class="stat-label">Losses</div></div>
+          <div class="stat"><div class="stat-val"><%= team.points %></div><div class="stat-label">Points</div></div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

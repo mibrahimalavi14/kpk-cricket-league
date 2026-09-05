@@ -1,0 +1,39 @@
+<%- include('../partials/header', { active: 'players', pageTitle: 'Players' }) %>
+
+<section class="hero" style="min-height:50vh">
+  <div class="hero-content">
+    <div class="hero-badge">⭐ Star Players</div>
+    <h1>The <span class="highlight">Players</span></h1>
+    <p>The elite athletes competing in the KPK Cricket League</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="players-grid">
+    <% data.players.forEach(player => {
+      const team = data.teams.find(t => t.id === player.teamId);
+    %>
+      <a href="/player/<%= player.id %>" class="player-card">
+        <div class="player-avatar" style="border-color:<%= player.teamColor %>;background:linear-gradient(135deg,<%= player.teamColor %>33,transparent)"><%= player.image %></div>
+        <div class="player-info">
+          <h3><%= player.name %></h3>
+          <div class="player-role" style="color:<%= player.teamColor %>"><%= player.role %></div>
+          <div class="player-team">🔹 
+          <% if (team) { %>
+            <img src="<%= team.logoUrl %>" alt="<%= team.name %>" class="mini-logo" onerror="this.style.display='none'">
+            <%= player.teamName %>
+          <% } else { %>
+            <%= player.teamName %>
+          <% } %>
+        </div>
+          <div style="margin-top:0.8rem;display:flex;gap:1rem;font-size:0.8rem;color:var(--text-light)">
+            <span>Runs: <%= player.runs %></span>
+            <span>Wickets: <%= player.wickets %></span>
+          </div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Seasons - Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons" class="active">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Manage Seasons</h1>
+        <a href="/seasons" class="btn btn-sm btn-outline">View Seasons Page</a>
+      </div>
+
+      <h2 style="margin-bottom:1rem;font-size:1.2rem">Seasons Overview</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Season</th>
+            <th>Year</th>
+            <th>Format</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.seasons.forEach(season => { %>
+            <tr>
+              <form action="/admin/seasons/<%= season.id %>" method="POST">
+                <td><input type="text" name="name" value="<%= season.name %>" style="width:120px"></td>
+                <td><input type="number" name="year" value="<%= season.year %>" style="width:80px"></td>
+                <td style="color:var(--text-light)">T<%= season.overs %> (<%= season.format %>)</td>
+                <td>
+                  <select name="status" style="width:130px">
+                    <option value="Active" <%= season.status === 'Active' ? 'selected' : '' %>>Active</option>
+                    <option value="Upcoming" <%= season.status === 'Upcoming' ? 'selected' : '' %>>Upcoming</option>
+                    <option value="Completed" <%= season.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                  </select>
+                </td>
+                <td style="white-space:nowrap">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                  <a href="/admin/season/<%= season.id %>" class="btn btn-sm btn-outline">Manage</a>
+                </td>
+              </form>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

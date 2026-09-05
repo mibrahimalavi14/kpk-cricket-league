@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - <%= data.tournament.name %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin" class="active">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Dashboard</h1>
+        <a href="http://localhost:3000" class="btn btn-sm btn-outline">View Website</a>
+      </div>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="sc-label">Teams</div>
+          <div class="sc-value"><%= data.teams.length %></div>
+          <div class="sc-sub">Registered teams</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Players</div>
+          <div class="sc-value"><%= data.players.length %></div>
+          <div class="sc-sub">Registered players</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Seasons</div>
+          <div class="sc-value"><%= data.seasons.length %></div>
+          <div class="sc-sub">Total seasons</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Active Season</div>
+          <div class="sc-value"><%= (data.seasons.find(s => s.status === 'Active') || {}).name || 'None' %></div>
+          <div class="sc-sub">Current season</div>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom:1.5rem;font-size:1.3rem">Tournament Settings</h2>
+      <form action="/admin/tournament" method="POST" style="background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:2rem">
+        <div class="form-group">
+          <label>Tournament Name</label>
+          <input type="text" name="name" value="<%= data.tournament.name %>" required>
+        </div>
+        <div class="form-group">
+          <label>Current Season</label>
+          <input type="text" name="season" value="<%= data.tournament.season %>" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" rows="3" style="width:100%;padding:0.8rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit"><%= data.tournament.description %></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

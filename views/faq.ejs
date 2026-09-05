@@ -1,0 +1,60 @@
+<%- include('partials/header', { active: 'faq', pageTitle: 'FAQ' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">❓ FAQs</div>
+    <h1>Frequently Asked <span class="highlight">Questions</span></h1>
+    <p>Everything you need to know about the league</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="format-section">
+    <div class="format-card">
+      <h3>🏏 General</h3>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">What is the KPK Cricket League?</div>
+        <p style="color:var(--text-light)">
+          The KPK Cricket League is a T<%= data.tournament.overs %> cricket tournament featuring 5 teams from Khyber Pakhtunkhwa:
+          Haripur, Abbottabad, Khanpur, Balakot, and Muzaffarabad.
+        </p>
+      </div>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">Why is the format called T<%= data.tournament.overs %>?</div>
+        <p style="color:var(--text-light)">
+          Because each team plays only <%= data.tournament.overs %> overs per innings, making matches fast, exciting and action-packed.
+        </p>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <h3>⚡ Format & Rules</h3>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">How many players does each team have?</div>
+        <p style="color:var(--text-light)">Each team has 1 elite player who bats and bowls for their team.</p>
+      </div>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">How is the winner decided?</div>
+        <p style="color:var(--text-light)">The team with the higher score at the end of its <%= data.tournament.overs %> overs wins the match.</p>
+      </div>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">How does the points system work?</div>
+        <p style="color:var(--text-light)">Win = 2 points, Tie = 1 point each, Loss = 0 points. Net Run Rate (NRR) breaks ties.</p>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <h3>🏆 Teams & Players</h3>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">Who is the current chairman?</div>
+        <p style="color:var(--text-light)">Muhammad Ibrahim Alavi serves as the Chairman of the KPK Cricket League.</p>
+      </div>
+      <div class="faq-item" style="margin-bottom:1.5rem">
+        <div style="font-weight:700;color:var(--gold);margin-bottom:0.4rem">Where can I find player profiles?</div>
+        <p style="color:var(--text-light)">Visit the Players section in the navigation menu to view detailed profiles and statistics of all players.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

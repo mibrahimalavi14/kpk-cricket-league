@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage <%= season.name %> - Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons" class="active">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1><%= season.name %> - <%= season.year %> (T<%= season.overs %>)</h1>
+        <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">View Public Page</a>
+      </div>
+
+      <div class="admin-tabs" style="display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap">
+        <a href="#points" class="btn btn-sm btn-outline">Points Table</a>
+        <a href="#matches" class="btn btn-sm btn-outline">Matches</a>
+        <a href="#playoff" class="btn btn-sm btn-outline">Playoffs</a>
+        <a href="#stats" class="btn btn-sm btn-outline">Stats</a>
+      </div>
+
+      <!-- POINTS TABLE -->
+      <h2 id="points" style="margin-bottom:1rem;font-size:1.2rem">Points Table</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Lost</th>
+            <th>Tied</th>
+            <th>NRR</th>
+            <th>Points</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% season.pointsTable.forEach((row, idx) => {
+            const teamData = data.teams.find(t => t.name === row.team);
+          %>
+            <tr>
+              <td style="display:flex;align-items:center;gap:0.5rem;color:var(--gold)">
+                <span style="width:10px;height:10px;border-radius:2px;background:<%= teamData ? teamData.color : '#666' %>"></span>
+                <%= row.team %>
+              </td>
+              <td><input type="number" name="played" form="ptForm_<%= idx %>" value="<%= row.played %>" style="width:60px"></td>
+              <td><input type="number" name="won" form="ptForm_<%= idx %>" value="<%= row.won %>" style="width:60px"></td>
+              <td><input type="number" name="lost" form="ptForm_<%= idx %>" value="<%= row.lost %>" style="width:60px"></td>
+              <td><input type="number" name="tied" form="ptForm_<%= idx %>" value="<%= row.tied %>" style="width:60px"></td>
+              <td><input type="text" name="nrr" form="ptForm_<%= idx %>" value="<%= row.nrr %>" style="width:80px"></td>
+              <td><input type="number" name="points" form="ptForm_<%= idx %>" value="<%= row.points %>" style="width:60px"></td>
+              <td>
+                <form id="ptForm_<%= idx %>" action="/admin/season/<%= season.id %>/points/<%= idx %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <!-- MATCHES -->
+      <h2 id="matches" style="margin:2.5rem 0 1rem;font-size:1.2rem">League Matches</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Match</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Result</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% season.matches.forEach((match, idx) => { %>
+            <tr>
+              <td style="color:var(--gold)"><%= match.match %></td>
+              <td>
+                <select name="team1" form="matchForm_<%= idx %>" style="width:130px">
+                  <% data.teams.forEach(t => { %>
+                    <option value="<%= t.name %>" <%= match.team1 === t.name ? 'selected' : '' %>><%= t.name %></option>
+                  <% }) %>
+                </select>
+              </td>
+              <td>
+                <select name="team2" form="matchForm_<%= idx %>" style="width:130px">
+                  <% data.teams.forEach(t => { %>
+                    <option value="<%= t.name %>" <%= match.team2 === t.name ? 'selected' : '' %>><%= t.name %></option>
+                  <% }) %>
+                </select>
+              </td>
+              <td><input type="date" name="date" form="matchForm_<%= idx %>" value="<%= match.date %>"></td>
+              <td><input type="time" name="time" form="matchForm_<%= idx %>" value="<%= match.time %>"></td>
+              <td><input type="text" name="result" form="matchForm_<%= idx %>" value="<%= match.result %>" placeholder="e.g. Haripur won by 12 runs" style="width:220px"></td>
+              <td>
+                <form id="matchForm_<%= idx %>" action="/admin/season/<%= season.id %>/matches/<%= idx %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <!-- PLAYOFFS -->
+      <h2 id="playoff" style="margin:2.5rem 0 1rem;font-size:1.2rem">Playoffs</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Match</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Result</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% season.playoff.forEach((match, idx) => { %>
+            <tr>
+              <td style="color:var(--accent)"><%= match.match %></td>
+              <td>
+                <select name="team1" form="poForm_<%= idx %>" style="width:130px">
+                  <option value="TBD" <%= match.team1 === 'TBD' ? 'selected' : '' %>>TBD</option>
+                  <% data.teams.forEach(t => { %>
+                    <option value="<%= t.name %>" <%= match.team1 === t.name ? 'selected' : '' %>><%= t.name %></option>
+                  <% }) %>
+                </select>
+              </td>
+              <td>
+                <select name="team2" form="poForm_<%= idx %>" style="width:130px">
+                  <option value="TBD" <%= match.team2 === 'TBD' ? 'selected' : '' %>>TBD</option>
+                  <% data.teams.forEach(t => { %>
+                    <option value="<%= t.name %>" <%= match.team2 === t.name ? 'selected' : '' %>><%= t.name %></option>
+                  <% }) %>
+                </select>
+              </td>
+              <td><input type="date" name="date" form="poForm_<%= idx %>" value="<%= match.date %>"></td>
+              <td><input type="time" name="time" form="poForm_<%= idx %>" value="<%= match.time %>"></td>
+              <td><input type="text" name="result" form="poForm_<%= idx %>" value="<%= match.result %>" placeholder="e.g. Haripur won" style="width:220px"></td>
+              <td>
+                <form id="poForm_<%= idx %>" action="/admin/season/<%= season.id %>/playoff/<%= idx %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <!-- STATS -->
+      <h2 id="stats" style="margin:2.5rem 0 1rem;font-size:1.2rem">Season Stats</h2>
+
+      <h3 style="margin-bottom:1rem;font-size:1rem;color:var(--gold)">Top Run Scorers</h3>
+      <table class="admin-table" style="margin-bottom:2.5rem">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Runs</th>
+            <th>Average</th>
+            <th>Strike Rate</th>
+            <th>Best</th>
+            <th>4s</th>
+            <th>6s</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (season.stats && season.stats.topRunScorers || []).forEach((p, idx) => { %>
+            <tr>
+              <td>
+                <select name="player" form="rsForm_<%= idx %>" style="width:180px">
+                  <option value="<%= p.player %>" selected><%= p.player %></option>
+                  <% data.players.forEach(pl => {
+                    if (pl.name !== p.player) { %>
+                      <option value="<%= pl.name %>"><%= pl.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </td>
+              <td>
+                <select name="team" form="rsForm_<%= idx %>" style="width:120px">
+                  <option value="<%= p.team %>" selected><%= p.team %></option>
+                  <% data.teams.forEach(t => {
+                    if (t.name !== p.team) { %>
+                      <option value="<%= t.name %>"><%= t.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </td>
+              <td><input type="number" name="runs" form="rsForm_<%= idx %>" value="<%= p.runs %>" style="width:60px"></td>
+              <td><input type="text" name="avg" form="rsForm_<%= idx %>" value="<%= p.avg %>" style="width:60px"></td>
+              <td><input type="text" name="sr" form="rsForm_<%= idx %>" value="<%= p.sr %>" style="width:60px"></td>
+              <td><input type="text" name="best" form="rsForm_<%= idx %>" value="<%= p.best %>" style="width:60px"></td>
+              <td><input type="number" name="fours" form="rsForm_<%= idx %>" value="<%= p.fours %>" style="width:50px"></td>
+              <td><input type="number" name="sixes" form="rsForm_<%= idx %>" value="<%= p.sixes %>" style="width:50px"></td>
+              <td>
+                <form id="rsForm_<%= idx %>" action="/admin/season/<%= season.id %>/stats/runs/<%= idx %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <h3 style="margin-bottom:1rem;font-size:1rem;color:var(--gold)">Top Wicket Takers</h3>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Wickets</th>
+            <th>Average</th>
+            <th>Economy</th>
+            <th>Best</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (season.stats && season.stats.topWicketTakers || []).forEach((p, idx) => { %>
+            <tr>
+              <td>
+                <select name="player" form="wsForm_<%= idx %>" style="width:180px">
+                  <option value="<%= p.player %>" selected><%= p.player %></option>
+                  <% data.players.forEach(pl => {
+                    if (pl.name !== p.player) { %>
+                      <option value="<%= pl.name %>"><%= pl.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </td>
+              <td>
+                <select name="team" form="wsForm_<%= idx %>" style="width:120px">
+                  <option value="<%= p.team %>" selected><%= p.team %></option>
+                  <% data.teams.forEach(t => {
+                    if (t.name !== p.team) { %>
+                      <option value="<%= t.name %>"><%= t.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </td>
+              <td><input type="number" name="wickets" form="wsForm_<%= idx %>" value="<%= p.wickets %>" style="width:60px"></td>
+              <td><input type="text" name="avg" form="wsForm_<%= idx %>" value="<%= p.avg %>" style="width:60px"></td>
+              <td><input type="text" name="eco" form="wsForm_<%= idx %>" value="<%= p.eco %>" style="width:60px"></td>
+              <td><input type="text" name="best" form="wsForm_<%= idx %>" value="<%= p.best %>" style="width:70px"></td>
+              <td>
+                <form id="wsForm_<%= idx %>" action="/admin/season/<%= season.id %>/stats/wickets/<%= idx %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-sm btn-gold">Save</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>
