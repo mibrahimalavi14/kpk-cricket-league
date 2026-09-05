@@ -69,6 +69,7 @@
           <tr>
             <th>Player</th>
             <th>Matches</th>
+            <th>Innings</th>
             <th>Runs</th>
             <th>Average</th>
             <th>Strike Rate</th>
@@ -85,6 +86,7 @@
             <tr>
               <td style="color:var(--gold)"><%= player.name %></td>
               <td><input type="number" name="matches" form="statsForm_<%= player.id %>" value="<%= player.matches %>" style="width:55px"></td>
+              <td><input type="number" name="innings" form="statsForm_<%= player.id %>" value="<%= player.innings %>" style="width:55px"></td>
               <td><input type="number" name="runs" form="statsForm_<%= player.id %>" value="<%= player.runs %>" style="width:60px"></td>
               <td><input type="text" name="average" form="statsForm_<%= player.id %>" value="<%= player.average %>" style="width:55px"></td>
               <td><input type="text" name="strikeRate" form="statsForm_<%= player.id %>" value="<%= player.strikeRate %>" style="width:60px"></td>

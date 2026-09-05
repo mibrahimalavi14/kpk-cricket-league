@@ -175,6 +175,8 @@
           <tr>
             <th>Player</th>
             <th>Team</th>
+            <th>Matches</th>
+            <th>Innings</th>
             <th>Runs</th>
             <th>Average</th>
             <th>Strike Rate</th>
@@ -207,6 +209,8 @@
                   <% }) %>
                 </select>
               </td>
+              <td><input type="number" name="matches" form="rsForm_<%= idx %>" value="<%= p.matches %>" style="width:60px"></td>
+              <td><input type="number" name="innings" form="rsForm_<%= idx %>" value="<%= p.innings %>" style="width:60px"></td>
               <td><input type="number" name="runs" form="rsForm_<%= idx %>" value="<%= p.runs %>" style="width:60px"></td>
               <td><input type="text" name="avg" form="rsForm_<%= idx %>" value="<%= p.avg %>" style="width:60px"></td>
               <td><input type="text" name="sr" form="rsForm_<%= idx %>" value="<%= p.sr %>" style="width:60px"></td>
@@ -229,6 +233,8 @@
           <tr>
             <th>Player</th>
             <th>Team</th>
+            <th>Matches</th>
+            <th>Innings</th>
             <th>Wickets</th>
             <th>Average</th>
             <th>Economy</th>
@@ -259,6 +265,8 @@
                   <% }) %>
                 </select>
               </td>
+              <td><input type="number" name="matches" form="wsForm_<%= idx %>" value="<%= p.matches %>" style="width:60px"></td>
+              <td><input type="number" name="innings" form="wsForm_<%= idx %>" value="<%= p.innings %>" style="width:60px"></td>
               <td><input type="number" name="wickets" form="wsForm_<%= idx %>" value="<%= p.wickets %>" style="width:60px"></td>
               <td><input type="text" name="avg" form="wsForm_<%= idx %>" value="<%= p.avg %>" style="width:60px"></td>
               <td><input type="text" name="eco" form="wsForm_<%= idx %>" value="<%= p.eco %>" style="width:60px"></td>

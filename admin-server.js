@@ -122,6 +122,7 @@ app.post('/admin/players/:id/stats', authMiddleware, (req, res) => {
   const player = data.players.find(p => p.id === parseInt(req.params.id));
   if (player) {
     player.matches = parseInt(req.body.matches) || 0;
+    player.innings = parseInt(req.body.innings) || 0;
     player.runs = parseInt(req.body.runs) || 0;
     player.wickets = parseInt(req.body.wickets) || 0;
     player.average = req.body.average || '0.00';
@@ -228,6 +229,8 @@ app.post('/admin/season/:id/stats/runs/:idx', authMiddleware, (req, res) => {
       p.avg = req.body.avg || '0.00';
       p.sr = req.body.sr || '0.00';
       p.best = req.body.best || '0';
+      p.matches = parseInt(req.body.matches) || 0;
+      p.innings = parseInt(req.body.innings) || 0;
       p.fours = parseInt(req.body.fours) || 0;
       p.sixes = parseInt(req.body.sixes) || 0;
     }
@@ -251,6 +254,8 @@ app.post('/admin/season/:id/stats/wickets/:idx', authMiddleware, (req, res) => {
       p.avg = req.body.avg || '0.00';
       p.eco = req.body.eco || '0.00';
       p.best = req.body.best || '0/0';
+      p.matches = parseInt(req.body.matches) || 0;
+      p.innings = parseInt(req.body.innings) || 0;
     }
     saveData(data);
   }

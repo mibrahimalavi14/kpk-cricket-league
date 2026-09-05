@@ -183,6 +183,8 @@
             "avg": "0.00",
             "sr": "0.00",
             "best": "0",
+            "matches": 0,
+            "innings": 0,
             "fours": 0,
             "sixes": 0
           },
@@ -193,6 +195,8 @@
             "avg": "0.00",
             "sr": "0.00",
             "best": "0",
+            "matches": 0,
+            "innings": 0,
             "fours": 0,
             "sixes": 0
           },
@@ -203,6 +207,8 @@
             "avg": "0.00",
             "sr": "0.00",
             "best": "0",
+            "matches": 0,
+            "innings": 0,
             "fours": 0,
             "sixes": 0
           },
@@ -213,6 +219,8 @@
             "avg": "0.00",
             "sr": "0.00",
             "best": "0",
+            "matches": 0,
+            "innings": 0,
             "fours": 0,
             "sixes": 0
           },
@@ -223,6 +231,8 @@
             "avg": "0.00",
             "sr": "0.00",
             "best": "0",
+            "matches": 0,
+            "innings": 0,
             "fours": 0,
             "sixes": 0
           }
@@ -234,7 +244,9 @@
             "wickets": 0,
             "avg": "0.00",
             "eco": "0.00",
-            "best": "0/0"
+            "best": "0/0",
+            "matches": 0,
+            "innings": 0
           },
           {
             "player": "Muhammad Usman Waseem",
@@ -242,7 +254,9 @@
             "wickets": 0,
             "avg": "0.00",
             "eco": "0.00",
-            "best": "0/0"
+            "best": "0/0",
+            "matches": 0,
+            "innings": 0
           },
           {
             "player": "Muhavia Usmani",
@@ -250,7 +264,9 @@
             "wickets": 0,
             "avg": "0.00",
             "eco": "0.00",
-            "best": "0/0"
+            "best": "0/0",
+            "matches": 0,
+            "innings": 0
           },
           {
             "player": "Muhammad Ali",
@@ -258,7 +274,9 @@
             "wickets": 0,
             "avg": "0.00",
             "eco": "0.00",
-            "best": "0/0"
+            "best": "0/0",
+            "matches": 0,
+            "innings": 0
           },
           {
             "player": "Mahir Usmani",
@@ -266,7 +284,9 @@
             "wickets": 0,
             "avg": "0.00",
             "eco": "0.00",
-            "best": "0/0"
+            "best": "0/0",
+            "matches": 0,
+            "innings": 0
           }
         ]
       }
@@ -361,6 +381,7 @@
       "battingStyle": "Right-Hand",
       "bowlingStyle": "Right-Arm Medium",
       "matches": 0,
+      "innings": 0,
       "runs": 0,
       "wickets": 0,
       "average": "0.00",
@@ -390,6 +411,7 @@
       "battingStyle": "Right-Hand",
       "bowlingStyle": "N/A",
       "matches": 0,
+      "innings": 0,
       "runs": 0,
       "wickets": 0,
       "average": "0.00",
@@ -419,6 +441,7 @@
       "battingStyle": "Left-Hand",
       "bowlingStyle": "Left-Arm Orthodox",
       "matches": 0,
+      "innings": 0,
       "runs": 0,
       "wickets": 0,
       "average": "0.00",
@@ -448,6 +471,7 @@
       "battingStyle": "Right-Hand",
       "bowlingStyle": "Right-Arm Fast",
       "matches": 0,
+      "innings": 0,
       "runs": 0,
       "wickets": 0,
       "average": "0.00",
@@ -477,6 +501,7 @@
       "battingStyle": "Right-Hand",
       "bowlingStyle": "N/A",
       "matches": 0,
+      "innings": 0,
       "runs": 0,
       "wickets": 0,
       "average": "0.00",

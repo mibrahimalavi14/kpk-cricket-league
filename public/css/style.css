@@ -237,13 +237,13 @@ a{text-decoration:none;color:inherit}
 
 /* SEASON TABS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:1200px;margin:0 auto}
-.stats-card{padding:1.5rem;margin-bottom:0;display:flex;flex-direction:column}
-.stats-card h3{font-size:1.05rem;margin-bottom:1.2rem}
+.stats-card{padding:1.5rem;margin-bottom:0;display:flex;flex-direction:column;overflow-x:auto}
+.stats-card h3{font-size:1.05rem;margin-bottom:1.2rem;flex-shrink:0}
 .compact-table{max-width:100%;border-radius:10px}
-.compact-table th{padding:0.5rem 0.6rem;font-size:0.68rem}
-.compact-table td{padding:0.5rem 0.6rem;font-size:0.82rem}
+.compact-table th{padding:0.5rem 0.55rem;font-size:0.66rem}
+.compact-table td{padding:0.5rem 0.55rem;font-size:0.8rem}
 .compact-table thead th,.compact-table tbody td{white-space:nowrap}
-.compact-table td:nth-child(3){white-space:normal}
+.compact-table tbody tr td:nth-child(2){white-space:normal}
 @media(max-width:900px){
   .stats-grid{grid-template-columns:1fr}
 }
