@@ -76,7 +76,6 @@
               <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
             </div>
             <div class="match-meta">
-              <span>📍 <%= match.venue || 'TBD' %></span>
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
               <% if (match.status === 'live') { %>
@@ -133,7 +132,6 @@
               <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
             </div>
             <div class="match-meta">
-              <span>📍 <%= match.venue || 'TBD' %></span>
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
               <% if (match.status === 'completed') { %>

@@ -86,18 +86,24 @@
         <h3><%= season.name %></h3>
         <div class="team-city"><%= season.year %> - T<%= season.overs %></div>
         <div class="team-captain" style="color:<%= seasonColor %>;text-transform:uppercase;font-size:0.75rem"><%= season.status %></div>
-        <% if (season.dateRange) { %>
-          <div class="team-city" style="font-size:0.8rem">📅 <%= season.dateRange %></div>
-        <% } %>
-        <% if (season.champion) { %>
-          <div class="team-captain" style="color:#2ecc71;font-weight:700">🏆 Winner: <%= season.champion %></div>
-        <% } %>
-        <% if (season.runnerUp) { %>
-          <div class="team-captain" style="color:#95a5a6">🥈 Runner-up: <%= season.runnerUp %></div>
-        <% } %>
-        <% if (potm) { %>
-          <div class="team-captain">🌟 Player of Season: <b><%= potm.player %></b> (<%= potm.team %>)</div>
-        <% } %>
+        <div class="season-facts">
+          <div class="sf-row">
+            <span class="sf-label">Dates</span>
+            <span class="sf-val"><%= season.dateRange || '—' %></span>
+          </div>
+          <div class="sf-row">
+            <span class="sf-label">Winner</span>
+            <span class="sf-val" style="color:<%= season.champion ? '#2ecc71' : 'var(--text-light)' %>"><%= season.champion || '—' %></span>
+          </div>
+          <div class="sf-row">
+            <span class="sf-label">Runner-Up</span>
+            <span class="sf-val"><%= season.runnerUp || '—' %></span>
+          </div>
+          <div class="sf-row">
+            <span class="sf-label">Player of Season</span>
+            <span class="sf-val"><%= potm ? potm.player + (potm.team ? ' (' + potm.team + ')' : '') : '—' %></span>
+          </div>
+        </div>
         <div class="team-stats">
           <div class="stat"><div class="stat-val"><%= season.matches ? season.matches.length : 0 %></div><div class="stat-label">Matches</div></div>
           <div class="stat"><div class="stat-val"><%= season.pointsTable ? season.pointsTable.length : 0 %></div><div class="stat-label">Teams</div></div>
