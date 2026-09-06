@@ -8,3 +8,5 @@ npm-debug.log*
 .env*
 .agents/
 skills-lock.json
+
+node_*.log
