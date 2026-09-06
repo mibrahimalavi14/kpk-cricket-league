@@ -1,10 +1,10 @@
 <%- include('partials/header', { active: 'schedule', pageTitle: match.match }) %>
 
 <section class="section section-pad">
+  <div class="back-bar">
+    <a href="/season/<%= season.id %>" class="back-btn">← Back to <%= season.name %></a>
+  </div>
   <div class="match-head">
-    <div class="match-head-sec">
-      <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">← <%= season.name %></a>
-    </div>
     <%- include('partials/match_banner', { m: match }) %>
   </div>
 
@@ -62,7 +62,7 @@
 
         <table class="standings-table compact-table">
           <thead>
-            <tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr>
+            <tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>Econ</th></tr>
           </thead>
           <tbody>
             <% (inn.bowling.length ? inn.bowling : [{ player: bowlingTeam + ' (no balls bowled yet)', balls: 0, maidens: 0, runs: 0, wickets: 0 }]).forEach(b => { %>
@@ -71,7 +71,6 @@
                 <td><%= b.overs || b.balls / 6 %></td>
                 <td><%= b.maidens %></td>
                 <td><%= b.runs %></td>
-                <td><%= b.wickets %></td>
                 <td><%= Number(b.eco || 0).toFixed(2) %></td>
               </tr>
             <% }) %>

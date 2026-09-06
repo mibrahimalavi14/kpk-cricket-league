@@ -1,0 +1,81 @@
+ReferenceError: D:\KPK Cricket League\views\seasons\detail.ejs:67
+    65|       <% season.matches.forEach(match => { %>
+    66|         <a href="/match/<%= match.id %>" class="match-card fixture-card">
+ >> 67|           <%- include('../partials/match_banner', { m: match }) %>
+    68|         </a>
+    69|       <% }) %>
+    70|     <% } else { %>
+
+D:\KPK Cricket League\views\partials\match_banner.ejs:10
+    8| %>
+    9| <div class="match-banner">
+ >> 10|   <div class="banner-label"><% if (playoff) { %>⭐ <% } %><%= m.match %></div>
+    11|   <div class="banner-row">
+    12|     <div class="banner-team">
+    13|       <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">
+
+playoff is not defined
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:21:8)
+    at match_banner (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at include (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:701:39)
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:84:17)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:78:23)
+    at detail (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (D:\KPK Cricket League\node_modules\express\lib\view.js:135:8)
+ReferenceError: D:\KPK Cricket League\views\fixtures.ejs:19
+    17|     <% (season.matches || []).forEach(match => { %>
+    18|       <a href="/match/<%= match.id %>" class="match-card fixture-card">
+ >> 19|         <%- include('partials/match_banner', { m: match }) %>
+    20|       </a>
+    21|     <% }) %>
+    22|   </div>
+
+D:\KPK Cricket League\views\partials\match_banner.ejs:10
+    8| %>
+    9| <div class="match-banner">
+ >> 10|   <div class="banner-label"><% if (playoff) { %>⭐ <% } %><%= m.match %></div>
+    11|   <div class="banner-row">
+    12|     <div class="banner-team">
+    13|       <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">
+
+playoff is not defined
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:21:8)
+    at match_banner (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at include (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:701:39)
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:31:17)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:25:31)
+    at fixtures (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (D:\KPK Cricket League\node_modules\express\lib\view.js:135:8)
+ReferenceError: D:\KPK Cricket League\views\match.ejs:8
+    6|   </div>
+    7|   <div class="match-head">
+ >> 8|     <%- include('partials/match_banner', { m: match }) %>
+    9|   </div>
+    10| 
+    11|   <% if (!match.innings || match.innings.length === 0 || match.innings[0].length === 0) { %>
+
+D:\KPK Cricket League\views\partials\match_banner.ejs:10
+    8| %>
+    9| <div class="match-banner">
+ >> 10|   <div class="banner-label"><% if (playoff) { %>⭐ <% } %><%= m.match %></div>
+    11|   <div class="banner-row">
+    12|     <div class="banner-team">
+    13|       <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">
+
+playoff is not defined
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:21:8)
+    at match_banner (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at include (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:701:39)
+    at eval (eval at compile (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:18:17)
+    at match (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (D:\KPK Cricket League\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (D:\KPK Cricket League\node_modules\express\lib\view.js:135:8)
+    at tryRender (D:\KPK Cricket League\node_modules\express\lib\application.js:657:10)
+    at app.render (D:\KPK Cricket League\node_modules\express\lib\application.js:609:3)

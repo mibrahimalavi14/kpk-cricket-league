@@ -13,7 +13,7 @@
     <h2>League <span class="highlight">Matches</span></h2>
     <p>All league games with teams, dates, schedules and results</p>
   </div>
-  <div class="match-grid">
+  <div class="match-grid match-grid-single">
     <% (season.matches || []).forEach(match => { %>
       <a href="/match/<%= match.id %>" class="match-card fixture-card">
         <%- include('partials/match_banner', { m: match }) %>
@@ -26,10 +26,10 @@
       <h2>Playoffs & <span class="highlight">Final</span></h2>
       <p>Knockout matches and the Grand Final</p>
     </div>
-    <div class="match-grid">
+    <div class="match-grid match-grid-single">
       <% season.playoff.forEach(match => { %>
         <a href="/match/<%= match.id %>" class="match-card fixture-card">
-          <%- include('partials/match_banner', { m: match }) %>
+          <%- include('partials/match_banner', { m: match, playoff: true }) %>
         </a>
       <% }) %>
     </div>

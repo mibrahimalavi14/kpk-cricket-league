@@ -381,3 +381,12 @@ a.match-card:hover{transform:translateY(-3px);border-color:var(--accent);text-de
 .sf-row{display:flex;justify-content:space-between;align-items:baseline;gap:0.6rem;font-size:0.82rem;border-bottom:1px dashed #263149;padding-bottom:0.3rem}
 .sf-label{color:var(--text-light);font-weight:600;white-space:nowrap}
 .sf-val{color:var(--text);font-weight:700;text-align:right;word-break:break-word}
+
+/* ===== Back button bar ===== */
+.back-bar{max-width:860px;margin:0 auto 1.2rem;padding-bottom:0.9rem;border-bottom:1px solid #2a3448}
+.back-btn{display:inline-flex;align-items:center;gap:0.5rem;color:var(--text-light);background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:10px;padding:0.55rem 1.1rem;font-size:0.88rem;font-weight:600;transition:all 0.2s}
+a.back-btn:hover{color:#fff;border-color:var(--accent);text-decoration:none;transform:translateX(-2px)}
+.match-head-sec{display:flex;justify-content:flex-start}
+
+/* ===== Single column match list ===== */
+.match-grid-single{grid-template-columns:minmax(0,1fr);max-width:860px;margin:0 auto}

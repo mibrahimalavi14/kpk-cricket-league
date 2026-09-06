@@ -7,7 +7,7 @@
   if (!Array.isArray(m.innings)) m.innings = [];
 %>
 <div class="match-banner">
-  <div class="banner-label"><%= m.match %></div>
+  <div class="banner-label"><% if (typeof playoff !== 'undefined' && playoff) { %>⭐ <% } %><%= m.match %></div>
   <div class="banner-row">
     <div class="banner-team">
       <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">

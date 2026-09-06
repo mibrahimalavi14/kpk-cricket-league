@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Score - <%= match.match %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=8">
+  <link rel="stylesheet" href="/css/style.css?v=9">
 </head>
 <body>
   <div class="admin-layout">
@@ -26,7 +26,7 @@
       <div class="admin-header">
         <h1>⚡ Live Scoring - <%= match.match %></h1>
         <div>
-          <a href="/admin/season/<%= season.id %>" class="btn btn-sm btn-outline">← Back to Season</a>
+          <a href="/admin/season/<%= season.id %>" class="btn back-btn">← Back to Season</a>
           <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">Public Page</a>
         </div>
       </div>
@@ -182,10 +182,10 @@
             <div class="sb-live-table">
               <h3>🎯 <%= bowlTeam %> Bowlers</h3>
               <table class="admin-table">
-                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Econ</th></tr></thead>
+                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>Econ</th></tr></thead>
                 <tbody>
                   <% curInn.bowling.forEach(b => { %>
-                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.wickets %></td><td><%= b.eco.toFixed(2) %></td></tr>
+                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.eco.toFixed(2) %></td></tr>
                   <% }) %>
                 </tbody>
               </table>
