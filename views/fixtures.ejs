@@ -4,123 +4,34 @@
   <div class="hero-content">
     <div class="hero-badge">📅 <%= data.tournament.name %> - <%= season.year %></div>
     <h1>Full <span class="highlight">Fixtures</span></h1>
-    <p><%= season.name %> | T<%= season.overs %> | <%= season.format %> | 📍 Venues, dates, scores sab yahan</p>
+    <p><%= season.name %> | T<%= season.overs %> | <%= season.format %></p>
   </div>
 </section>
 
 <section class="section" style="padding-top:3rem">
   <div class="section-title">
     <h2>League <span class="highlight">Matches</span></h2>
-    <p>Har match ki teams (vs), jagah, score aur result — sab aik jagah</p>
+    <p>All league games with teams, venues, dates, schedules and results</p>
   </div>
-  <div class="schedule-container">
-    <div class="match-grid">
-      <% (season.matches || []).forEach(match => {
-        const t1 = data.teams.find(t => t.name === match.team1);
-        const t2 = data.teams.find(t => t.name === match.team2);
-        const hasScore = match.innings && match.innings.length > 0 && match.innings[0].length > 0;
-        const showScore = hasScore;
-      %>
-        <div class="match-card">
-          <div class="match-info">
-            <div class="match-label"><%= match.match %></div>
-            <div class="match-teams">
-              <span class="match-team"><img src="<%= t1 ? t1.logoUrl : '' %>" alt="<%= match.team1 %>" class="mini-logo" onerror="this.style.display='none'"><%= match.team1 %></span>
-              <span class="vs">vs</span>
-              <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
-            </div>
-            <% if (showScore) { %>
-              <div class="fixture-score-line">
-                <span class="fs-team" style="color:var(--accent)"><%= match.team1 %> <b><%= match.inn1.runs %>/<%= match.inn1.wickets %></b> <span class="fs-ov">(<%= match.inn1.ballStr %>)</span></span>
-                <% if (match.inn2 && match.inn2.legalBalls > 0) { %>
-                  <span class="fs-team" style="color:#2ecc71"><%= match.team2 %> <b><%= match.inn2.runs %>/<%= match.inn2.wickets %></b> <span class="fs-ov">(<%= match.inn2.ballStr %>)</span></span>
-                <% } %>
-              </div>
-            <% } else { %>
-              <div class="fixture-score-line">
-                <span class="fs-empty">Match abhi shuru nahi hua</span>
-              </div>
-            <% } %>
-            <div class="match-meta">
-              <span>📍 <%= match.venue || 'TBD' %></span>
-              <span>📅 <%= match.date %></span>
-              <span>⏰ <%= match.time %></span>
-            </div>
-            <% if (match.status === 'completed') { %>
-              <div style="color:#2ecc71;font-size:0.85rem;margin-top:0.4rem;font-weight:600">✅ <%= match.result %></div>
-            <% } else if (match.status === 'live') { %>
-              <div style="color:#e74c3c;font-size:0.85rem;margin-top:0.4rem;font-weight:700">● LIVE</div>
-            <% } %>
-            <div style="margin-top:0.7rem">
-              <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
-            </div>
-          </div>
-          <% if (match.status === 'live') { %>
-            <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
-          <% } else if (match.status === 'completed') { %>
-            <span class="match-status status-completed">Completed</span>
-          <% } else { %>
-            <span class="match-status status-upcoming">Upcoming</span>
-          <% } %>
-        </div>
-      <% }) %>
-    </div>
+  <div class="match-grid">
+    <% (season.matches || []).forEach(match => { %>
+      <a href="/match/<%= match.id %>" class="match-card fixture-card">
+        <%- include('partials/match_banner', { m: match }) %>
+      </a>
+    <% }) %>
   </div>
 
   <% if (season.playoff && season.playoff.length > 0) { %>
     <div class="section-title" style="margin-top:4rem">
       <h2>Playoffs & <span class="highlight">Final</span></h2>
-      <p>Knockout aur final ke muqablay</p>
+      <p>Knockout matches and the Grand Final</p>
     </div>
-    <div class="schedule-container">
-      <div class="match-grid">
-        <% season.playoff.forEach(match => {
-          const t1 = data.teams.find(t => t.name === match.team1);
-          const t2 = data.teams.find(t => t.name === match.team2);
-          const hasScore = match.innings && match.innings.length > 0 && match.innings[0].length > 0;
-        %>
-          <div class="match-card">
-            <div class="match-info">
-              <div class="match-label" style="color:var(--accent)">⭐ <%= match.match %></div>
-              <div class="match-teams">
-                <span class="match-team"><img src="<%= t1 ? t1.logoUrl : '' %>" alt="<%= match.team1 %>" class="mini-logo" onerror="this.style.display='none'"><%= match.team1 %></span>
-                <span class="vs">vs</span>
-                <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
-              </div>
-              <% if (hasScore) { %>
-                <div class="fixture-score-line">
-                  <span class="fs-team" style="color:var(--accent)"><%= match.team1 %> <b><%= match.inn1.runs %>/<%= match.inn1.wickets %></b> <span class="fs-ov">(<%= match.inn1.ballStr %>)</span></span>
-                  <% if (match.inn2 && match.inn2.legalBalls > 0) { %>
-                    <span class="fs-team" style="color:#2ecc71"><%= match.team2 %> <b><%= match.inn2.runs %>/<%= match.inn2.wickets %></b> <span class="fs-ov">(<%= match.inn2.ballStr %>)</span></span>
-                  <% } %>
-                </div>
-              <% } else { %>
-                <div class="fixture-score-line">
-                  <span class="fs-empty">Teams abhi mayyad nahi</span>
-                </div>
-              <% } %>
-              <div class="match-meta">
-                <span>📍 <%= match.venue || 'TBD' %></span>
-                <span>📅 <%= match.date %></span>
-                <span>⏰ <%= match.time %></span>
-              </div>
-              <% if (match.status === 'completed') { %>
-                <div style="color:#2ecc71;font-size:0.85rem;margin-top:0.4rem;font-weight:600">✅ <%= match.result %></div>
-              <% } %>
-              <div style="margin-top:0.7rem">
-                <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
-              </div>
-            </div>
-            <% if (match.status === 'live') { %>
-              <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
-            <% } else if (match.status === 'completed') { %>
-              <span class="match-status status-completed">Completed</span>
-            <% } else { %>
-              <span class="match-status status-upcoming">Upcoming</span>
-            <% } %>
-          </div>
-        <% }) %>
-      </div>
+    <div class="match-grid">
+      <% season.playoff.forEach(match => { %>
+        <a href="/match/<%= match.id %>" class="match-card fixture-card">
+          <%- include('partials/match_banner', { m: match }) %>
+        </a>
+      <% }) %>
     </div>
   <% } %>
 </section>

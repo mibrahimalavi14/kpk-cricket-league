@@ -5,19 +5,7 @@
     <div class="match-head-sec">
       <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">← <%= season.name %></a>
     </div>
-    <div class="match-card-head">
-      <div class="match-label" style="color:var(--gold)"><%= isPlayoff ? '⭐ ' : '' %><%= match.match %> <span style="color:var(--text-light);font-weight:400">· <%= match.date %> · <%= match.time %></span></div>
-      <div class="match-teams match-teams-lg">
-        <span class="match-team"><img src="<%= teamLogo(match.team1) %>" alt="" class="mini-logo" onerror="this.style.display='none'"><%= match.team1 %></span>
-        <span class="vs">vs</span>
-        <span class="match-team"><%= match.team2 %><img src="<%= teamLogo(match.team2) %>" alt="" class="mini-logo" onerror="this.style.display='none'"></span>
-      </div>
-      <% if (match.status === 'live') { %>
-        <div style="text-align:center;margin-top:0.6rem"><span class="live-badge"><span class="live-dot"></span> LIVE</span></div>
-      <% } else if (match.status === 'completed' && match.result) { %>
-        <div style="text-align:center;margin-top:0.6rem;color:#2ecc71;font-weight:700;font-size:1.05rem">✅ <%= match.result %></div>
-      <% } %>
-    </div>
+    <%- include('partials/match_banner', { m: match }) %>
   </div>
 
   <% if (!match.innings || match.innings.length === 0 || match.innings[0].length === 0) { %>

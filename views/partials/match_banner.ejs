@@ -1,0 +1,42 @@
+<% 
+  const t1l = data.teams.find(x => x.name === m.team1);
+  const t2l = data.teams.find(x => x.name === m.team2);
+  const s1 = m.inn1 && m.inn1.legalBalls > 0;
+  const s2 = m.inn2 && m.inn2.legalBalls > 0;
+  const live = m.status === 'live';
+  if (!Array.isArray(m.innings)) m.innings = [];
+%>
+<div class="match-banner">
+  <div class="banner-label"><%= m.match %></div>
+  <div class="banner-row">
+    <div class="banner-team">
+      <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">
+      <div class="banner-name"><%= m.team1 %></div>
+      <div class="banner-score">
+        <% if (s1) { %><%= m.inn1.runs %>/<%= m.inn1.wickets %> <span class="banner-ov">(<%= m.inn1.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
+      </div>
+    </div>
+    <div class="banner-mid">
+      <div class="banner-vs">vs</div>
+      <div class="banner-date">📅 <%= m.date %></div>
+      <div class="banner-time">⏰ <%= m.time %></div>
+      <div class="banner-venue">📍 <%= m.venue || 'TBD' %></div>
+    </div>
+    <div class="banner-team">
+      <img src="<%= t2l ? t2l.logoUrl : '' %>" alt="<%= m.team2 %>" class="banner-logo" onerror="this.style.display='none'">
+      <div class="banner-name"><%= m.team2 %></div>
+      <div class="banner-score">
+        <% if (s2) { %><%= m.inn2.runs %>/<%= m.inn2.wickets %> <span class="banner-ov">(<%= m.inn2.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
+      </div>
+    </div>
+  </div>
+  <div class="banner-result">
+    <% if (live) { %>
+      <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+    <% } else if (m.result) { %>
+      ✅ <span style="color:#2ecc71"><%= m.result %></span>
+    <% } else { %>
+      <span class="banner-noscore">Upcoming</span>
+    <% } %>
+  </div>
+</div>
