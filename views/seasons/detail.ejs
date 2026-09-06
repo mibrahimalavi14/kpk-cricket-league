@@ -76,6 +76,7 @@
               <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
             </div>
             <div class="match-meta">
+              <span>📍 <%= match.venue || 'TBD' %></span>
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
               <% if (match.status === 'live') { %>
@@ -88,11 +89,9 @@
                 <span style="color:var(--accent)">🏏 <%= match.team1 %>: <%= match.inn1.runs %>/<%= match.inn1.wickets %> (<%= match.inn1.ballStr %>)</span>
               <% } %>
             </div>
-            <% if (hasScore || match.status === 'completed') { %>
-              <div style="margin-top:0.6rem">
-                <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
-              </div>
-            <% } %>
+            <div style="margin-top:0.6rem">
+              <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
+            </div>
           </div>
           <% if (match.status === 'live') { %>
             <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
@@ -134,6 +133,7 @@
               <span class="match-team"><%= match.team2 %><img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= match.team2 %>" class="mini-logo" onerror="this.style.display='none'"></span>
             </div>
             <div class="match-meta">
+              <span>📍 <%= match.venue || 'TBD' %></span>
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
               <% if (match.status === 'completed') { %>
@@ -142,11 +142,9 @@
                 <span style="color:#e74c3c;font-weight:700">● LIVE</span>
               <% } %>
             </div>
-            <% if (hasScore) { %>
-              <div style="margin-top:0.6rem">
-                <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
-              </div>
-            <% } %>
+            <div style="margin-top:0.6rem">
+              <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
+            </div>
           </div>
           <% if (match.status === 'live') { %>
             <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>

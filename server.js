@@ -162,6 +162,20 @@ app.get('/faq', handle(async (req, res) => {
   res.render('faq', { data });
 }));
 
+app.get('/awards', handle(async (req, res) => {
+  const data = await loadViewData();
+  const season = data.seasons.find(s => s.status === 'Active') || data.seasons[data.seasons.length - 1];
+  if (!season) return res.status(404).render('404', { data });
+  res.render('awards', { data, season });
+}));
+
+app.get('/awards/:id', handle(async (req, res) => {
+  const data = await loadViewData();
+  const season = data.seasons.find(s => s.id === parseInt(req.params.id));
+  if (!season) return res.status(404).render('404', { data });
+  res.render('awards', { data, season });
+}));
+
 // ==================== ADMIN ROUTES ====================
 
 app.use(require('./lib/admin-router'));

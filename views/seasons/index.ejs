@@ -13,13 +13,27 @@
     <% data.seasons.forEach(season => {
       const matchCount = (season.matches ? season.matches.length : 0) + (season.playoff ? season.playoff.length : 0);
       const seasonColor = season.status === 'Active' ? '#2ecc71' : season.status === 'Completed' ? '#3498db' : '#f39c12';
+      const icon = season.status === 'Completed' ? (season.champion ? '🏆' : '✅') : season.status === 'Active' ? '🏏' : '📅';
+      const potm = season.playerOfSeason;
     %>
-      <a href="/season/<%= season.id %>" class="team-card">
+      <a href="/season/<%= season.id %>" class="team-card season-card">
         <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= seasonColor %>"></div>
-        <div class="team-logo"><%= season.status === 'Active' ? '🔥' : season.status === 'Completed' ? '🏆' : '📅' %></div>
+        <div class="team-logo"><%= icon %></div>
         <h3><%= season.name %></h3>
-        <div class="team-city"><%= season.year %></div>
+        <div class="team-city"><%= season.year %> | T<%= season.overs %> Format</div>
         <div class="team-captain" style="color:<%= seasonColor %>;text-transform:uppercase;font-size:0.75rem"><%= season.status %></div>
+        <% if (season.dateRange) { %>
+          <div class="team-city" style="font-size:0.8rem">📅 <%= season.dateRange %></div>
+        <% } %>
+        <% if (season.champion) { %>
+          <div class="team-captain" style="color:#2ecc71;font-weight:700">🏆 Winner: <%= season.champion %></div>
+        <% } %>
+        <% if (season.runnerUp) { %>
+          <div class="team-captain" style="color:#95a5a6">🥈 Runner-up: <%= season.runnerUp %></div>
+        <% } %>
+        <% if (potm) { %>
+          <div class="team-captain">🌟 Player of Season: <b><%= potm.player %></b> (<%= potm.team %>)</div>
+        <% } %>
         <div class="team-stats">
           <div class="stat"><div class="stat-val"><%= season.overs %></div><div class="stat-label">Overs</div></div>
           <div class="stat"><div class="stat-val"><%= season.matches ? season.matches.length : 0 %></div><div class="stat-label">Matches</div></div>

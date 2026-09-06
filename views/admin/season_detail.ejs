@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage <%= season.name %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=5">
+  <link rel="stylesheet" href="/css/style.css?v=6">
 </head>
 <body>
   <div class="admin-layout">
@@ -73,7 +73,7 @@
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+            <th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Venue</th><th>Status</th><th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -96,6 +96,7 @@
               </td>
               <td><input type="date" name="date" form="matchForm_<%= idx %>" value="<%= match.date %>"></td>
               <td><input type="time" name="time" form="matchForm_<%= idx %>" value="<%= match.time %>"></td>
+              <td><input type="text" name="venue" form="matchForm_<%= idx %>" value="<%= match.venue || '' %>" placeholder="Stadium / Ground" style="width:130px"></td>
               <td>
                 <% if (match.status === 'live') { %>
                   <span class="live-badge"><span class="live-dot"></span> LIVE</span>

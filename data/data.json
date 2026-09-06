@@ -70,7 +70,8 @@
           "team2": "Abbottabad",
           "date": "2026-09-10",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "Haripur Ground"
         },
         {
           "id": 2,
@@ -79,7 +80,8 @@
           "team2": "Balakot",
           "date": "2026-09-10",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "Khanpur Ground"
         },
         {
           "id": 3,
@@ -88,7 +90,8 @@
           "team2": "Haripur",
           "date": "2026-09-12",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "Muzaffarabad Ground"
         },
         {
           "id": 4,
@@ -97,7 +100,8 @@
           "team2": "Khanpur",
           "date": "2026-09-12",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "Abbottabad Ground"
         },
         {
           "id": 5,
@@ -106,7 +110,8 @@
           "team2": "Muzaffarabad",
           "date": "2026-09-14",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "Balakot Ground"
         },
         {
           "id": 6,
@@ -115,7 +120,8 @@
           "team2": "Khanpur",
           "date": "2026-09-14",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "Haripur Ground"
         },
         {
           "id": 7,
@@ -124,7 +130,8 @@
           "team2": "Balakot",
           "date": "2026-09-16",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "Abbottabad Ground"
         },
         {
           "id": 8,
@@ -133,7 +140,8 @@
           "team2": "Muzaffarabad",
           "date": "2026-09-16",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "Khanpur Ground"
         },
         {
           "id": 9,
@@ -142,7 +150,8 @@
           "team2": "Balakot",
           "date": "2026-09-18",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "Haripur Ground"
         },
         {
           "id": 10,
@@ -151,7 +160,8 @@
           "team2": "Muzaffarabad",
           "date": "2026-09-18",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "Abbottabad Ground"
         }
       ],
       "playoff": [
@@ -162,7 +172,8 @@
           "team2": "TBD",
           "date": "2026-09-20",
           "time": "14:00",
-          "result": ""
+          "result": "",
+          "venue": "KPK Ground"
         },
         {
           "id": 2,
@@ -171,7 +182,8 @@
           "team2": "TBD",
           "date": "2026-09-22",
           "time": "18:00",
-          "result": ""
+          "result": "",
+          "venue": "KPK Ground"
         }
       ],
       "stats": {

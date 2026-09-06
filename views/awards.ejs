@@ -1,0 +1,104 @@
+<%- include('partials/header', { active: 'awards', pageTitle: 'Awards' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">🏆 Awards Center</div>
+    <h1>Player of Season & <span class="highlight">Man of the Match</span></h1>
+    <p><%= season.name %> | T<%= season.overs %> | <%= season.format %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="season-chips">
+    <% data.seasons.forEach(s => { %>
+      <a href="/awards/<%= s.id %>" class="chip <%= s.id === season.id ? 'chip-active' : '' %>"><%= s.name %></a>
+    <% }) %>
+  </div>
+
+  <% const potm = season.playerOfSeason; const pt = potm ? data.players.find(p => p.name === potm.player) : null; %>
+  <% if (potm) { %>
+    <div class="format-card potm-card">
+      <div class="potm-head">
+        <div style="font-size:3rem">🌟</div>
+        <div>
+          <div class="potm-title">PLAYER OF THE SEASON</div>
+          <div class="potm-name"><%= potm.player %></div>
+          <div class="potm-team"><img src="<%= pt && pt.teamId ? (data.teams.find(t => t.id === pt.teamId) || {}).logoUrl : '' %>" alt="<%= potm.team %>" class="mini-logo" onerror="this.style.display='none'"> <%= potm.team %> <span class="potm-awards">⭐ <%= potm.motmAwards %> Man of the Match award(s)</span></div>
+        </div>
+      </div>
+      <div class="potm-stats-grid">
+        <div class="stat"><div class="stat-val"><%= potm.points %></div><div class="stat-label">Match Points</div></div>
+        <div class="stat"><div class="stat-val"><%= potm.matches %></div><div class="stat-label">Matches</div></div>
+        <div class="stat"><div class="stat-val"><%= potm.runs %></div><div class="stat-label">Runs</div></div>
+        <div class="stat"><div class="stat-val"><%= potm.wickets %></div><div class="stat-label">Wickets</div></div>
+        <div class="stat"><div class="stat-val"><%= potm.catches %></div><div class="stat-label">Catches</div></div>
+      </div>
+      <p style="color:var(--text-light);font-size:0.85rem;margin-top:1rem">Points scheme: run=1 · four bonus=1 · six bonus=2 · wicket=25 · catch/runout/stumping=8 · 50+=10 · 100+=25</p>
+    </div>
+  <% } else { %>
+    <div class="format-card" style="text-align:center;padding:2rem;max-width:640px;margin:0 auto">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">🌟</div>
+      <h3 style="margin-bottom:0.5rem">Player of the Season abhi tay nahi</h3>
+      <p style="color:var(--text-light)">Jab league ke matches score ho jayenge, to har match ka Man of the Match aur poore season ka best player yahan auto-choose ho jayega.</p>
+    </div>
+  <% } %>
+
+  <% if (season.champion) { %>
+    <div class="champion-strip">
+      <span class="cs-chip cs-gold">🏆 Champion: <%= season.champion %></span>
+      <span class="cs-chip cs-silver">🥈 Runner-up: <%= season.runnerUp %></span>
+    </div>
+  <% } %>
+
+  <div class="section-title" style="margin-top:3rem">
+    <h2>Man of the <span class="highlight">Match</span></h2>
+    <p>Har mukammal match ka best performer</p>
+  </div>
+  <div class="schedule-container">
+    <% const motms = season.motms || []; %>
+    <% if (motms.length > 0) { %>
+      <table class="standings-table">
+        <thead>
+          <tr><th>Match</th><th>Teams</th><th>Score</th><th>Man of the Match</th><th>Points</th><th>Contribution</th></tr>
+        </thead>
+        <tbody>
+          <% [].concat(season.matches || [], season.playoff || []).forEach(m => {
+            if (m.status !== 'completed' || !m.motm) return;
+            const t1 = data.teams.find(t => t.name === m.team1);
+            const t2 = data.teams.find(t => t.name === m.team2);
+            const motm = m.motm;
+            const mp = motm.points;
+          %>
+            <tr>
+              <td style="font-weight:700;color:var(--gold)"><%= m.match %></td>
+              <td>
+                <div class="team-name-cell">
+                  <img src="<%= t1 ? t1.logoUrl : '' %>" alt="<%= m.team1 %>" class="table-logo" onerror="this.style.display='none'"><%= m.team1 %>
+                </div>
+                <div class="team-name-cell" style="margin-top:2px">
+                  <img src="<%= t2 ? t2.logoUrl : '' %>" alt="<%= m.team2 %>" class="table-logo" onerror="this.style.display='none'"><%= m.team2 %>
+                </div>
+              </td>
+              <td>
+                <span style="color:var(--accent);font-weight:600"><%= m.inn1.runs %>/<%= m.inn1.wickets %></span> vs
+                <span style="color:#2ecc71;font-weight:600"><%= m.inn2.runs %>/<%= m.inn2.wickets %></span>
+              </td>
+              <td>
+                <span style="font-weight:700;color:var(--gold)">⭐ <%= motm.name %></span>
+                <div style="color:var(--text-light);font-size:0.85rem"><%= motm.team %></div>
+              </td>
+              <td style="font-weight:700;color:var(--accent)"><%= mp %></td>
+              <td>
+                <span style="color:var(--text-light)"><%= motm.runs %> runs<%= motm.wickets ? ' · ' + motm.wickets + ' wkts' : '' %><%= motm.catches ? ' · ' + motm.catches + ' ct' : '' %></span>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-light)">Abhi koi match mukammal nahi hua — Man of the Match list tayar hone ke baad yahan aayegi.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer', { active: 'awards' }) %>
