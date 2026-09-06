@@ -1,7 +1,7 @@
 const express = require('express');
 const compression = require('compression');
-const fs = require('fs');
 const path = require('path');
+const { loadData } = require('./lib/store');
 
 const app = express();
 const PORT = 3000;
@@ -13,98 +13,102 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d', etag: tru
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const DATA_FILE = path.join(__dirname, 'data', 'data.json');
-
-let cachedData = null;
-let cachedMtime = 0;
-
-function loadData() {
-  const stat = fs.statSync(DATA_FILE);
-  if (cachedData && stat.mtimeMs === cachedMtime) return cachedData;
-  cachedData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-  cachedMtime = stat.mtimeMs;
-  return cachedData;
+function handle(fn) {
+  return async (req, res) => {
+    try {
+      await fn(req, res);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    }
+  };
 }
 
 // ==================== PUBLIC ROUTES ====================
 
-app.get('/', (req, res) => {
-  const data = loadData();
+app.get('/', handle(async (req, res) => {
+  const data = await loadData();
   res.render('index', { data });
-});
+}));
 
-app.get('/teams', (req, res) => {
-  const data = loadData();
+app.get('/teams', handle(async (req, res) => {
+  const data = await loadData();
   res.render('teams/index', { data });
-});
+}));
 
-app.get('/team/:id', (req, res) => {
-  const data = loadData();
+app.get('/team/:id', handle(async (req, res) => {
+  const data = await loadData();
   const team = data.teams.find(t => t.id === parseInt(req.params.id));
   const player = data.players.find(p => p.teamId === parseInt(req.params.id));
   if (!team) return res.status(404).render('404', { data });
   res.render('teams/detail', { data, team, player });
-});
+}));
 
-app.get('/players', (req, res) => {
-  const data = loadData();
+app.get('/players', handle(async (req, res) => {
+  const data = await loadData();
   res.render('players/index', { data });
-});
+}));
 
-app.get('/player/:id', (req, res) => {
-  const data = loadData();
+app.get('/player/:id', handle(async (req, res) => {
+  const data = await loadData();
   const player = data.players.find(p => p.id === parseInt(req.params.id));
   if (!player) return res.status(404).render('404', { data });
   res.render('players/detail', { data, player });
-});
+}));
 
-app.get('/seasons', (req, res) => {
-  const data = loadData();
+app.get('/seasons', handle(async (req, res) => {
+  const data = await loadData();
   res.render('seasons/index', { data });
-});
+}));
 
-app.get('/season/:id', (req, res) => {
-  const data = loadData();
+app.get('/season/:id', handle(async (req, res) => {
+  const data = await loadData();
   const season = data.seasons.find(s => s.id === parseInt(req.params.id));
   if (!season) return res.status(404).render('404', { data });
   res.render('seasons/detail', { data, season });
-});
+}));
 
-app.get('/format', (req, res) => {
-  const data = loadData();
+app.get('/format', handle(async (req, res) => {
+  const data = await loadData();
   res.render('format', { data });
-});
+}));
 
-app.get('/schedule', (req, res) => {
-  const data = loadData();
+app.get('/schedule', handle(async (req, res) => {
+  const data = await loadData();
   const season = data.seasons[data.seasons.length - 1];
   res.render('schedule', { data, season });
-});
+}));
 
-app.get('/about', (req, res) => {
-  const data = loadData();
+app.get('/about', handle(async (req, res) => {
+  const data = await loadData();
   res.render('about', { data });
-});
+}));
 
-app.get('/contact', (req, res) => {
-  const data = loadData();
+app.get('/contact', handle(async (req, res) => {
+  const data = await loadData();
   res.render('contact', { data, sent: false });
-});
+}));
 
-app.post('/contact', (req, res) => {
-  const data = loadData();
+app.post('/contact', handle(async (req, res) => {
+  const data = await loadData();
   res.render('contact', { data, sent: true });
-});
+}));
 
-app.get('/faq', (req, res) => {
-  const data = loadData();
+app.get('/faq', handle(async (req, res) => {
+  const data = await loadData();
   res.render('faq', { data });
-});
+}));
 
-app.use((req, res) => {
-  const data = loadData();
+// ==================== ADMIN ROUTES ====================
+
+app.use(require('./lib/admin-router'));
+
+// ==================== 404 ====================
+
+app.use(handle(async (req, res) => {
+  const data = await loadData();
   res.status(404).render('404', { data });
-});
+}));
 
 if (require.main === module) {
   app.listen(PORT, () => {
