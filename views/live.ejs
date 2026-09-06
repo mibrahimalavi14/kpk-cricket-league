@@ -1,0 +1,83 @@
+<%- include('partials/header', { active: 'live', pageTitle: 'Live' }) %>
+
+<section class="hero" style="min-height:35vh">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="live-dot" style="display:inline-block;vertical-align:middle;margin-right:6px"></span> Live Scoring</div>
+    <h1>Live <span class="highlight">Matches</span></h1>
+    <p>Real-time scores, updated ball by ball</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:3rem">
+  <% if (liveMatches.length === 0) { %>
+    <div class="format-card" style="text-align:center;padding:3rem">
+      <div style="font-size:3rem;margin-bottom:1rem">📡</div>
+      <h3 style="margin-bottom:0.5rem">No Live Matches Right Now</h3>
+      <p style="color:var(--text-light)">Live scoring will appear here as soon as a match starts.</p>
+      <div style="margin-top:1.5rem"><a href="/fixtures" class="btn btn-primary">View Fixtures</a></div>
+    </div>
+  <% } else { %>
+    <p style="text-align:center;color:var(--text-light);margin-bottom:2rem">Auto-refreshing every 5 seconds — sab kuch live update hota hai</p>
+  <% } %>
+
+  <div id="live-matches" class="teams-grid">
+    <% liveMatches.forEach(m => { %>
+      <div class="match-card live-match-card" data-matchid="<%= m.id %>">
+        <div class="match-info">
+          <div class="match-label"><%= m.match %> <span style="color:var(--text-light);font-weight:400">· <%= m.seasonName %></span></div>
+          <div class="match-teams">
+            <span class="match-team"><%= m.team1 %></span>
+            <span class="vs">vs</span>
+            <span class="match-team"><%= m.team2 %></span>
+          </div>
+          <div class="live-scores">
+            <div class="live-score-row" id="score-<%= m.id %>-1">
+              <span class="ls-team"><%= m.team1 %></span>
+              <span class="ls-val"><%= m.inn1.runs %>/<%= m.inn1.wickets %></span>
+              <span class="ls-overs">(<%= m.inn1.ballStr %>)</span>
+            </div>
+            <% if (m.inn2) { %>
+              <div class="live-score-row" id="score-<%= m.id %>-2">
+                <span class="ls-team"><%= m.team2 %></span>
+                <span class="ls-val"><%= m.inn2.runs %>/<%= m.inn2.wickets %></span>
+                <span class="ls-overs">(<%= m.inn2.ballStr %>)</span>
+              </div>
+            <% } %>
+          </div>
+          <a href="/match/<%= m.id %>" class="btn btn-sm btn-primary" style="margin-top:1rem">Full Scorecard →</a>
+        </div>
+        <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<script>
+(function () {
+  var container = document.getElementById('live-matches');
+  if (!container) return;
+  var emptyBox = document.querySelector('.format-card.d-none');
+  setInterval(function () {
+    fetch('/api/live', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var live = res.live || [];
+        live.forEach(function (m) {
+          var row1 = document.getElementById('score-' + m.id + '-1');
+          var row2 = document.getElementById('score-' + m.id + '-2');
+          if (row1) {
+            row1.innerHTML = '<span class="ls-team">' + m.team1 + '</span><span class="ls-val">' + m.inn1.runs + '/' + m.inn1.wickets + '</span><span class="ls-overs">(' + m.inn1.overs + ')</span>';
+          }
+          if (row2 && m.inn2) {
+            row2.innerHTML = '<span class="ls-team">' + m.team2 + '</span><span class="ls-val">' + m.inn2.runs + '/' + m.inn2.wickets + '</span><span class="ls-overs">(' + m.inn2.overs + ')</span>';
+          }
+        });
+        if (live.length === 0 && container.querySelectorAll('.live-match-card').length > 0) {
+          location.reload();
+        }
+      }).catch(function () {});
+  }, 5000);
+})();
+</script>
+
+<%- include('partials/footer', { active: 'live' }) %>

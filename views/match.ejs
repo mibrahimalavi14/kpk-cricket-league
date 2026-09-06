@@ -1,0 +1,128 @@
+<%- include('partials/header', { active: 'schedule', pageTitle: match.match }) %>
+
+<section class="section section-pad">
+  <div class="match-head">
+    <div class="match-head-sec">
+      <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">← <%= season.name %></a>
+    </div>
+    <div class="match-card-head">
+      <div class="match-label" style="color:var(--gold)"><%= isPlayoff ? '⭐ ' : '' %><%= match.match %> <span style="color:var(--text-light);font-weight:400">· <%= match.date %> · <%= match.time %></span></div>
+      <div class="match-teams match-teams-lg">
+        <span class="match-team"><img src="<%= teamLogo(match.team1) %>" alt="" class="mini-logo" onerror="this.style.display='none'"><%= match.team1 %></span>
+        <span class="vs">vs</span>
+        <span class="match-team"><%= match.team2 %><img src="<%= teamLogo(match.team2) %>" alt="" class="mini-logo" onerror="this.style.display='none'"></span>
+      </div>
+      <% if (match.status === 'live') { %>
+        <div style="text-align:center;margin-top:0.6rem"><span class="live-badge"><span class="live-dot"></span> LIVE</span></div>
+      <% } else if (match.status === 'completed' && match.result) { %>
+        <div style="text-align:center;margin-top:0.6rem;color:#2ecc71;font-weight:700;font-size:1.05rem">✅ <%= match.result %></div>
+      <% } %>
+    </div>
+  </div>
+
+  <% if (!match.innings || match.innings.length === 0 || match.innings[0].length === 0) { %>
+    <div class="format-card" style="text-align:center;padding:3rem;max-width:640px;margin:2rem auto">
+      <div style="font-size:3rem;margin-bottom:1rem">📅</div>
+      <h3>Match has not started yet</h3>
+      <p style="color:var(--text-light)">Scorecard will appear here once the match begins.</p>
+    </div>
+  <% } else { %>
+    <% if (match.target) { %>
+      <div class="target-line">🏁 Target: <strong><%= match.target %></strong> runs for <%= match.team2 %></div>
+    <% } %>
+
+    <% [0, 1].forEach(innNo => {
+      const inn = innNo === 0 ? match.inn1 : match.inn2;
+      if (!inn || inn.legalBalls === 0) return;
+      const battingTeam = innNo === 0 ? match.team1 : match.team2;
+      const bowlingTeam = innNo === 0 ? match.team2 : match.team1;
+    %>
+      <div class="scorecard-box">
+        <h2 class="scorecard-title">
+          <%= battingTeam %> Innings
+          <span class="scorecard-total"><%= inn.runs %>/<%= inn.wickets %> (<%= inn.ballStr %> ov)</span>
+          <span class="scorecard-note"><%= inn.allOut ? 'All Out' : '' %></span>
+        </h2>
+
+        <table class="standings-table compact-table">
+          <thead>
+            <tr>
+              <th>Batter</th><th></th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% inn.batting.forEach(b => { %>
+              <tr>
+                <td><a href="/player/<%= playerId(b.player) %>" style="color:var(--text)"><%= b.player %></a></td>
+                <td style="color:var(--text-light);font-size:0.8rem">
+                  <%= b.out ? (b.howOut === 'runout' ? 'run out' : (b.howOut === 'caught' ? 'c ' + (b.dismisser || '') : b.howOut)) : 'not out' %>
+                </td>
+                <td style="font-weight:700;color:var(--accent)"><%= b.runs %></td>
+                <td><%= b.balls %></td>
+                <td><%= b.fours %></td>
+                <td><%= b.sixes %></td>
+                <td><%= b.sr.toFixed(2) %></td>
+              </tr>
+            <% }) %>
+            <% if (inn.legalBalls > 0 && inn.batting.length === 0) { %>
+              <tr><td colspan="7" style="text-align:center;color:var(--text-light)">No batting entries</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+
+        <div class="extras-line">Extras: <%= inn.extras.wd %>w + <%= inn.extras.nb %>nb + <%= inn.extras.by %>b + <%= inn.extras.lb %>lb = <%= inn.extras.wd + inn.extras.nb + inn.extras.by + inn.extras.lb %></div>
+
+        <table class="standings-table compact-table">
+          <thead>
+            <tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr>
+          </thead>
+          <tbody>
+            <% (inn.bowling.length ? inn.bowling : [{ player: bowlingTeam + ' (no balls bowled yet)', balls: 0, maidens: 0, runs: 0, wickets: 0 }]).forEach(b => { %>
+              <tr>
+                <td><a href="/player/<%= playerId(b.player) %>" style="color:var(--text)"><%= b.player %></a></td>
+                <td><%= b.overs || b.balls / 6 %></td>
+                <td><%= b.maidens %></td>
+                <td><%= b.runs %></td>
+                <td><%= b.wickets %></td>
+                <td><%= Number(b.eco || 0).toFixed(2) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <% if (inn.fow.length > 0) { %>
+          <div class="fow-line">Fall of Wickets: <% inn.fow.forEach((f, i) => { %><%= i > 0 ? ', ' : '' %><%= f.score %>/<%= f.wickets %> (<%= f.player %>) at <%= f.over %> ov<% }) %></div>
+        <% } %>
+
+        <h3 class="commentary-title">Ball by Ball<%= innNo === 0 ? '' : '' %></h3>
+        <div class="commentary-feed">
+          <% match.innings[innNo].forEach((b, i) => { %>
+            <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= i + 1 %>. <%= commentaryText(b) %></span>
+          <% }) %>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</section>
+
+<% function teamLogo(name) {
+  const t = data.teams.find(x => x.name === name);
+  return t ? t.logoUrl : '';
+}
+function playerId(name) {
+  const p = data.players.find(x => x.name === name);
+  return p ? p.id : '#';
+}
+function commentaryText(b) {
+  if (b.extraType === 'wd') return 'Wide +' + b.extraRuns;
+  if (b.extraType === 'nb') return 'No Ball +' + b.extraRuns;
+  if (b.extraType === 'by') return 'Byes +' + b.extraRuns;
+  if (b.extraType === 'lb') return 'Leg Byes +' + b.extraRuns;
+  if (b.isWicket) return 'WICKET - ' + (b.striker || '') + ' ' + (b.wicketType || '');
+  if (b.batRuns === 6) return 'SIX! Maximum by ' + b.striker;
+  if (b.batRuns === 4) return 'FOUR! by ' + b.striker;
+  if (b.batRuns > 0) return (b.batRuns || 1) + ' run' + (b.batRuns === 1 ? '' : 's') + ' by ' + b.striker;
+  return 'Dot ball by ' + b.bowler;
+} %>
+
+<%- include('partials/footer', { active: 'schedule' }) %>

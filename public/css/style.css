@@ -278,3 +278,52 @@ a{text-decoration:none;color:inherit}
 .player-bio-section h3{color:var(--gold);margin-bottom:0.8rem;font-size:1rem;text-transform:uppercase;letter-spacing:1px}
 
 .section-pad{padding:3rem 2rem}
+
+/* ===== Live / Fixtures / Scorecard additions ===== */
+.live-dot{width:8px;height:8px;background:#e74c3c;border-radius:50%;display:inline-block;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(231,76,60,0.6)}70%{box-shadow:0 0 0 8px rgba(231,76,60,0)}100%{box-shadow:0 0 0 0 rgba(231,76,60,0)}}
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(231,76,60,0.15);color:#ff6b6b;font-weight:700;font-size:0.75rem;padding:4px 10px;border-radius:999px}
+.match-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.match-card{position:relative;display:block;background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:1.4rem;transition:transform 0.2s,border-color 0.2s;color:var(--text)}
+a.match-card:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none}
+.match-grid .match-card{margin:0}
+.commentary-feed{display:flex;flex-wrap:wrap;gap:0.5rem}
+.commentary-ball{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.82rem;color:var(--text-light)}
+.commentary-ball.cb-four{border-color:rgba(155,89,182,0.5);color:#b07ce0}
+.commentary-ball.cb-six{border-color:rgba(241,196,15,0.5);color:var(--gold)}
+.commentary-ball.cb-wicket{border-color:rgba(231,76,60,0.6);color:#ff6b6b;background:rgba(231,76,60,0.1)}
+.scorecard-box{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:2.5rem;max-width:920px;margin-left:auto;margin-right:auto}
+.scorecard-title{font-size:1.25rem;margin-bottom:1rem;display:flex;align-items:baseline;gap:0.8rem;flex-wrap:wrap}
+.scorecard-total{color:var(--accent);font-weight:700}
+.scorecard-note{color:#2ecc71;font-size:0.8rem}
+.extras-line{color:var(--text-light);font-size:0.85rem;margin:0.6rem 0 1rem;text-align:right;padding-right:0.4rem}
+.fow-line{color:var(--text-light);font-size:0.85rem;margin:1rem 0 1.6rem}
+.target-line{max-width:920px;margin:0 auto 1.5rem;background:rgba(241,196,15,0.12);border:1px solid rgba(241,196,15,0.35);color:var(--gold);text-align:center;padding:0.7rem;border-radius:12px;font-size:0.95rem}
+.match-head{max-width:920px;margin:0 auto 2rem}
+.match-card-head{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:2rem;text-align:center}
+.match-teams-lg{display:flex;justify-content:center;gap:2.5rem;align-items:center;font-size:1.2rem;font-weight:700;flex-wrap:wrap}
+.live-match-card{border-color:rgba(231,76,60,0.4)}
+.live-scores{margin-top:1rem;display:grid;gap:0.5rem}
+.live-score-row{display:flex;gap:0.8rem;align-items:baseline;font-size:1rem}
+.ls-team{font-weight:600;min-width:110px}
+.ls-val{font-weight:700;color:var(--accent)}
+.ls-overs{color:var(--text-light);font-size:0.8rem}
+.sb-scores{display:flex;align-items:center;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0}
+.sb-score{text-align:center;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:1rem 1.6rem;min-width:200px}
+.sb-team-name{font-weight:700}
+.sb-score-val{font-size:1.9rem;font-weight:800;color:var(--accent)}
+.sb-score-sub{color:var(--text-light);font-size:0.8rem}
+.sb-vs{color:var(--text-light);font-size:0.85rem}
+.sb-notice{text-align:center;background:rgba(243,156,18,0.15);border:1px solid rgba(243,156,18,0.4);color:#f39c12;padding:0.8rem;border-radius:12px;margin:1rem 0;font-weight:600}
+.sb-form{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.sb-form h3{margin-bottom:1rem;font-size:1.05rem}
+.sb-form-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
+.sb-field label{display:block;font-size:0.8rem;color:var(--text-light);margin-bottom:0.3rem}
+.sb-field input,.sb-field select{padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);font-size:0.9rem}
+.sb-submit{display:flex;align-items:flex-end}
+.sb-wicket label{display:flex;align-items:center;gap:0.4rem;height:100%;color:var(--text)}
+.sb-actions{display:flex;gap:0.6rem;flex-wrap:wrap;margin:1.5rem 0;justify-content:center}
+.sb-live-table{margin-top:1.8rem}
+.sb-live-table h3{font-size:1rem;margin-bottom:0.75rem;color:var(--gold)}
+.btn-danger{background:#e74c3c;color:#fff}
+@media(max-width:640px){.sb-form-row{grid-template-columns:1fr}}

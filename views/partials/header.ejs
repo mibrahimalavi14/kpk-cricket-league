@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= data.tournament.name %> - <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Home' %></title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=5">
 </head>
 <body>
   <nav class="navbar">
@@ -20,8 +20,9 @@
         <a href="/" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">Home</a>
         <a href="/teams" class="<%= typeof active !== 'undefined' && active === 'teams' ? 'active' : '' %>">Teams</a>
         <a href="/players" class="<%= typeof active !== 'undefined' && active === 'players' ? 'active' : '' %>">Players</a>
+        <a href="/live" class="<%= typeof active !== 'undefined' && active === 'live' ? 'active' : '' %>"><span class="live-dot" style="display:inline-block;vertical-align:middle;margin-right:4px"></span>Live</a>
+        <a href="/fixtures" class="<%= typeof active !== 'undefined' && active === 'fixtures' ? 'active' : '' %>">Fixtures</a>
         <a href="/seasons" class="<%= typeof active !== 'undefined' && active === 'seasons' ? 'active' : '' %>">Seasons</a>
-        <a href="/schedule" class="<%= typeof active !== 'undefined' && active === 'schedule' ? 'active' : '' %>">Schedule</a>
         <a href="/format" class="<%= typeof active !== 'undefined' && active === 'format' ? 'active' : '' %>">Format</a>
         <div class="dropdown">
           <button class="dropdown-toggle <%= typeof active !== 'undefined' && ['about','contact','faq'].indexOf(active) !== -1 ? 'active' : '' %>">More ▾</button>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Score - <%= match.match %> - Admin</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/css/style.css?v=5">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons" class="active">🏆 Seasons</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>⚡ Live Scoring - <%= match.match %></h1>
+        <div>
+          <a href="/admin/season/<%= season.id %>" class="btn btn-sm btn-outline">← Back to Season</a>
+          <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">Public Page</a>
+        </div>
+      </div>
+
+      <div class="scoreboard-box">
+        <div class="sb-match">
+          <span class="sb-teams"><%= match.team1 %> <span class="vs">vs</span> <%= match.team2 %></span>
+          <% if (match.status === 'live') { %>
+            <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+          <% } else if (match.status === 'completed') { %>
+            <span style="color:#2ecc71;font-weight:700">✅ <%= match.result || 'Completed' %></span>
+          <% } else { %>
+            <span style="color:#f39c12;font-weight:600">Not started</span>
+          <% } %>
+        </div>
+
+        <% if (match.status === 'upcoming' && (!match.innings || match.innings.length === 0 || match.innings[0].length === 0)) { %>
+          <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/start" method="POST" style="text-align:center;padding:1.5rem">
+            <h3 style="margin-bottom:1rem">Start Match Scoring</h3>
+            <label style="margin-right:0.5rem">Winning the toss:</label>
+            <select name="toss" style="padding:0.5rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+              <option value="<%= match.team1 %>"><%= match.team1 %></option>
+              <option value="<%= match.team2 %>"><%= match.team2 %></option>
+            </select>
+            <button type="submit" class="btn btn-primary" style="margin-left:0.5rem">▶ Start Match</button>
+          </form>
+        <% } else { %>
+
+          <!-- SCORES -->
+          <div class="sb-scores">
+            <div class="sb-score">
+              <div class="sb-team-name"><%= match.team1 %></div>
+              <div class="sb-score-val"><%= match.inn1.runs %>/<%= match.inn1.wickets %></div>
+              <div class="sb-score-sub"><%= match.inn1.ballStr %> ov · CRR <%= match.inn1.crr %></div>
+            </div>
+            <% if (match.inn2 && match.inn2.legalBalls > 0) { %>
+              <div class="sb-vs">2nd Inns <%= match.target ? '· Target ' + match.target : '' %></div>
+            <% } else { %>
+              <div class="sb-vs">vs</div>
+            <% } %>
+            <div class="sb-score">
+              <div class="sb-team-name"><%= match.team2 %></div>
+              <div class="sb-score-val"><%= match.inn2 && match.inn2.legalBalls > 0 ? match.inn2.runs + '/' + match.inn2.wickets : '—' %></div>
+              <div class="sb-score-sub"><%= match.inn2 && match.inn2.legalBalls > 0 ? match.inn2.ballStr + ' ov · CRR ' + match.inn2.crr : 'Yet to bat' %></div>
+            </div>
+          </div>
+
+          <%
+            const curLen = match.innings.length;
+            const battTeam = curLen === 1 ? match.team1 : match.team2;
+            const bowlTeam = curLen === 1 ? match.team2 : match.team1;
+            const curInn = curLen === 1 ? match.inn1 : match.inn2;
+            const battPlayers = (data.players || []).filter(p => p.teamName === battTeam);
+            const bowlPlayers = (data.players || []).filter(p => p.teamName === bowlTeam);
+            const quota = season.overs;
+          %>
+
+          <% if (curInn.done && match.status === 'live') { %>
+            <div class="sb-notice">⏰ Current innings over (<%= curInn.allOut ? 'All Out' : 'Overs complete' %>)</div>
+          <% } %>
+
+          <!-- BALL ENTRY -->
+          <% if (!curInn.done && match.status !== 'completed') { %>
+            <div class="sb-form">
+              <h3>Add Ball - <%= battTeam %> batting</h3>
+              <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/ball" method="POST">
+                <div class="sb-form-row">
+                  <div class="sb-field">
+                    <label>Striker</label>
+                    <input type="text" name="striker" list="batters" placeholder="Striker" required style="width:100%">
+                  </div>
+                  <div class="sb-field">
+                    <label>Non-striker</label>
+                    <input type="text" name="nonStriker" list="batters" placeholder="Non-striker" style="width:100%">
+                  </div>
+                  <div class="sb-field">
+                    <label>Bowler</label>
+                    <input type="text" name="bowler" list="bowlers" placeholder="Bowler" required style="width:100%">
+                  </div>
+                </div>
+                <datalist id="batters"><% battPlayers.forEach(p => { %><option value="<%= p.name %>"><% }) %></datalist>
+                <datalist id="bowlers"><% bowlPlayers.forEach(p => { %><option value="<%= p.name %>"><% }) %></datalist>
+
+                <div class="sb-form-row">
+                  <div class="sb-field">
+                    <label>Runs off bat</label>
+                    <select name="batRuns" style="width:100%">
+                      <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                      <option value="3">3</option><option value="4">4 (FOUR)</option><option value="6">6 (SIX)</option>
+                    </select>
+                  </div>
+                  <div class="sb-field">
+                    <label>Extra</label>
+                    <select name="extraType" id="extraType" style="width:100%">
+                      <option value="">None</option>
+                      <option value="wd">Wide</option>
+                      <option value="nb">No Ball</option>
+                      <option value="by">Byes</option>
+                      <option value="lb">Leg Byes</option>
+                    </select>
+                  </div>
+                  <div class="sb-field">
+                    <label>Extra runs</label>
+                    <input type="number" name="extraRuns" value="1" min="0" max="4" style="width:100%">
+                  </div>
+                </div>
+
+                <div class="sb-form-row">
+                  <div class="sb-field sb-wicket">
+                    <label><input type="checkbox" name="isWicket" value="1" onchange="document.getElementById('wk-details').style.display = this.checked ? 'grid' : 'none'"> Wicket</label>
+                    <div id="wk-details" style="display:none;grid-template-columns:1fr 1fr;gap:0.5rem">
+                      <select name="wicketType" style="width:100%">
+                        <option value="bowled">Bowled</option>
+                        <option value="caught">Caught</option>
+                        <option value="lbw">LBW</option>
+                        <option value="runout">Run Out</option>
+                        <option value="stumped">Stumped</option>
+                        <option value="hitwicket">Hit Wicket</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <input type="text" name="fielder" placeholder="Fielder (caught/stumped)" style="width:100%">
+                    </div>
+                  </div>
+                  <div class="sb-field sb-submit">
+                    <button type="submit" class="btn btn-primary" style="width:100%">+ Add Ball</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          <% } %>
+
+          <!-- CURRENT BATSMEN -->
+          <% if (curInn.batting.length > 0) { %>
+            <div class="sb-live-table">
+              <h3>🏏 <%= battTeam %> Batters</h3>
+              <table class="admin-table">
+                <thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th><th>Status</th></tr></thead>
+                <tbody>
+                  <% curInn.batting.forEach(b => { %>
+                    <tr>
+                      <td><%= b.player %></td>
+                      <td><%= b.runs %></td><td><%= b.balls %></td><td><%= b.fours %></td><td><%= b.sixes %></td><td><%= b.sr.toFixed(2) %></td>
+                      <td style="color:<%= b.out ? '#e74c3c' : '#2ecc71' %>"><%= b.out ? b.howOut : 'Not out' %></td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+
+          <!-- BOWLERS -->
+          <% if (curInn.bowling.length > 0) { %>
+            <div class="sb-live-table">
+              <h3>🎯 <%= bowlTeam %> Bowlers</h3>
+              <table class="admin-table">
+                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Econ</th></tr></thead>
+                <tbody>
+                  <% curInn.bowling.forEach(b => { %>
+                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.wickets %></td><td><%= b.eco.toFixed(2) %></td></tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+
+          <!-- ACTIONS -->
+          <div class="sb-actions">
+            <% if (match.status === 'live') { %>
+              <% if (curLen === 1 && curInn.done) { %>
+                <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/endinnings" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-primary">▶ Start 2nd Innings (Target <%= match.target %>)</button>
+                </form>
+              <% } %>
+              <% if (curLen >= 2 && curInn.done) { %>
+                <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/complete" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-gold">🏁 Complete Match (Auto Result)</button>
+                </form>
+              <% } %>
+              <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/undo" method="POST" style="display:inline">
+                <button type="submit" class="btn btn-sm btn-outline">↩ Undo Last Ball</button>
+              </form>
+            <% } %>
+            <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/reset" method="POST" style="display:inline" onsubmit="return confirm('Reset all scoring data for this match?')">
+              <button type="submit" class="btn btn-sm btn-danger" style="background:#e74c3c">🗑 Reset Match</button>
+            </form>
+          </div>
+
+          <% if (match.innings.some(inArr => inArr.length > 0)) { %>
+            <div class="sb-live-table">
+              <h3>📜 Ball by Ball</h3>
+              <div class="commentary-feed">
+                <% match.innings.forEach((inArr, ii) => {
+                  inArr.forEach((b, i) => {
+                    const txt = b.extraType === 'wd' ? 'Wide +' + b.extraRuns
+                      : b.extraType === 'nb' ? 'No Ball +' + b.extraRuns
+                      : b.extraType === 'by' ? 'Byes +' + b.extraRuns
+                      : b.extraType === 'lb' ? 'Leg Byes +' + b.extraRuns
+                      : b.isWicket ? 'WICKET - ' + b.striker + ' ' + b.wicketType
+                      : b.batRuns === 6 ? 'SIX! by ' + b.striker
+                      : b.batRuns === 4 ? 'FOUR! by ' + b.striker
+                      : b.batRuns > 0 ? b.batRuns + ' run' + (b.batRuns === 1 ? '' : 's') + ' by ' + b.striker
+                      : 'Dot ball by ' + b.bowler; %>
+                    <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : '' %>"><%= ii + 1 %>.<%= i + 1 %><%= b.legal ? '' : '*' %> <%= txt %> (<%= b.over %>.<%= b.ball %>)</span>
+                  <% });
+                }) %>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

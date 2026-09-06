@@ -65,6 +65,7 @@
       <% season.matches.forEach(match => {
         const t1 = data.teams.find(t => t.name === match.team1);
         const t2 = data.teams.find(t => t.name === match.team2);
+        const hasScore = match.innings && match.innings.length > 0 && match.innings[0].length > 0;
       %>
         <div class="match-card">
           <div class="match-info">
@@ -77,17 +78,28 @@
             <div class="match-meta">
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
-              <% if (match.result) { %>
+              <% if (match.status === 'live') { %>
+                <span style="color:#e74c3c;font-weight:700">● LIVE: <%= match.inn1.runs %>/<%= match.inn1.wickets %> (<%= match.inn1.ballStr %>)</span>
+              <% } else if (match.status === 'completed') { %>
                 <span style="color:#2ecc71">✅ <%= match.result %></span>
-              <% } else { %>
-                <span style="color:#f39c12">⏳ Pending</span>
+              <% } else if (match.inn2 && match.inn2.legalBalls > 0) { %>
+                <span style="color:var(--accent)">🏏 <%= match.team2 %>: <%= match.inn2.runs %>/<%= match.inn2.wickets %> (<%= match.inn2.ballStr %>)</span>
+              <% } else if (hasScore) { %>
+                <span style="color:var(--accent)">🏏 <%= match.team1 %>: <%= match.inn1.runs %>/<%= match.inn1.wickets %> (<%= match.inn1.ballStr %>)</span>
               <% } %>
             </div>
+            <% if (hasScore || match.status === 'completed') { %>
+              <div style="margin-top:0.6rem">
+                <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
+              </div>
+            <% } %>
           </div>
-          <% if (!match.result) { %>
-            <span class="match-status status-upcoming">Upcoming</span>
-          <% } else { %>
+          <% if (match.status === 'live') { %>
+            <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
+          <% } else if (match.status === 'completed') { %>
             <span class="match-status status-completed">Completed</span>
+          <% } else { %>
+            <span class="match-status status-upcoming">Upcoming</span>
           <% } %>
         </div>
       <% }) %>
@@ -99,11 +111,19 @@
 
 <section class="section season-tab-content" id="playoff-content" style="display:none">
   <div class="section-title"><h2>Playoffs & <span class="highlight">Final</span></h2></div>
+  <% if (!((season.matches || []).every(m => m.status === 'completed'))) { %>
+    <div class="format-card" style="text-align:center;padding:2rem;max-width:640px;margin:0 auto 2rem">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">🏅</div>
+      <h3 style="margin-bottom:0.5rem">Playoff spots lock automatically</h3>
+      <p style="color:var(--text-light)">Jab saare league matches mukammal ho jayenge, tab points table ke mutabiq playoff teams khud-ba-khud fill ho jayengi.</p>
+    </div>
+  <% } %>
   <div class="schedule-container">
     <% if (season.playoff && season.playoff.length > 0) { %>
       <% season.playoff.forEach(match => {
         const t1 = data.teams.find(t => t.name === match.team1);
         const t2 = data.teams.find(t => t.name === match.team2);
+        const hasScore = match.innings && match.innings.length > 0 && match.innings[0].length > 0;
       %>
         <div class="match-card">
           <div class="match-info">
@@ -116,17 +136,24 @@
             <div class="match-meta">
               <span>📅 <%= match.date %></span>
               <span>⏰ <%= match.time %></span>
-              <% if (match.result) { %>
+              <% if (match.status === 'completed') { %>
                 <span style="color:#2ecc71">✅ <%= match.result %></span>
-              <% } else { %>
-                <span style="color:#f39c12">⏳ Pending</span>
+              <% } else if (match.status === 'live') { %>
+                <span style="color:#e74c3c;font-weight:700">● LIVE</span>
               <% } %>
             </div>
+            <% if (hasScore) { %>
+              <div style="margin-top:0.6rem">
+                <a href="/match/<%= match.id %>" class="btn btn-sm btn-outline">📋 Scorecard</a>
+              </div>
+            <% } %>
           </div>
-          <% if (!match.result) { %>
-            <span class="match-status status-upcoming">Upcoming</span>
-          <% } else { %>
+          <% if (match.status === 'live') { %>
+            <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
+          <% } else if (match.status === 'completed') { %>
             <span class="match-status status-completed">Completed</span>
+          <% } else { %>
+            <span class="match-status status-upcoming">Upcoming</span>
           <% } %>
         </div>
       <% }) %>
