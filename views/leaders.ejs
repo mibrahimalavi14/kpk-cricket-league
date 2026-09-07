@@ -1,0 +1,225 @@
+<%- include('partials/header', { active: 'leaders', pageTitle: 'Leaders' }) %>
+
+<section class="hero" style="min-height:35vh">
+  <div class="hero-content">
+    <div class="hero-badge">📊 Stats Leaders</div>
+    <h1>Season <span class="highlight">Leaders</span></h1>
+    <p>Top performers across batting and bowling categories</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:2rem">
+  <% const latest = data.seasons.find(s => s.status === 'Active') || data.seasons[data.seasons.length - 1]; %>
+  <% const stats = latest ? latest.stats : null; %>
+  <% if (!latest || !stats) { %>
+    <p style="text-align:center;color:var(--text-light)">No season data available.</p>
+  <% } else {
+    const runsList = (stats.topRunScorers || []);
+    const wktsList = (stats.topWicketTakers || []);
+    const byFours = runsList.slice().sort((a, b) => b.fours - a.fours);
+    const bySixes = runsList.slice().sort((a, b) => b.sixes - a.sixes);
+    const bySr = runsList.slice().sort((a, b) => parseFloat(b.sr) - parseFloat(a.sr));
+    const byAvg = runsList.slice().sort((a, b) => parseFloat(b.avg) - parseFloat(a.avg));
+    const byEco = wktsList.slice().sort((a, b) => parseFloat(a.eco) - parseFloat(b.eco));
+    const byBowling = wktsList.slice().sort((a, b) => b.wickets - a.wickets || parseFloat(a.avg) - parseFloat(b.avg));
+    const byFifties = data.players.filter(p => (p.fifties || 0) > 0).sort((a, b) => b.fifties - a.fifties);
+    const byCenturies = data.players.filter(p => (p.centuries || 0) > 0).sort((a, b) => b.centuries - a.centuries);
+    const byCatches = data.players.filter(p => (p.catches || 0) > 0).sort((a, b) => b.catches - a.catches);
+
+    if (runsList.length === 0 && wktsList.length === 0 && byFifties.length === 0 && byCenturies.length === 0) {
+  %>
+    <div class="format-card" style="max-width:640px;margin:0 auto 2rem;text-align:center;padding:2rem">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">📊</div>
+      <h3>No stats yet</h3>
+      <p style="color:var(--text-light)">Leaderboards will fill automatically as matches are scored in <%= latest.name %>.</p>
+    </div>
+  <%
+    }
+
+    function playerLink(name) {
+      const p = data.players.find(x => x.name === name);
+      return p ? '<a href="/player/' + p.id + '" style="color:var(--text)">' + name + '</a>' : name;
+    }
+    function teamCell(team) {
+      const t = data.teams.find(x => x.name === team);
+      return t ? '<img src="' + t.logoUrl + '" class="table-logo" style="width:18px;height:18px;vertical-align:middle;margin-right:4px" onerror="this.style.display=\'none\'">' + team : team;
+    }
+  %>
+
+    <div class="section-title">
+      <h2><%= latest.name %> <span class="highlight">Leaders</span></h2>
+      <p>Top performers in the current season</p>
+    </div>
+
+    <div class="leaders-grid">
+
+      <% if (byAvg.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>🏏 Top Run Scorers</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Runs</th><th>Avg</th><th>SR</th></tr></thead>
+          <tbody>
+            <% byAvg.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
+                <td><%= p.avg %></td>
+                <td><%= p.sr %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byBowling.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>🎯 Top Wicket Takers</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Wickets</th><th>Econ</th><th>Best</th></tr></thead>
+          <tbody>
+            <% byBowling.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.wickets %></td>
+                <td><%= p.eco %></td>
+                <td><%= p.best %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byFours.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>4️⃣ Most Fours</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>4s</th></tr></thead>
+          <tbody>
+            <% byFours.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.fours %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (bySixes.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>💣 Most Sixes</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>6s</th></tr></thead>
+          <tbody>
+            <% bySixes.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.sixes %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (bySr.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>⚡ Best Strike Rate</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Runs</th><th>SR</th></tr></thead>
+          <tbody>
+            <% bySr.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td><%= p.runs %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.sr %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byEco.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>🛡️ Best Economy Rate</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Econ</th></tr></thead>
+          <tbody>
+            <% byEco.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.eco %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byFifties.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>50️⃣ Most Fifties</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>50s</th></tr></thead>
+          <tbody>
+            <% byFifties.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.name) %></td>
+                <td><%- teamCell(p.teamName) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.fifties %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byCenturies.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>💯 Most Centuries</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>100s</th></tr></thead>
+          <tbody>
+            <% byCenturies.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.name) %></td>
+                <td><%- teamCell(p.teamName) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.centuries %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer', { active: 'leaders' }) %>

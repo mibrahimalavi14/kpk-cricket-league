@@ -164,16 +164,17 @@ app.get('/faq', handle(async (req, res) => {
 
 app.get('/awards', handle(async (req, res) => {
   const data = await loadViewData();
-  const season = data.seasons.find(s => s.status === 'Active') || data.seasons[data.seasons.length - 1];
-  if (!season) return res.status(404).render('404', { data });
-  res.render('awards', { data, season });
+  res.render('awards', { data, tab: 'motm' });
 }));
 
-app.get('/awards/:id', handle(async (req, res) => {
+app.get('/leaders', handle(async (req, res) => {
   const data = await loadViewData();
-  const season = data.seasons.find(s => s.id === parseInt(req.params.id));
-  if (!season) return res.status(404).render('404', { data });
-  res.render('awards', { data, season });
+  res.render('leaders', { data });
+}));
+
+app.get('/points-table', handle(async (req, res) => {
+  const data = await loadViewData();
+  res.render('points-table', { data });
 }));
 
 // ==================== ADMIN ROUTES ====================

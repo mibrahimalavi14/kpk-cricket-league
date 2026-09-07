@@ -1,0 +1,84 @@
+<%- include('partials/header', { active: 'points-table', pageTitle: 'Points Table' }) %>
+
+<section class="hero" style="min-height:40vh">
+  <div class="hero-content">
+    <div class="hero-badge">📊 Points Table</div>
+    <h1><span class="highlight">Points Table</span></h1>
+    <p>League standings — top 3 qualify for playoffs</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:2rem">
+  <% const latest = data.seasons.find(s => s.status === 'Active') || data.seasons[data.seasons.length - 1]; %>
+  <% if (!latest) { %>
+    <p style="text-align:center;color:var(--text-light)">No season available.</p>
+  <% } else {
+    const pt = (latest.pointsTable || []).slice().sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr));
+    const leagueDone = (latest.matches || []).every(m => m.status === 'completed');
+  %>
+    <div class="section-title">
+      <h2><%= latest.name %> <span class="highlight">Standings</span></h2>
+      <p><%= latest.year %> | T<%= latest.overs %> | <%= pt.length %> teams</p>
+    </div>
+
+    <div class="points-table-wrap">
+      <table class="standings-table pt-full">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>P</th>
+            <th>W</th>
+            <th>L</th>
+            <th>T</th>
+            <th>Pts</th>
+            <th>NRR</th>
+            <th class="th-status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pt.forEach((row, i) => {
+            const teamData = data.teams.find(t => t.name === row.team);
+            const pos = i + 1;
+            const qualified = pos <= 3;
+            const statusClass = qualified ? 'badge-qualified' : 'badge-eliminated';
+            const statusText = qualified ? 'QUALIFIED' : 'ELIMINATED';
+          %>
+            <tr class="<%= qualified ? 'row-qualified' : 'row-eliminated' %>">
+              <td style="font-weight:700;color:var(--gold)"><%= pos %></td>
+              <td>
+                <div class="team-name-cell">
+                  <img src="<%= teamData ? teamData.logoUrl : '' %>" alt="<%= row.team %>" class="table-logo" onerror="this.style.display='none'">
+                  <a href="/team/<%= teamData ? teamData.id : '#' %>" style="color:var(--text);font-weight:600"><%= row.team %></a>
+                </div>
+              </td>
+              <td><%= row.played %></td>
+              <td><%= row.won %></td>
+              <td><%= row.lost %></td>
+              <td><%= row.tied %></td>
+              <td style="font-weight:700;color:var(--gold);font-size:1.05rem"><%= row.points %></td>
+              <td style="color:<%= parseFloat(row.nrr) >= 0 ? '#2ecc71' : '#e74c3c' %>"><%= row.nrr %></td>
+              <td>
+                <span class="status-badge <%= statusClass %>"><%= statusText %></span>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (leagueDone && latest.playoff && latest.playoff.length > 0) { %>
+      <div class="format-card" style="max-width:640px;margin:2rem auto 0;text-align:center;padding:1.5rem">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">🏅</div>
+        <h3>Playoffs Locked</h3>
+        <p style="color:var(--text-light);margin-top:0.5rem">Top 3 teams have qualified. Knockout fixtures are set.</p>
+      </div>
+    <% } else if (!leagueDone) { %>
+      <div class="format-card" style="max-width:640px;margin:2rem auto 0;text-align:center;padding:1.5rem">
+        <p style="color:var(--text-light)">Qualification is based on the top 3 from the final standings. Positions are not final until all league matches are completed.</p>
+      </div>
+    <% } %>
+  <% } %>
+</section>
+
+<%- include('partials/footer', { active: 'points-table' }) %>

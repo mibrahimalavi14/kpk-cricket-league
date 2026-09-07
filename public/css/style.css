@@ -390,3 +390,53 @@ a.back-btn:hover{color:#fff;border-color:var(--accent);text-decoration:none;tran
 
 /* ===== Single column match list ===== */
 .match-grid-single{grid-template-columns:minmax(0,1fr);max-width:860px;margin:0 auto}
+
+/* ===== Awards tabs & accordion ===== */
+.award-tabs{display:flex;justify-content:center;gap:0.8rem;margin:1.5rem 0 2.5rem;flex-wrap:wrap}
+.award-tab{display:inline-block;padding:0.65rem 1.6rem;border-radius:999px;font-weight:700;color:var(--text-light);background:rgba(255,255,255,0.05);border:1px solid var(--border);transition:all 0.2s;font-size:0.95rem}
+a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
+.award-tab.active{background:var(--gold);color:#0b0e16;border-color:var(--gold)}
+.season-accordion{max-width:860px;margin:0 auto 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.accordion-toggle{width:100%;background:transparent;border:none;color:var(--text);cursor:pointer;padding:1rem 1.2rem;text-align:left;font-size:1rem}
+.accordion-toggle:hover{background:rgba(255,255,255,0.05)}
+.accordion-toggle.open{border-bottom:1px solid var(--border)}
+.acc-title{display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap}
+.acc-icon{color:var(--gold);font-size:0.9rem;width:16px}
+.acc-count{margin-left:auto;font-size:0.78rem;color:var(--text-light);font-weight:400}
+.accordion-body{padding:1.4rem 1.4rem 1.6rem}
+
+/* ===== MOTM grid ===== */
+.motm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.motm-card{background:#111724;border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;transition:border-color 0.2s}
+.motm-card:hover{border-color:var(--gold)}
+.motm-head{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--text-light);margin-bottom:0.6rem}
+.motm-match{font-weight:600}
+.motm-pts{color:var(--gold);font-weight:700}
+.motm-player{display:flex;flex-direction:column;gap:0.15rem}
+.motm-name{font-weight:800;color:#fff;font-size:1rem}
+.motm-team{color:var(--accent);font-size:0.8rem}
+.motm-line{color:var(--text-light);font-size:0.85rem;margin-top:0.5rem}
+
+/* ===== POTM hero ===== */
+.potm-hero{text-align:center;padding:1.2rem 0}
+.potm-hero-name{font-size:1.7rem;font-weight:800;color:#fff}
+.potm-hero-team{color:var(--accent);font-size:1rem;margin-top:0.25rem}
+.potm-hero-stats{display:flex;justify-content:center;flex-wrap:wrap;gap:1.2rem;margin-top:1.4rem}
+.potm-stat{min-width:110px;padding:0.85rem 0.6rem;background:#111724;border-radius:10px;text-align:center}
+.potm-sv{display:block;font-size:1.5rem;font-weight:800;color:var(--gold)}
+.potm-sl{display:block;font-size:0.75rem;color:var(--text-light);margin-top:0.2rem}
+
+/* ===== Leaders grid ===== */
+.leaders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;align-items:start}
+
+/* ===== Points table badges ===== */
+.points-table-wrap{max-width:860px;margin:0 auto}
+.pt-full{max-width:100%}
+.th-status{text-align:center}
+.row-qualified{background:rgba(46,204,113,0.07)}
+.row-eliminated{background:rgba(231,76,60,0.07)}
+.row-qualified:hover,.row-eliminated:hover{background:rgba(255,255,255,0.03)}
+.status-badge{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;font-size:0.72rem;font-weight:800;letter-spacing:1px}
+.badge-qualified{background:rgba(46,204,113,0.16);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
+.badge-eliminated{background:rgba(231,76,60,0.16);color:#ff6b6b;border:1px solid rgba(231,76,60,0.4)}
+.standings-table tr.row-qualified td,.standings-table tr.row-eliminated td{border-color:rgba(255,255,255,0.04)}
