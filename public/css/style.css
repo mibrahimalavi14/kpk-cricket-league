@@ -440,3 +440,13 @@ a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
 .badge-qualified{background:rgba(46,204,113,0.16);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
 .badge-eliminated{background:rgba(231,76,60,0.16);color:#ff6b6b;border:1px solid rgba(231,76,60,0.4)}
 .standings-table tr.row-qualified td,.standings-table tr.row-eliminated td{border-color:rgba(255,255,255,0.04)}
+
+/* ===== Run quick buttons (live scoring) ===== */
+.run-btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
+.run-btn{flex:1;min-width:52px;padding:0.7rem 0;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--text);font-weight:800;font-size:1rem;cursor:pointer;text-align:center;transition:all 0.15s}
+.run-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.run-btn.active{border-color:var(--accent);background:rgba(52,152,219,0.25);color:#fff;box-shadow:0 0 0 1px var(--accent)}
+.run-four{border-color:rgba(155,89,182,0.45);color:#b07ce0;font-weight:800}
+.run-four.active{background:rgba(155,89,182,0.3);color:#d3b0f5;border-color:#b07ce0;box-shadow:0 0 0 1px #b07ce0}
+.run-six{border-color:rgba(241,196,15,0.5);color:var(--gold);font-weight:800}
+.run-six.active{background:rgba(241,196,15,0.3);color:#ffe066;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}

@@ -132,7 +132,7 @@
           "status": "upcoming",
           "innings": [],
           "inn1": {
-            "runs": 12,
+            "runs": 17,
             "wickets": 0,
             "legalBalls": 4,
             "overs": "0.4",
@@ -146,7 +146,7 @@
             "batting": [
               {
                 "player": "Muhavia Usmani",
-                "runs": 12,
+                "runs": 13,
                 "balls": 4,
                 "fours": 1,
                 "sixes": 1,
@@ -154,22 +154,22 @@
                 "notOut": true,
                 "howOut": "",
                 "dismisser": "",
-                "sr": 300
+                "sr": 325
               }
             ],
             "bowling": [
               {
                 "player": "Muhammad Ali",
                 "balls": 4,
-                "runs": 12,
+                "runs": 13,
                 "wickets": 0,
                 "maidens": 0,
                 "overs": "0.4",
-                "eco": 18
+                "eco": 19.5
               }
             ],
             "fow": [],
-            "crr": 18,
+            "crr": 25.5,
             "allOut": false,
             "fullOvers": false,
             "done": false

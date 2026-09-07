@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Score - <%= match.match %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=11">
+  <link rel="stylesheet" href="/css/style.css?v=12">
 </head>
 <body>
   <div class="admin-layout">
@@ -99,10 +99,6 @@
                     <input type="text" name="striker" list="batters" placeholder="Striker" required style="width:100%">
                   </div>
                   <div class="sb-field">
-                    <label>Non-striker</label>
-                    <input type="text" name="nonStriker" list="batters" placeholder="Non-striker" style="width:100%">
-                  </div>
-                  <div class="sb-field">
                     <label>Bowler</label>
                     <input type="text" name="bowler" list="bowlers" placeholder="Bowler" required style="width:100%">
                   </div>
@@ -113,10 +109,15 @@
                 <div class="sb-form-row">
                   <div class="sb-field">
                     <label>Runs off bat</label>
-                    <select name="batRuns" style="width:100%">
-                      <option value="0">0</option><option value="1">1</option><option value="2">2</option>
-                      <option value="3">3</option><option value="4">4 (FOUR)</option><option value="6">6 (SIX)</option>
-                    </select>
+                    <div class="run-btn-row">
+                      <button type="button" class="run-btn active" data-runs="0" onclick="setRuns(this,0)">0</button>
+                      <button type="button" class="run-btn" data-runs="1" onclick="setRuns(this,1)">1</button>
+                      <button type="button" class="run-btn" data-runs="2" onclick="setRuns(this,2)">2</button>
+                      <button type="button" class="run-btn" data-runs="3" onclick="setRuns(this,3)">3</button>
+                      <button type="button" class="run-btn run-four" data-runs="4" onclick="setRuns(this,4)">FOUR 4</button>
+                      <button type="button" class="run-btn run-six" data-runs="6" onclick="setRuns(this,6)">SIX 6</button>
+                    </div>
+                    <input type="hidden" name="batRuns" id="batRuns" value="0">
                   </div>
                   <div class="sb-field">
                     <label>Extra</label>
@@ -239,5 +240,12 @@
       </div>
     </main>
   </div>
+  <script>
+    function setRuns(btn, v) {
+      document.getElementById('batRuns').value = v;
+      document.querySelectorAll('.run-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+  </script>
 </body>
 </html>
