@@ -18,7 +18,7 @@
 <section class="section season-tab-content" id="points-content">
   <div class="section-title"><h2>Points <span class="highlight">Table</span></h2></div>
   <% if (season.pointsTable && season.pointsTable.length > 0) { %>
-    <table class="standings-table">
+    <table class="standings-table pt-full">
       <thead>
         <tr>
           <th>#</th>
@@ -29,14 +29,17 @@
           <th>Tied</th>
           <th>Points</th>
           <th>NRR</th>
+          <th class="th-status">Status</th>
         </tr>
       </thead>
       <tbody>
-        <% season.pointsTable.map((s, i) => ({ s, i })).sort((a, b) => b.s.points - a.s.points).forEach(({ s, i }) => {
+        <% season.pointsTable.slice().sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr)).forEach((s, i) => {
           const teamData = data.teams.find(t => t.name === s.team);
+          const pos = i + 1;
+          const qualified = pos <= 3;
         %>
-          <tr>
-            <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+          <tr class="<%= qualified ? 'row-qualified' : 'row-eliminated' %>">
+            <td style="font-weight:700;color:var(--gold)"><%= pos %></td>
             <td>
               <div class="team-name-cell">
                 <img src="<%= teamData ? teamData.logoUrl : '' %>" alt="<%= s.team %>" class="table-logo" onerror="this.style.display='none'">
@@ -48,11 +51,15 @@
             <td style="color:#e74c3c"><%= s.lost %></td>
             <td><%= s.tied %></td>
             <td style="font-weight:700;color:var(--gold)"><%= s.points %></td>
-            <td><%= s.nrr %></td>
+            <td style="color:<%= parseFloat(s.nrr) >= 0 ? '#2ecc71' : '#e74c3c' %>"><%= s.nrr %></td>
+            <td>
+              <span class="status-badge <%= qualified ? 'badge-qualified' : 'badge-eliminated' %>"><%= qualified ? 'QUALIFIED' : 'ELIMINATED' %></span>
+            </td>
           </tr>
         <% }) %>
       </tbody>
     </table>
+    <p style="text-align:center;color:var(--text-light);font-size:0.82rem;margin-top:1rem">Top 3 teams qualify for the playoffs.</p>
   <% } else { %>
     <p style="text-align:center;color:var(--text-light)">Points table not available yet.</p>
   <% } %>

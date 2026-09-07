@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage <%= season.name %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=10">
+  <link rel="stylesheet" href="/css/style.css?v=11">
 </head>
 <body>
   <div class="admin-layout">
@@ -43,11 +43,12 @@
       <h2 id="points" style="margin-bottom:1rem;font-size:1.2rem">Points Table <span style="font-size:0.75rem;color:var(--text-light)">(auto)</span></h2>
       <table class="admin-table">
         <thead>
-          <tr><th>#</th><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Tied</th><th>NRR</th><th>Points</th></tr>
+          <tr><th>#</th><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Tied</th><th>NRR</th><th>Points</th><th>Status</th></tr>
         </thead>
         <tbody>
           <% season.pointsTable.slice().sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr)).forEach((row, i) => {
             const teamData = data.teams.find(t => t.name === row.team);
+            const qualified = (i + 1) <= 3;
           %>
             <tr>
               <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
@@ -63,6 +64,7 @@
               <td><%= row.tied %></td>
               <td><%= row.nrr %></td>
               <td style="font-weight:700;color:var(--gold)"><%= row.points %></td>
+              <td><span class="status-badge <%= qualified ? 'badge-qualified' : 'badge-eliminated' %>"><%= qualified ? 'QUALIFIED' : 'ELIMINATED' %></span></td>
             </tr>
           <% }) %>
         </tbody>
