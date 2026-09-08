@@ -16,7 +16,7 @@
   <div class="match-grid match-grid-single">
     <% (season.matches || []).forEach(match => { %>
       <a href="/match/<%= match.id %>" class="match-card fixture-card">
-        <%- include('partials/match_banner', { m: match }) %>
+        <%- include('partials/match_banner', { m: match, season: season }) %>
       </a>
     <% }) %>
   </div>
@@ -29,7 +29,7 @@
     <div class="match-grid match-grid-single">
       <% season.playoff.forEach(match => { %>
         <a href="/match/<%= match.id %>" class="match-card fixture-card">
-          <%- include('partials/match_banner', { m: match, playoff: true }) %>
+          <%- include('partials/match_banner', { m: match, playoff: true, season: season }) %>
         </a>
       <% }) %>
     </div>

@@ -5,15 +5,18 @@
   const s2 = m.inn2 && m.inn2.legalBalls > 0;
   const live = m.status === 'live';
   if (!Array.isArray(m.innings)) m.innings = [];
+  const isPlayoff = typeof playoff !== 'undefined' && playoff;
+  const seasonId = typeof season !== 'undefined' && season ? season.id : (typeof sId !== 'undefined' ? sId : (m.seasonId || 0));
+  const matchKey = seasonId + '-' + (isPlayoff ? 'p' : 'm') + '-' + m.id;
 %>
-<div class="match-banner">
-  <div class="banner-label"><% if (typeof playoff !== 'undefined' && playoff) { %>⭐ <% } %><%= m.match %></div>
+<div class="match-banner" data-match-id="<%= m.id %>" data-match-key="<%= matchKey %>" data-match-name="<%= m.match %>">
+  <div class="banner-label"><% if (isPlayoff) { %>⭐ <% } %><%= m.match %></div>
   <div class="banner-row">
     <div class="banner-team">
       <img src="<%= t1l ? t1l.logoUrl : '' %>" alt="<%= m.team1 %>" class="banner-logo" onerror="this.style.display='none'">
       <div class="banner-name"><%= m.team1 %></div>
       <div class="banner-score">
-        <% if (s1) { %><%= m.inn1.runs %>/<%= m.inn1.wickets %> <span class="banner-ov">(<%= m.inn1.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
+        <% if (s1) { %><span class="banner-score-val"><%= m.inn1.runs %>/<%= m.inn1.wickets %></span> <span class="banner-ov">(<%= m.inn1.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
       </div>
     </div>
     <div class="banner-mid">
@@ -25,15 +28,22 @@
       <img src="<%= t2l ? t2l.logoUrl : '' %>" alt="<%= m.team2 %>" class="banner-logo" onerror="this.style.display='none'">
       <div class="banner-name"><%= m.team2 %></div>
       <div class="banner-score">
-        <% if (s2) { %><%= m.inn2.runs %>/<%= m.inn2.wickets %> <span class="banner-ov">(<%= m.inn2.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
+        <% if (s2) { %><span class="banner-score-val"><%= m.inn2.runs %>/<%= m.inn2.wickets %></span> <span class="banner-ov">(<%= m.inn2.ballStr %>)</span><% } else { %><span class="banner-noscore">–</span><% } %>
       </div>
     </div>
   </div>
   <div class="banner-result">
     <% if (live) { %>
-      <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+      <span class="live-badge"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
     <% } else if (m.result) { %>
       ✅ <span style="color:#2ecc71"><%= m.result %></span>
+      <% if (m.superOverLegs && m.superOverLegs.length) { %>
+        <div class="banner-so">
+          <% m.superOverLegs.forEach(leg => { %>
+            <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %></span>
+          <% }) %>
+        </div>
+      <% } %>
     <% } else { %>
       <span class="banner-noscore">Upcoming</span>
     <% } %>

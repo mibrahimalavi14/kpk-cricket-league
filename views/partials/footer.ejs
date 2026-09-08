@@ -39,5 +39,61 @@
     </div>
   </footer>
   <script src="/js/main.js?v=5"></script>
+  <script>
+    (function () {
+      var banners = document.querySelectorAll('.match-banner[data-match-key]');
+      if (!banners.length) return;
+      function updateBanner(m) {
+        var b = document.querySelector('.match-banner[data-match-key="' + m.key + '"]');
+        if (!b) return;
+        var teams = b.querySelectorAll('.banner-team');
+        var inns = [m.inn1, m.inn2];
+        teams.forEach(function (t, i) {
+          var inn = inns[i];
+          var val = t.querySelector('.banner-score-val');
+          var ov = t.querySelector('.banner-ov');
+          var noScore = t.querySelector('.banner-noscore');
+          if (i === 0 && inn) {
+            if (val) val.textContent = inn.runs + '/' + inn.wickets;
+            if (ov) ov.textContent = '(' + inn.overs + ')';
+            if (noScore) noScore.textContent = '';
+          } else if (i === 1) {
+            if (inn) {
+              if (val) val.textContent = inn.runs + '/' + inn.wickets;
+              if (ov) ov.textContent = '(' + inn.overs + ')';
+              if (noScore) noScore.textContent = '';
+            } else {
+              if (val) val.textContent = '–';
+              if (ov) ov.textContent = '';
+              if (noScore) noScore.textContent = '–';
+            }
+          }
+        });
+        var badge = b.querySelector('.live-badge');
+        if (badge && m.inSuperOver) badge.classList.add('superover');
+      }
+      function pulse() {
+        fetch('/api/live', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            var byKey = {};
+            (res.live || []).forEach(function (m) { byKey[m.key] = m; });
+            banners.forEach(function (b) {
+              var key = b.getAttribute('data-match-key');
+              var m = byKey[key];
+              var isLiveNow = !!m;
+              var shownLive = !!b.querySelector('.live-badge');
+              if (isLiveNow && shownLive) {
+                updateBanner(m);
+              } else if (isLiveNow !== shownLive) {
+                location.reload();
+              }
+            });
+          }).catch(function () {});
+      }
+      pulse();
+      setInterval(pulse, 3000);
+    })();
+  </script>
 </body>
 </html>

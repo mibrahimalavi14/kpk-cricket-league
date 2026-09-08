@@ -17,7 +17,7 @@
       <div style="margin-top:1.5rem"><a href="/fixtures" class="btn btn-primary">View Fixtures</a></div>
     </div>
   <% } else { %>
-    <p style="text-align:center;color:var(--text-light);margin-bottom:2rem">Auto-refreshing every 5 seconds — live updates</p>
+    <p style="text-align:center;color:var(--text-light);margin-bottom:2rem">Auto-refreshing every 3 seconds — live updates</p>
   <% } %>
 
   <div id="live-matches" class="teams-grid">
@@ -46,7 +46,7 @@
           </div>
           <a href="/match/<%= m.id %>" class="btn btn-sm btn-primary" style="margin-top:1rem">Full Scorecard →</a>
         </div>
-        <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
+        <span class="match-status live-badge<%= m.inSuperOver ? ' superover' : '' %>"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
       </div>
     <% }) %>
   </div>
@@ -76,7 +76,7 @@
           location.reload();
         }
       }).catch(function () {});
-  }, 5000);
+  }, 3000);
 })();
 </script>
 

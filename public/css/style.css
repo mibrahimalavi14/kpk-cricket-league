@@ -450,3 +450,15 @@ a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
 .run-four.active{background:rgba(155,89,182,0.3);color:#d3b0f5;border-color:#b07ce0;box-shadow:0 0 0 1px #b07ce0}
 .run-six{border-color:rgba(241,196,15,0.5);color:var(--gold);font-weight:800}
 .run-six.active{background:rgba(241,196,15,0.3);color:#ffe066;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+
+/* ===== Super Over banner ===== */
+.banner-so{display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;margin-top:0.35rem}
+.banner-so-leg{display:inline-block;padding:0.15rem 0.6rem;border:1px dashed rgba(241,196,15,0.5);border-radius:999px;font-size:0.75rem;color:var(--gold);background:rgba(241,196,15,0.08)}
+.live-badge.superover{background:rgba(241,196,15,0.2);border-color:var(--gold)}
+
+/* ===== Extra quick buttons + rules box (live scoring) ===== */
+.run-wd{border-color:rgba(230,126,34,0.5);color:#f0b27a;background:rgba(230,126,34,0.06)}
+.run-nb{border-color:rgba(231,76,60,0.5);color:#f1948a;background:rgba(231,76,60,0.06)}
+.run-by{border-color:rgba(26,188,156,0.5);color:#76d7c4;background:rgba(26,188,156,0.06)}
+.run-lb{border-color:rgba(52,152,219,0.5);color:#85c1e9;background:rgba(52,152,219,0.06)}
+.sb-rules-box{margin:0.6rem 0 0.9rem;padding:0.7rem 0.9rem;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;background:rgba(255,255,255,0.03);color:var(--muted);font-size:0.8rem;line-height:1.6}

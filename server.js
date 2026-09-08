@@ -3,12 +3,14 @@ const compression = require('compression');
 const path = require('path');
 const { loadData } = require('./lib/store');
 const { attach } = require('./lib/compute');
+const c = require('./lib/cricket');
 
 const app = express();
 const PORT = 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.locals.c = c;
 app.use(compression());
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d', etag: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -116,21 +118,23 @@ app.get('/live', handle(async (req, res) => {
 app.get('/api/live', handle(async (req, res) => {
   const data = await loadViewData();
   const live = [];
-  (data.seasons || []).forEach(season => {
-    [].concat(season.matches || [], season.playoff || []).forEach(m => {
-      if (m.status === 'live') {
-        live.push({
-          id: m.id,
-          match: m.match,
-          team1: m.team1,
-          team2: m.team2,
-          seasonId: season.id,
-          inn1: { runs: m.inn1.runs, wickets: m.inn1.wickets, overs: m.inn1.ballStr, crr: m.inn1.crr },
-          inn2: m.innings.length > 1 ? { runs: m.inn2.runs, wickets: m.inn2.wickets, overs: m.inn2.ballStr, crr: m.inn2.crr, target: m.target } : null,
-          target: m.target
-        });
-      }
+  function collect(m, season, isPlayoff) {
+    live.push({
+      id: m.id,
+      key: season.id + '-' + (isPlayoff ? 'p' : 'm') + '-' + m.id,
+      match: m.match,
+      team1: m.team1,
+      team2: m.team2,
+      seasonId: season.id,
+      inn1: { runs: m.inn1.runs, wickets: m.inn1.wickets, overs: m.inn1.ballStr, crr: m.inn1.crr },
+      inn2: m.innings.length > 1 ? { runs: m.inn2.runs, wickets: m.inn2.wickets, overs: m.inn2.ballStr, crr: m.inn2.crr, target: m.target } : null,
+      target: m.target,
+      inSuperOver: !!m.inSuperOver
     });
+  }
+  (data.seasons || []).forEach(season => {
+    (season.matches || []).forEach(m => { if (m.status === 'live') collect(m, season, false); });
+    (season.playoff || []).forEach(m => { if (m.status === 'live') collect(m, season, true); });
   });
   res.json({ live });
 }));

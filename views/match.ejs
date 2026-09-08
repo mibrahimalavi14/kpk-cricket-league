@@ -5,7 +5,7 @@
     <a href="/season/<%= season.id %>" class="back-btn">← Back to <%= season.name %></a>
   </div>
   <div class="match-head">
-    <%- include('partials/match_banner', { m: match }) %>
+    <%- include('partials/match_banner', { m: match, season: season }) %>
   </div>
 
   <% if (!match.innings || match.innings.length === 0 || match.innings[0].length === 0) { %>
@@ -89,6 +89,20 @@
         </div>
       </div>
     <% }) %>
+
+    <% if (match.superOverLegs && match.superOverLegs.length) { %>
+      <div class="scorecard-box">
+        <h2 class="scorecard-title">⭐ Super Over <span class="scorecard-note">Tie-breaker</span></h2>
+        <% match.superOverLegs.forEach(leg => { %>
+          <h3 class="commentary-title" style="margin-top:1rem"><%= leg.team %> &nbsp;·&nbsp; <%= leg.inn.runs %>/<%= leg.inn.wickets %> (<%= leg.inn.ballStr %> ov)</h3>
+          <div class="commentary-feed">
+            <% (match.innings[2 + (leg.leg - 1) * 2 + (leg.team === match.team2 ? 0 : 1)] || []).forEach((b, i) => { %>
+              <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= i + 1 %>. <%= commentaryText(b) %></span>
+            <% }) %>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
   <% } %>
 </section>
 

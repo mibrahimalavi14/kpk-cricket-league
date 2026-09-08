@@ -62,7 +62,9 @@
               <div class="sb-score-val"><%= match.inn1.runs %>/<%= match.inn1.wickets %></div>
               <div class="sb-score-sub"><%= match.inn1.ballStr %> ov · CRR <%= match.inn1.crr %></div>
             </div>
-            <% if (match.inn2 && match.inn2.legalBalls > 0) { %>
+            <% if (match.inSuperOver) { %>
+              <div class="sb-vs">TIE MATCH → SUPER OVER<br><%= match.target ? 'Target ' + match.target : '' %></div>
+            <% } else if (match.inn2 && match.inn2.legalBalls > 0) { %>
               <div class="sb-vs">2nd Inns <%= match.target ? '· Target ' + match.target : '' %></div>
             <% } else { %>
               <div class="sb-vs">vs</div>
@@ -73,12 +75,23 @@
               <div class="sb-score-sub"><%= match.inn2 && match.inn2.legalBalls > 0 ? match.inn2.ballStr + ' ov · CRR ' + match.inn2.crr : 'Yet to bat' %></div>
             </div>
           </div>
+          <% if (match.inSuperOver && match.superOverLegs && match.superOverLegs.length) { %>
+            <div class="sb-so-box">
+              <% match.superOverLegs.forEach(leg => { %>
+                <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %></span>
+              <% }) %>
+            </div>
+          <% } %>
 
           <%
             const curLen = match.innings.length;
-            const battTeam = curLen === 1 ? match.team1 : match.team2;
-            const bowlTeam = curLen === 1 ? match.team2 : match.team1;
-            const curInn = curLen === 1 ? match.inn1 : match.inn2;
+            const lastIdx = curLen - 1;
+            const isSO = lastIdx >= 2;
+            const battTeam = isSO ? (lastIdx % 2 === 0 ? match.team2 : match.team1) : (curLen === 1 ? match.team1 : match.team2);
+            const bowlTeam = battTeam === match.team1 ? match.team2 : match.team1;
+            const curRaw = match.innings[lastIdx] || [];
+            const curQuota = isSO ? 1 : season.overs;
+            const curInn = c.inningsSummary(curRaw, curQuota, c.squadSizeFor(battTeam, data));
             const battPlayers = (data.players || []).filter(p => p.teamName === battTeam);
             const bowlPlayers = (data.players || []).filter(p => p.teamName === bowlTeam);
             const quota = season.overs;
@@ -90,56 +103,72 @@
 
           <!-- BALL ENTRY -->
           <% if (!curInn.done && match.status !== 'completed') { %>
+            <%
+              const soMode = match.inSuperOver;
+              const soLabel = soMode ? '⭐ Super Over' : '';
+              const strikerPref = [...curInn.batting].reverse().find(b => !b.out) || curInn.batting[0];
+              const bowlerPref = curInn.bowling.length ? curInn.bowling[curInn.bowling.length - 1].player : (bowlPlayers[0] ? bowlPlayers[0].name : '');
+            %>
             <div class="sb-form">
-              <h3>Add Ball - <%= battTeam %> batting</h3>
-              <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/ball" method="POST">
+              <h3>
+                <%= soLabel ? (soLabel + ' — ') : '' %>Add Ball - <%= battTeam %> batting
+                <% if (match.toss) { %><span class="sb-rules" style="font-weight:400">· Toss: <b><%= match.toss %></b> won</span><% } %>
+              </h3>
+              <div class="sb-rules sb-rules-box">
+                <strong>Scoring rules:</strong> 0 / 1 / 2 / 3 off the bat · <span style="color:#b07ce0">FOUR</span> = 4 runs (boundary) · <span style="color:var(--gold)">SIX</span> = 6 runs (over the rope). <b>Wide</b> = +1 run (no extra ball does not count as a legal ball) · <b>No Ball</b> = +1 run + a free hit next delivery · <b>Byes</b> = runs taken without touching the bat · <b>Leg Byes</b> = runs when the ball hits the pad. Overs: T<%= season.overs %> per innings; the team batting second must beat the target to avoid a tie.
+              </div>
+              <form id="ballForm" action="/admin/season/<%= season.id %>/match/<%= match.id %>/ball" method="POST">
                 <div class="sb-form-row">
                   <div class="sb-field">
                     <label>Striker</label>
-                    <input type="text" name="striker" list="batters" placeholder="Striker" required style="width:100%">
+                    <input type="text" name="striker" list="batters" value="<%= strikerPref ? strikerPref.player : '' %>" placeholder="Striker" required style="width:100%">
                   </div>
                   <div class="sb-field">
                     <label>Bowler</label>
-                    <input type="text" name="bowler" list="bowlers" placeholder="Bowler" required style="width:100%">
+                    <input type="text" name="bowler" list="bowlers" value="<%= bowlerPref %>" placeholder="Bowler" required style="width:100%">
                   </div>
                 </div>
                 <datalist id="batters"><% battPlayers.forEach(p => { %><option value="<%= p.name %>"><% }) %></datalist>
                 <datalist id="bowlers"><% bowlPlayers.forEach(p => { %><option value="<%= p.name %>"><% }) %></datalist>
 
+                <input type="hidden" name="batRuns" id="batRuns" value="0">
+                <input type="hidden" name="extraType" id="extraType" value="">
+                <input type="hidden" name="extraRuns" id="extraRuns" value="0">
+                <input type="hidden" name="isWicket" id="isWicket" value="0">
+                <input type="hidden" name="wicketType" id="wicketType" value="">
+                <input type="hidden" name="fielder" id="fielder" value="">
+
                 <div class="sb-form-row">
                   <div class="sb-field">
                     <label>Runs off bat</label>
                     <div class="run-btn-row">
-                      <button type="button" class="run-btn active" data-runs="0" onclick="setRuns(this,0)">0</button>
-                      <button type="button" class="run-btn" data-runs="1" onclick="setRuns(this,1)">1</button>
-                      <button type="button" class="run-btn" data-runs="2" onclick="setRuns(this,2)">2</button>
-                      <button type="button" class="run-btn" data-runs="3" onclick="setRuns(this,3)">3</button>
-                      <button type="button" class="run-btn run-four" data-runs="4" onclick="setRuns(this,4)">FOUR 4</button>
-                      <button type="button" class="run-btn run-six" data-runs="6" onclick="setRuns(this,6)">SIX 6</button>
+                      <button type="button" class="run-btn" onclick="addBall(0)">0</button>
+                      <button type="button" class="run-btn" onclick="addBall(1)">1</button>
+                      <button type="button" class="run-btn" onclick="addBall(2)">2</button>
+                      <button type="button" class="run-btn" onclick="addBall(3)">3</button>
+                      <button type="button" class="run-btn run-four" onclick="addBall(4)">FOUR 4</button>
+                      <button type="button" class="run-btn run-six" onclick="addBall(6)">SIX 6</button>
                     </div>
-                    <input type="hidden" name="batRuns" id="batRuns" value="0">
                   </div>
                   <div class="sb-field">
-                    <label>Extra</label>
-                    <select name="extraType" id="extraType" style="width:100%">
-                      <option value="">None</option>
-                      <option value="wd">Wide</option>
-                      <option value="nb">No Ball</option>
-                      <option value="by">Byes</option>
-                      <option value="lb">Leg Byes</option>
-                    </select>
-                  </div>
-                  <div class="sb-field">
-                    <label>Extra runs</label>
-                    <input type="number" name="extraRuns" value="1" min="0" max="4" style="width:100%">
+                    <label>Extras</label>
+                    <div class="run-btn-row">
+                      <button type="button" class="run-btn run-wd" onclick="addExtra('wd',<%= match.inn2 && match.inn2.legalBalls > 0 ? 1 : 1 %>)">Wide +1</button>
+                      <button type="button" class="run-btn run-nb" onclick="addExtra('nb',1)">No Ball +1</button>
+                      <button type="button" class="run-btn run-by" onclick="addExtra('by',1)">Byes +1</button>
+                      <button type="button" class="run-btn run-lb" onclick="addExtra('lb',1)">Leg Byes +1</button>
+                    </div>
                   </div>
                 </div>
 
                 <div class="sb-form-row">
                   <div class="sb-field sb-wicket">
-                    <label><input type="checkbox" name="isWicket" value="1" onchange="document.getElementById('wk-details').style.display = this.checked ? 'grid' : 'none'"> Wicket</label>
-                    <div id="wk-details" style="display:none;grid-template-columns:1fr 1fr;gap:0.5rem">
-                      <select name="wicketType" style="width:100%">
+                    <label>Wicket</label>
+                    <div class="wicket-row">
+                      <button type="button" class="btn btn-sm btn-danger" style="background:#e74c3c" onclick="toggleWicket()">🦴 Take Wicket</button>
+                    </div>
+                    <div id="wk-details" style="display:none;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.6rem">
+                      <select id="wicketTypeSelect" style="width:100%">
                         <option value="bowled">Bowled</option>
                         <option value="caught">Caught</option>
                         <option value="lbw">LBW</option>
@@ -148,12 +177,14 @@
                         <option value="hitwicket">Hit Wicket</option>
                         <option value="other">Other</option>
                       </select>
-                      <input type="text" name="fielder" placeholder="Fielder (caught/stumped)" style="width:100%">
+                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="width:100%">
                     </div>
                   </div>
-                  <div class="sb-field sb-submit">
-                    <button type="submit" class="btn btn-primary" style="width:100%">+ Add Ball</button>
-                  </div>
+                </div>
+
+                <div class="sb-form-row" style="margin-top:0.5rem">
+                  <button type="button" class="btn btn-primary" style="width:100%" onclick="document.getElementById('addBallNotice').style.display='block'; setTimeout(function(){ document.getElementById('addBallNotice').style.display='none'; },3000);">+ Add Ball (or click a run/extra button)</button>
+                  <div id="addBallNotice" style="display:none;color:var(--gold);text-align:center;width:100%;margin-top:0.4rem;font-weight:700">Click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
                 </div>
               </form>
             </div>
@@ -183,10 +214,10 @@
             <div class="sb-live-table">
               <h3>🎯 <%= bowlTeam %> Bowlers</h3>
               <table class="admin-table">
-                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>Econ</th></tr></thead>
+                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Econ</th></tr></thead>
                 <tbody>
                   <% curInn.bowling.forEach(b => { %>
-                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.eco.toFixed(2) %></td></tr>
+                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.wickets %></td><td><%= b.eco.toFixed(2) %></td></tr>
                   <% }) %>
                 </tbody>
               </table>
@@ -202,8 +233,11 @@
                 </form>
               <% } %>
               <% if (curLen >= 2 && curInn.done) { %>
+                <%
+                  const soOpenNext = match.inSuperOver && curLen % 2 === 1;
+                %>
                 <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/complete" method="POST" style="display:inline">
-                  <button type="submit" class="btn btn-gold">🏁 Complete Match (Auto Result)</button>
+                  <button type="submit" class="btn btn-gold"><%= soOpenNext ? '▶ Start Super Over 2nd Leg' : '🏁 ' + (match.inSuperOver ? 'Complete Super Over (Auto Result)' : 'Complete Match (Auto Result)') %></button>
                 </form>
               <% } %>
               <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/undo" method="POST" style="display:inline">
@@ -241,11 +275,47 @@
     </main>
   </div>
   <script>
-    function setRuns(btn, v) {
+    function addBall(v) {
+      var f = document.getElementById('ballForm');
       document.getElementById('batRuns').value = v;
-      document.querySelectorAll('.run-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
+      document.getElementById('extraType').value = '';
+      document.getElementById('extraRuns').value = '0';
+      document.getElementById('isWicket').value = '0';
+      f.submit();
     }
+    function addExtra(type, runs) {
+      var f = document.getElementById('ballForm');
+      document.getElementById('batRuns').value = '0';
+      document.getElementById('extraType').value = type;
+      document.getElementById('extraRuns').value = runs;
+      document.getElementById('isWicket').value = '0';
+      f.submit();
+    }
+    function toggleWicket() {
+      var d = document.getElementById('wk-details');
+      var on = d.style.display === 'grid';
+      d.style.display = on ? 'none' : 'grid';
+      if (!on) return;
+      document.getElementById('wicketTypeSelect').value = document.getElementById('wicketTypeSelect').value || 'bowled';
+    }
+    function submitWicket() {
+      var f = document.getElementById('ballForm');
+      document.getElementById('batRuns').value = '0';
+      document.getElementById('extraType').value = '';
+      document.getElementById('isWicket').value = '1';
+      document.getElementById('wicketType').value = document.getElementById('wicketTypeSelect').value;
+      document.getElementById('fielder').value = document.getElementById('fielderInput').value;
+      window.wicketSubmitting = true;
+      f.submit();
+    }
+    document.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('.sb-wicket .btn-danger')) {
+        var el = e.target.closest('.sb-wicket .btn-danger');
+        el.textContent = '✓ Confirm Wicket';
+        el.style.background = '#c0392b';
+        el.onclick = submitWicket;
+      }
+    });
   </script>
 </body>
 </html>

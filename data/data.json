@@ -15,58 +15,6 @@
       "overs": 3,
       "format": "T3",
       "status": "Active",
-      "pointsTable": [
-        {
-          "team": "Haripur",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 1
-        },
-        {
-          "team": "Abbottabad",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 2
-        },
-        {
-          "team": "Khanpur",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 3
-        },
-        {
-          "team": "Balakot",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 4
-        },
-        {
-          "team": "Muzaffarabad",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 5
-        }
-      ],
       "matches": [
         {
           "id": 1,
@@ -78,47 +26,7 @@
           "result": "",
           "venue": "Haripur Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 2,
@@ -130,70 +38,7 @@
           "result": "",
           "venue": "Khanpur Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 17,
-            "wickets": 0,
-            "legalBalls": 4,
-            "overs": "0.4",
-            "ballStr": "0.4",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [
-              {
-                "player": "Muhavia Usmani",
-                "runs": 13,
-                "balls": 4,
-                "fours": 1,
-                "sixes": 1,
-                "out": false,
-                "notOut": true,
-                "howOut": "",
-                "dismisser": "",
-                "sr": 325
-              }
-            ],
-            "bowling": [
-              {
-                "player": "Muhammad Ali",
-                "balls": 4,
-                "runs": 13,
-                "wickets": 0,
-                "maidens": 0,
-                "overs": "0.4",
-                "eco": 19.5
-              }
-            ],
-            "fow": [],
-            "crr": 25.5,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 3,
@@ -205,47 +50,7 @@
           "result": "",
           "venue": "Muzaffarabad Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 4,
@@ -257,47 +62,7 @@
           "result": "",
           "venue": "Abbottabad Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 5,
@@ -309,47 +74,7 @@
           "result": "",
           "venue": "Balakot Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 6,
@@ -361,47 +86,7 @@
           "result": "",
           "venue": "Haripur Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 7,
@@ -413,47 +98,7 @@
           "result": "",
           "venue": "Abbottabad Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 8,
@@ -465,47 +110,7 @@
           "result": "",
           "venue": "Khanpur Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 9,
@@ -517,47 +122,7 @@
           "result": "",
           "venue": "Haripur Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 10,
@@ -569,47 +134,7 @@
           "result": "",
           "venue": "Abbottabad Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         }
       ],
       "playoff": [
@@ -623,47 +148,7 @@
           "result": "",
           "venue": "KPK Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         },
         {
           "id": 2,
@@ -675,111 +160,9 @@
           "result": "",
           "venue": "KPK Ground",
           "status": "upcoming",
-          "innings": [],
-          "inn1": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          },
-          "inn2": {
-            "runs": 0,
-            "wickets": 0,
-            "legalBalls": 0,
-            "overs": "0",
-            "ballStr": "0",
-            "extras": {
-              "wd": 0,
-              "nb": 0,
-              "by": 0,
-              "lb": 0
-            },
-            "batting": [],
-            "bowling": [],
-            "fow": [],
-            "crr": 0,
-            "allOut": false,
-            "fullOvers": false,
-            "done": false
-          }
+          "innings": []
         }
-      ],
-      "stats": {
-        "topRunScorers": [],
-        "topWicketTakers": []
-      },
-      "_quota": 3,
-      "playerOfSeason": null,
-      "motms": [],
-      "champion": "",
-      "runnerUp": "",
-      "dateRange": "10 Sept – 22 Sept 2026",
-      "pointsByTeam": {
-        "Haripur": {
-          "team": "Haripur",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 1
-        },
-        "Abbottabad": {
-          "team": "Abbottabad",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 2
-        },
-        "Khanpur": {
-          "team": "Khanpur",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 3
-        },
-        "Balakot": {
-          "team": "Balakot",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 4
-        },
-        "Muzaffarabad": {
-          "team": "Muzaffarabad",
-          "played": 0,
-          "won": 0,
-          "lost": 0,
-          "tied": 0,
-          "nrr": "0.000",
-          "points": 0,
-          "position": 5
-        }
-      }
+      ]
     }
   ],
   "teams": [
