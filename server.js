@@ -129,7 +129,8 @@ app.get('/api/live', handle(async (req, res) => {
       inn1: { runs: m.inn1.runs, wickets: m.inn1.wickets, overs: m.inn1.ballStr, crr: m.inn1.crr },
       inn2: m.innings.length > 1 ? { runs: m.inn2.runs, wickets: m.inn2.wickets, overs: m.inn2.ballStr, crr: m.inn2.crr, target: m.target } : null,
       target: m.target,
-      inSuperOver: !!m.inSuperOver
+      inSuperOver: !!m.inSuperOver,
+      superOver: m.innings.length > 2 ? m.superOverLegs.map(l => ({ leg: l.leg, team: l.team, runs: l.inn.runs, wickets: l.inn.wickets, overs: l.inn.ballStr })) : []
     });
   }
   (data.seasons || []).forEach(season => {

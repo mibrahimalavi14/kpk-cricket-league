@@ -314,6 +314,10 @@ a.match-card:hover{transform:translateY(-3px);border-color:var(--accent);text-de
 .sb-score-val{font-size:1.9rem;font-weight:800;color:var(--accent)}
 .sb-score-sub{color:var(--text-light);font-size:0.8rem}
 .sb-vs{color:var(--text-light);font-size:0.85rem}
+.sb-so-vs{display:grid;gap:0.3rem;text-align:center;font-size:0.82rem}
+.sb-so-vs div:first-child{color:var(--gold);font-weight:700}
+.sb-so-box{display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;margin:0.6rem 0}
+.live-so-legs{border-top:1px dashed rgba(241,196,15,0.4);margin-top:0.6rem;padding-top:0.5rem}
 .sb-notice{text-align:center;background:rgba(243,156,18,0.15);border:1px solid rgba(243,156,18,0.4);color:#f39c12;padding:0.8rem;border-radius:12px;margin:1rem 0;font-weight:600}
 .sb-form{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
 .sb-form h3{margin-bottom:1rem;font-size:1.05rem}

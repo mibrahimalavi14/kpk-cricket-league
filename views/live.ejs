@@ -44,6 +44,17 @@
               </div>
             <% } %>
           </div>
+          <% if (m.inSuperOver && m.superOverLegs && m.superOverLegs.length) { %>
+            <div class="live-so-legs" id="so-legs-<%= m.id %>">
+              <% m.superOverLegs.forEach(leg => { %>
+                <div class="live-score-row">
+                  <span class="ls-team">⭐ SO<%= leg.leg %>: <%= leg.team %></span>
+                  <span class="ls-val"><%= leg.inn.runs %>/<%= leg.inn.wickets %></span>
+                  <span class="ls-overs">(<%= leg.inn.ballStr %>)</span>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
           <a href="/match/<%= m.id %>" class="btn btn-sm btn-primary" style="margin-top:1rem">Full Scorecard →</a>
         </div>
         <span class="match-status live-badge<%= m.inSuperOver ? ' superover' : '' %>"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
@@ -70,6 +81,12 @@
           }
           if (row2 && m.inn2) {
             row2.innerHTML = '<span class="ls-team">' + m.team2 + '</span><span class="ls-val">' + m.inn2.runs + '/' + m.inn2.wickets + '</span><span class="ls-overs">(' + m.inn2.overs + ')</span>';
+          }
+          var soBox = document.getElementById('so-legs-' + m.id);
+          if (soBox) {
+            soBox.innerHTML = (m.superOver || []).map(function (leg) {
+              return '<div class="live-score-row"><span class="ls-team">⭐ SO' + leg.leg + ': ' + leg.team + '</span><span class="ls-val">' + leg.runs + '/' + leg.wickets + '</span><span class="ls-overs">(' + leg.overs + ')</span></div>';
+            }).join('');
           }
         });
         if (live.length === 0 && container.querySelectorAll('.live-match-card').length > 0) {

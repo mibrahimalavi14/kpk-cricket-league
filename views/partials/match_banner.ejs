@@ -35,6 +35,13 @@
   <div class="banner-result">
     <% if (live) { %>
       <span class="live-badge"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
+      <% if (m.superOverLegs && m.superOverLegs.length) { %>
+        <div class="banner-so so-live">
+          <% m.superOverLegs.forEach(leg => { %>
+            <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %> (<%= leg.inn.ballStr %>)</span>
+          <% }) %>
+        </div>
+      <% } %>
     <% } else if (m.result) { %>
       ✅ <span style="color:#2ecc71"><%= m.result %></span>
       <% if (m.superOverLegs && m.superOverLegs.length) { %>

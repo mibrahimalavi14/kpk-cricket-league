@@ -15,7 +15,9 @@
       <p style="color:var(--text-light)">Scorecard will appear here once the match begins.</p>
     </div>
   <% } else { %>
-    <% if (match.target) { %>
+    <% if (match.inSuperOver) { %>
+      <div class="target-line">🏏 Match tied after regulation — ⭐ Super Over in progress</div>
+    <% } else if (match.target) { %>
       <div class="target-line">🏁 Target: <strong><%= match.target %></strong> runs for <%= match.team2 %></div>
     <% } %>
 
@@ -84,7 +86,7 @@
         <h3 class="commentary-title">Ball by Ball<%= innNo === 0 ? '' : '' %></h3>
         <div class="commentary-feed">
           <% match.innings[innNo].forEach((b, i) => { %>
-            <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= i + 1 %>. <%= commentaryText(b) %></span>
+            <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= b.over %>.<%= b.ball %><%= b.legal ? '' : '*' %> <%= commentaryText(b) %></span>
           <% }) %>
         </div>
       </div>
@@ -97,7 +99,7 @@
           <h3 class="commentary-title" style="margin-top:1rem"><%= leg.team %> &nbsp;·&nbsp; <%= leg.inn.runs %>/<%= leg.inn.wickets %> (<%= leg.inn.ballStr %> ov)</h3>
           <div class="commentary-feed">
             <% (match.innings[2 + (leg.leg - 1) * 2 + (leg.team === match.team2 ? 0 : 1)] || []).forEach((b, i) => { %>
-              <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= i + 1 %>. <%= commentaryText(b) %></span>
+              <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : (b.batRuns === 4 || b.batRuns === 6 ? (b.batRuns === 6 ? 'cb-six' : 'cb-four') : '') %>"><%= b.over %>.<%= b.ball %><%= b.legal ? '' : '*' %> <%= commentaryText(b) %></span>
             <% }) %>
           </div>
         <% }) %>

@@ -71,6 +71,12 @@
         });
         var badge = b.querySelector('.live-badge');
         if (badge && m.inSuperOver) badge.classList.add('superover');
+        var soBox = b.querySelector('.banner-so .so-live');
+        if (soBox && m.superOver && m.superOver.length) {
+          soBox.innerHTML = m.superOver.map(function (leg) {
+            return '<span class="banner-so-leg">⭐ SO' + leg.leg + ': ' + leg.team + ' ' + leg.runs + '/' + leg.wickets + ' (' + leg.overs + ')</span>';
+          }).join('');
+        }
       }
       function pulse() {
         fetch('/api/live', { headers: { 'Accept': 'application/json' } })

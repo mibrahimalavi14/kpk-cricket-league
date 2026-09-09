@@ -55,6 +55,17 @@
           </form>
         <% } else { %>
 
+          <%
+            const soLen = match.innings.length;
+            const soLastIdx = soLen - 1;
+            const soBattTeam = soLastIdx >= 2 ? (soLastIdx % 2 === 0 ? match.team2 : match.team1) : (soLen === 1 ? match.team1 : match.team2);
+            const soTarget = (match.inSuperOver && soLastIdx >= 3 && soLastIdx % 2 === 1)
+              ? parseInt(c.inningsSummary(match.innings[soLastIdx - 1], 1, c.squadSizeFor(match.team2, data)).runs, 10) + 1
+              : null;
+            const soLegNum = match.inSuperOver && soLastIdx >= 2 ? (Math.floor((soLastIdx - 2) / 2) + 1) : 0;
+            const soIsChase = soLastIdx >= 3 && soLastIdx % 2 === 1;
+          %>
+
           <!-- SCORES -->
           <div class="sb-scores">
             <div class="sb-score">
@@ -63,7 +74,10 @@
               <div class="sb-score-sub"><%= match.inn1.ballStr %> ov · CRR <%= match.inn1.crr %></div>
             </div>
             <% if (match.inSuperOver) { %>
-              <div class="sb-vs">TIE MATCH → SUPER OVER<br><%= match.target ? 'Target ' + match.target : '' %></div>
+              <div class="sb-vs sb-so-vs">
+                <div>MATCH TIED → SUPER OVER</div>
+                <div>SO<%= soLegNum %> · <%= soBattTeam %> batting <%= soIsChase ? '· Target ' + soTarget : '' %></div>
+              </div>
             <% } else if (match.inn2 && match.inn2.legalBalls > 0) { %>
               <div class="sb-vs">2nd Inns <%= match.target ? '· Target ' + match.target : '' %></div>
             <% } else { %>
@@ -75,10 +89,10 @@
               <div class="sb-score-sub"><%= match.inn2 && match.inn2.legalBalls > 0 ? match.inn2.ballStr + ' ov · CRR ' + match.inn2.crr : 'Yet to bat' %></div>
             </div>
           </div>
-          <% if (match.inSuperOver && match.superOverLegs && match.superOverLegs.length) { %>
+          <% if (match.superOverLegs && match.superOverLegs.length) { %>
             <div class="sb-so-box">
               <% match.superOverLegs.forEach(leg => { %>
-                <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %></span>
+                <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %> (<%= leg.inn.ballStr %> ov)</span>
               <% }) %>
             </div>
           <% } %>
@@ -165,7 +179,7 @@
                   <div class="sb-field sb-wicket">
                     <label>Wicket</label>
                     <div class="wicket-row">
-                      <button type="button" class="btn btn-sm btn-danger" style="background:#e74c3c" onclick="toggleWicket()">🦴 Take Wicket</button>
+                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
                     </div>
                     <div id="wk-details" style="display:none;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.6rem">
                       <select id="wicketTypeSelect" style="width:100%">
@@ -183,8 +197,8 @@
                 </div>
 
                 <div class="sb-form-row" style="margin-top:0.5rem">
-                  <button type="button" class="btn btn-primary" style="width:100%" onclick="document.getElementById('addBallNotice').style.display='block'; setTimeout(function(){ document.getElementById('addBallNotice').style.display='none'; },3000);">+ Add Ball (or click a run/extra button)</button>
-                  <div id="addBallNotice" style="display:none;color:var(--gold);text-align:center;width:100%;margin-top:0.4rem;font-weight:700">Click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
+                  <button type="button" class="btn btn-primary" style="width:100%" onclick="submitDot()">➕ Add Dot Ball (0 runs)</button>
+                  <div style="color:var(--text-light);text-align:center;width:100%;margin-top:0.4rem;font-weight:500">Tip: click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
                 </div>
               </form>
             </div>
@@ -264,9 +278,11 @@
                       : b.batRuns === 4 ? 'FOUR! by ' + b.striker
                       : b.batRuns > 0 ? b.batRuns + ' run' + (b.batRuns === 1 ? '' : 's') + ' by ' + b.striker
                       : 'Dot ball by ' + b.bowler; %>
-                    <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : '' %>"><%= ii + 1 %>.<%= i + 1 %><%= b.legal ? '' : '*' %> <%= txt %> (<%= b.over %>.<%= b.ball %>)</span>
-                  <% });
-                }) %>
+                    <span class="commentary-ball <%= b.isWicket ? 'cb-wicket' : '' %>">
+                      <% if (ii >= 2) { %>⭐ SO<%= Math.floor((ii - 2) / 2) + 1 %> · <% } %><%= b.over %>.<%= b.ball %><%= b.legal ? '' : '*' %> <%= txt %>
+                    </span>
+                  <% }); %>
+                <% }) %>
               </div>
             </div>
           <% } %>
@@ -275,46 +291,56 @@
     </main>
   </div>
   <script>
-    function addBall(v) {
+    var sbSubmitting = false;
+    function readySubmit(batRuns, extraType, extraRuns, isWicket, wicketType, fielder) {
+      if (sbSubmitting) return;
+      sbSubmitting = true;
       var f = document.getElementById('ballForm');
-      document.getElementById('batRuns').value = v;
-      document.getElementById('extraType').value = '';
-      document.getElementById('extraRuns').value = '0';
-      document.getElementById('isWicket').value = '0';
+      document.getElementById('batRuns').value = batRuns;
+      document.getElementById('extraType').value = extraType || '';
+      document.getElementById('extraRuns').value = extraRuns || '0';
+      document.getElementById('isWicket').value = isWicket ? '1' : '0';
+      document.getElementById('wicketType').value = wicketType || '';
+      document.getElementById('fielder').value = fielder || '';
       f.submit();
+    }
+    function addBall(v) {
+      readySubmit(v, '', '0', false, '', '');
     }
     function addExtra(type, runs) {
-      var f = document.getElementById('ballForm');
-      document.getElementById('batRuns').value = '0';
-      document.getElementById('extraType').value = type;
-      document.getElementById('extraRuns').value = runs;
-      document.getElementById('isWicket').value = '0';
-      f.submit();
+      readySubmit('0', type, runs, false, '', '');
     }
+    function submitDot() {
+      readySubmit('0', '', '0', false, '', '');
+    }
+    var wicketArmed = false;
     function toggleWicket() {
       var d = document.getElementById('wk-details');
       var on = d.style.display === 'grid';
       d.style.display = on ? 'none' : 'grid';
-      if (!on) return;
-      document.getElementById('wicketTypeSelect').value = document.getElementById('wicketTypeSelect').value || 'bowled';
+      if (!on) {
+        document.getElementById('wicketTypeSelect').value = document.getElementById('wicketTypeSelect').value || 'bowled';
+      }
     }
     function submitWicket() {
-      var f = document.getElementById('ballForm');
-      document.getElementById('batRuns').value = '0';
-      document.getElementById('extraType').value = '';
-      document.getElementById('isWicket').value = '1';
-      document.getElementById('wicketType').value = document.getElementById('wicketTypeSelect').value;
-      document.getElementById('fielder').value = document.getElementById('fielderInput').value;
-      window.wicketSubmitting = true;
-      f.submit();
+      readySubmit('0', '', '0', true,
+        document.getElementById('wicketTypeSelect').value,
+        document.getElementById('fielderInput').value);
     }
-    document.addEventListener('click', function (e) {
-      if (e.target.closest && e.target.closest('.sb-wicket .btn-danger')) {
-        var el = e.target.closest('.sb-wicket .btn-danger');
-        el.textContent = '✓ Confirm Wicket';
-        el.style.background = '#c0392b';
-        el.onclick = submitWicket;
-      }
+    document.addEventListener('DOMContentLoaded', function () {
+      var wb = document.getElementById('wicketBtn');
+      if (!wb) return;
+      wb.addEventListener('click', function () {
+        if (!wicketArmed) {
+          wicketArmed = true;
+          toggleWicket();
+          wb.textContent = '✓ Confirm Wicket';
+          wb.style.background = '#c0392b';
+          if (document.activeElement && document.activeElement !== wb) document.activeElement.blur();
+        } else {
+          submitWicket();
+        }
+      });
     });
   </script>
 </body>
