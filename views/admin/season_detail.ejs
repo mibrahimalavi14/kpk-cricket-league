@@ -19,24 +19,28 @@
         <a href="/admin/teams">🛡️ Teams</a>
         <a href="/admin/players">⭐ Players</a>
         <a href="/admin/seasons" class="active">🏆 Seasons</a>
+        <a href="/admin/scoring">⚡ Live Scoring</a>
         <a href="/admin/logout">🚪 Logout</a>
       </nav>
     </aside>
     <main class="admin-main">
       <div class="admin-header">
         <h1><%= season.name %> - <%= season.year %> (T<%= season.overs %>)</h1>
-        <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">View Public Page</a>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <a href="/admin/scoring" class="btn btn-sm btn-gold">⚡ Open Live Scoring</a>
+          <a href="/season/<%= season.id %>" class="btn btn-sm btn-outline">View Public Page</a>
+        </div>
       </div>
 
       <div class="admin-tabs" style="display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap">
         <a href="#points" class="btn btn-sm btn-outline">Points Table</a>
-        <a href="#matches" class="btn btn-sm btn-outline">Matches & Scoring</a>
+        <a href="#matches" class="btn btn-sm btn-outline">Matches</a>
         <a href="#playoff" class="btn btn-sm btn-outline">Playoffs</a>
         <a href="#stats" class="btn btn-sm btn-outline">Stats</a>
       </div>
 
       <div class="format-card" style="margin-bottom:2rem;background:rgba(46,204,113,0.08);border-color:rgba(46,204,113,0.3)">
-        <p style="margin:0">✅ <strong>Everything is auto-computed.</strong> Points table, stats, playoff teams and results are calculated automatically from the scorecards — no manual entry needed. Just score the matches.</p>
+        <p style="margin:0">✅ <strong>Everything is auto-computed.</strong> Points table, stats, playoff teams and results are calculated automatically from the scorecards — no manual entry needed. Score your matches from ⚡ <a href="/admin/scoring" style="color:var(--gold)">Live Scoring</a>.</p>
       </div>
 
       <!-- POINTS TABLE (auto) -->
@@ -71,11 +75,11 @@
       </table>
 
       <!-- MATCHES -->
-      <h2 id="matches" style="margin:2.5rem 0 1rem;font-size:1.2rem">League Matches & Scoring</h2>
+      <h2 id="matches" style="margin:2.5rem 0 1rem;font-size:1.2rem">Fixtures</h2>
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+            <th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Status</th><th></th>
           </tr>
         </thead>
         <tbody>
@@ -108,7 +112,6 @@
                 <% } %>
               </td>
               <td>
-                <a href="/admin/season/<%= season.id %>/match/<%= match.id %>" class="btn btn-sm btn-gold">⚡ Score</a>
                 <form id="matchForm_<%= idx %>" action="/admin/season/<%= season.id %>/matches/<%= idx %>" method="POST" style="display:inline">
                   <button type="submit" class="btn btn-sm btn-outline">Save</button>
                 </form>
@@ -121,7 +124,7 @@
       <!-- PLAYOFFS (auto) -->
       <h2 id="playoff" style="margin:2.5rem 0 1rem;font-size:1.2rem">Playoffs <span style="font-size:0.75rem;color:var(--text-light)">(auto - league rules)</span></h2>
       <table class="admin-table">
-        <thead><tr><th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Status</th><th></th></tr></thead>
         <tbody>
           <% season.playoff.forEach((match, idx) => { %>
             <tr>
@@ -131,11 +134,16 @@
               <td><%= match.date %></td>
               <td><%= match.time %></td>
               <td>
-                <% if (match.status === 'completed' || (match.innings && match.innings.length > 0 && match.innings[0].length > 0)) { %>
-                  <a href="/admin/season/<%= season.id %>/match/<%= match.id %>" class="btn btn-sm btn-gold">⚡ Score</a>
+                <% if (match.status === 'live') { %>
+                  <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+                <% } else if (match.status === 'completed') { %>
+                  <span style="color:#2ecc71;font-weight:600">✅ <%= match.result %></span>
                 <% } else { %>
-                  <span style="color:var(--text-light);font-size:0.8rem">Waiting for league completion</span>
+                  <span style="color:var(--text-light);font-size:0.85rem">Waiting for league completion</span>
                 <% } %>
+              </td>
+              <td>
+                <a href="/admin/scoring#m<%= season.id %>-<%= match.id %>" class="btn btn-sm btn-outline">Open Scoring</a>
               </td>
             </tr>
           <% }) %>

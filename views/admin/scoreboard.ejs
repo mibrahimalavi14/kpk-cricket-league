@@ -19,6 +19,7 @@
         <a href="/admin/teams">🛡️ Teams</a>
         <a href="/admin/players">⭐ Players</a>
         <a href="/admin/seasons" class="active">🏆 Seasons</a>
+        <a href="/admin/scoring">⚡ Live Scoring</a>
         <a href="/admin/logout">🚪 Logout</a>
       </nav>
     </aside>
@@ -178,11 +179,8 @@
                 <div class="sb-form-row">
                   <div class="sb-field sb-wicket">
                     <label>Wicket</label>
-                    <div class="wicket-row">
-                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
-                    </div>
-                    <div id="wk-details" style="display:none;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.6rem">
-                      <select id="wicketTypeSelect" style="width:100%">
+                    <div class="wicket-row" style="display:flex;gap:0.5rem;flex-wrap:wrap">
+                      <select id="wicketTypeSelect" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
                         <option value="bowled">Bowled</option>
                         <option value="caught">Caught</option>
                         <option value="lbw">LBW</option>
@@ -191,7 +189,8 @@
                         <option value="hitwicket">Hit Wicket</option>
                         <option value="other">Other</option>
                       </select>
-                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="width:100%">
+                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
                     </div>
                   </div>
                 </div>
@@ -314,14 +313,6 @@
       readySubmit('0', '', '0', false, '', '');
     }
     var wicketArmed = false;
-    function toggleWicket() {
-      var d = document.getElementById('wk-details');
-      var on = d.style.display === 'grid';
-      d.style.display = on ? 'none' : 'grid';
-      if (!on) {
-        document.getElementById('wicketTypeSelect').value = document.getElementById('wicketTypeSelect').value || 'bowled';
-      }
-    }
     function submitWicket() {
       readySubmit('0', '', '0', true,
         document.getElementById('wicketTypeSelect').value,
@@ -330,10 +321,18 @@
     document.addEventListener('DOMContentLoaded', function () {
       var wb = document.getElementById('wicketBtn');
       if (!wb) return;
+      var wt = document.getElementById('wicketTypeSelect');
+      if (wt) {
+        wt.addEventListener('change', function () { wicketArmed = false; resetWicketBtn(); });
+      }
+      function resetWicketBtn() {
+        wicketArmed = false;
+        wb.textContent = '🦴 Take Wicket';
+        wb.style.background = '#e74c3c';
+      }
       wb.addEventListener('click', function () {
         if (!wicketArmed) {
           wicketArmed = true;
-          toggleWicket();
           wb.textContent = '✓ Confirm Wicket';
           wb.style.background = '#c0392b';
           if (document.activeElement && document.activeElement !== wb) document.activeElement.blur();

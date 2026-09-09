@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Scoring - Admin</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <h2>🏏 KPK League</h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav>
+        <a href="/admin">📊 Dashboard</a>
+        <a href="/admin/teams">🛡️ Teams</a>
+        <a href="/admin/players">⭐ Players</a>
+        <a href="/admin/seasons">🏆 Seasons</a>
+        <a href="/admin/scoring" class="active">⚡ Live Scoring</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>⚡ Live Scoring</h1>
+        <a href="/live" class="btn btn-sm btn-outline">Public Live Page</a>
+      </div>
+
+      <% if (active) { %>
+        <div class="format-card" style="margin-bottom:2rem;background:rgba(231,76,60,0.08);border-color:rgba(231,76,60,0.3)">
+          <% if (active.match.status === 'live') { %>
+            <p style="margin:0">🔴 In progress: <strong><%= active.match.match %></strong> (<%= active.seasonName %>) · <%= active.match.team1 %> vs <%= active.match.team2 %> — <a href="/admin/season/<%= active.seasonId %>/match/<%= active.match.id %>" style="color:var(--gold)">Continue scoring →</a></p>
+          <% } else { %>
+            <p style="margin:0">▶ Next up: <strong><%= active.match.match %></strong> (<%= active.seasonName %>) · <%= active.match.team1 %> vs <%= active.match.team2 %> — <a href="#m<%= active.seasonId %>-<%= active.match.id %>" style="color:var(--gold)">Start scoring →</a></p>
+          <% } %>
+        </div>
+      <% } else { %>
+        <div class="format-card" style="margin-bottom:2rem;background:rgba(46,204,113,0.08);border-color:rgba(46,204,113,0.3)">
+          <p style="margin:0">✅ No live match right now. Ask the admin to start scoring from the matches below.</p>
+        </div>
+      <% } %>
+
+      <table class="admin-table" id="matches">
+        <thead>
+          <tr><th>Season</th><th>Match</th><th>Team 1</th><th>Team 2</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <% all.forEach(x => {
+            const m = x.match;
+            const hasInnings = Array.isArray(m.innings) && m.innings.length > 0 && m.innings[0].length > 0;
+            const url = '/admin/season/' + x.seasonId + '/match/' + m.id;
+          %>
+            <tr id="m<%= x.seasonId %>-<%= m.id %>">
+              <td style="font-size:0.8rem;color:var(--text-light)"><%= x.isPlayoff ? '⭐ ' : '' %><%= x.seasonName %></td>
+              <td style="color:var(--gold)"><%= m.match %></td>
+              <td><%= m.team1 %></td>
+              <td><%= m.team2 %></td>
+              <td><%= m.date %></td>
+              <td><%= m.time %></td>
+              <td>
+                <% if (m.status === 'live') { %>
+                  <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+                <% } else if (m.status === 'completed') { %>
+                  <span style="color:#2ecc71;font-weight:600">✅ <%= m.result %></span>
+                <% } else { %>
+                  <span style="color:#f39c12;font-weight:600">Upcoming</span>
+                <% } %>
+              </td>
+              <td>
+                <% if (m.status === 'completed') { %>
+                  <a href="<%= url %>" class="btn btn-sm btn-outline">View</a>
+                <% } else if (m.status === 'live') { %>
+                  <a href="<%= url %>" class="btn btn-sm btn-gold">⚡ Score</a>
+                <% } else if (!hasInnings) { %>
+                  <form action="/admin/season/<%= x.seasonId %>/match/<%= m.id %>/start" method="POST" style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
+                    <select name="toss" style="padding:0.35rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                      <option value="<%= m.team1 %>">🏏 <%= m.team1 %> won</option>
+                      <option value="<%= m.team2 %>">🏏 <%= m.team2 %> won</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-gold">▶ Start + Score</button>
+                  </form>
+                <% } else { %>
+                  <a href="<%= url %>" class="btn btn-sm btn-gold">Score</a>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <p style="color:var(--text-light);font-size:0.85rem">Select the toss winner, then press Start — the toss is shown on the public match page and scoreboards.</p>
+    </main>
+  </div>
+</body>
+</html>
