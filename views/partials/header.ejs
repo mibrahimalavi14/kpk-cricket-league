@@ -21,19 +21,24 @@
         <a href="/teams" class="<%= typeof active !== 'undefined' && active === 'teams' ? 'active' : '' %>">Teams</a>
         <a href="/players" class="<%= typeof active !== 'undefined' && active === 'players' ? 'active' : '' %>">Players</a>
         <a href="/live" class="<%= typeof active !== 'undefined' && active === 'live' ? 'active' : '' %>"><span class="live-dot" style="display:inline-block;vertical-align:middle;margin-right:4px"></span>Live</a>
-        <a href="/fixtures" class="<%= typeof active !== 'undefined' && active === 'fixtures' ? 'active' : '' %>">Fixtures</a>
         <a href="/schedule" class="<%= typeof active !== 'undefined' && active === 'schedule' ? 'active' : '' %>">Schedule</a>
-        <a href="/points-table" class="<%= typeof active !== 'undefined' && active === 'points-table' ? 'active' : '' %>">Points Table</a>
-        <a href="/leaders" class="<%= typeof active !== 'undefined' && active === 'leaders' ? 'active' : '' %>">Leaders</a>
-        <a href="/seasons" class="<%= typeof active !== 'undefined' && active === 'seasons' ? 'active' : '' %>">Seasons</a>
-        <a href="/format" class="<%= typeof active !== 'undefined' && active === 'format' ? 'active' : '' %>">Format</a>
         <div class="dropdown">
-          <button class="dropdown-toggle <%= typeof active !== 'undefined' && ['about','contact','faq','awards'].indexOf(active) !== -1 ? 'active' : '' %>">More ▾</button>
+          <button class="dropdown-toggle <%= typeof active !== 'undefined' && ['fixtures','points-table','leaders','seasons','format','about','awards','contact','faq'].indexOf(active) !== -1 ? 'active' : '' %>">More ▾</button>
           <div class="dropdown-menu">
-            <a href="/about" class="<%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">About</a>
-            <a href="/awards" class="<%= typeof active !== 'undefined' && active === 'awards' ? 'active' : '' %>">Awards</a>
-            <a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">Contact</a>
-            <a href="/faq" class="<%= typeof active !== 'undefined' && active === 'faq' ? 'active' : '' %>">FAQ</a>
+            <div class="dd-section-label">Statistics</div>
+            <a href="/fixtures" class="<%= typeof active !== 'undefined' && active === 'fixtures' ? 'active' : '' %>">📋 Fixtures</a>
+            <a href="/points-table" class="<%= typeof active !== 'undefined' && active === 'points-table' ? 'active' : '' %>">📊 Points Table</a>
+            <a href="/leaders" class="<%= typeof active !== 'undefined' && active === 'leaders' ? 'active' : '' %>">📈 Leaders</a>
+            <div class="dd-divider"></div>
+            <div class="dd-section-label">Seasons & Awards</div>
+            <a href="/seasons" class="<%= typeof active !== 'undefined' && active === 'seasons' ? 'active' : '' %>">🏆 Seasons</a>
+            <a href="/format" class="<%= typeof active !== 'undefined' && active === 'format' ? 'active' : '' %>">📋 Format</a>
+            <a href="/awards" class="<%= typeof active !== 'undefined' && active === 'awards' ? 'active' : '' %>">⭐ Awards</a>
+            <div class="dd-divider"></div>
+            <div class="dd-section-label">About</div>
+            <a href="/about" class="<%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">ℹ️ About</a>
+            <a href="/faq" class="<%= typeof active !== 'undefined' && active === 'faq' ? 'active' : '' %>">❓ FAQ</a>
+            <a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">📞 Contact</a>
           </div>
         </div>
       </div>
