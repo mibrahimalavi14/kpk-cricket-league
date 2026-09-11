@@ -80,7 +80,7 @@
       <div class="format-card stats-card">
         <h3>🎯 Top Wicket Takers</h3>
         <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Wickets</th><th>Econ</th><th>Best</th></tr></thead>
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Wkts</th><th>Runs</th><th>Econ</th><th>SR</th><th>Best</th></tr></thead>
           <tbody>
             <% byBowling.slice(0, 5).forEach((p, i) => { %>
               <tr>
@@ -89,7 +89,9 @@
                 <td><%- teamCell(p.team) %></td>
                 <td><%= p.matches || 0 %></td>
                 <td style="font-weight:700;color:var(--accent)"><%= p.wickets %></td>
+                <td><%= p.runs %></td>
                 <td><%= p.eco %></td>
+                <td><%= p.sr %></td>
                 <td><%= p.best %></td>
               </tr>
             <% }) %>

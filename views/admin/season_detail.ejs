@@ -171,12 +171,12 @@
 
       <h3 style="margin-bottom:1rem;font-size:1rem;color:var(--gold)">Top Wicket Takers</h3>
       <table class="admin-table">
-        <thead><tr><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Wickets</th><th>Avg</th><th>Econ</th><th>SR</th><th>Best</th></tr></thead>
+<thead><tr><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Wkts</th><th>Runs</th><th>Avg</th><th>Econ</th><th>SR</th><th>Best</th></tr></thead>
         <tbody>
           <% (season.stats && season.stats.topWicketTakers || []).slice(0, 10).forEach(p => { %>
             <tr>
               <td><%= p.player %></td><td><%= p.team %></td><td><%= p.matches %></td><td><%= p.innings %></td>
-              <td style="font-weight:700"><%= p.wickets %></td><td><%= p.avg %></td><td><%= p.eco %></td><td><%= p.sr %></td><td><%= p.best %></td>
+              <td style="font-weight:700"><%= p.wickets %></td><td><%= p.runs %></td><td><%= p.avg %></td><td><%= p.eco %></td><td><%= p.sr %></td><td><%= p.best %></td>
             </tr>
           <% }) %>
         </tbody>
