@@ -10,67 +10,56 @@
 
 <section class="section" style="padding-top:2rem">
   <div class="award-tabs">
-    <a href="/awards#motm" class="award-tab <%= (typeof tab !== 'undefined' && tab === 'motm') || (typeof tab === 'undefined') ? 'active' : '' %>">Man of the Match</a>
-    <a href="/awards#potm" class="award-tab <%= typeof tab !== 'undefined' && tab === 'potm' ? 'active' : '' %>">Player of the Season</a>
+    <a href="/awards#motm" class="award-tab <%= (typeof tab !== 'undefined' && tab === 'motm') || (typeof tab === 'undefined') ? 'active' : '' %>" data-tab="motm">Man of the Match</a>
+    <a href="/awards#potm" class="award-tab <%= typeof tab !== 'undefined' && tab === 'potm' ? 'active' : '' %>" data-tab="potm">Player of the Season</a>
   </div>
 
   <!-- MOTM Tab -->
   <div id="motm-section" class="award-section" style="<%= typeof tab !== 'undefined' && tab === 'potm' ? 'display:none' : '' %>">
-    <!-- ====== TEMP DESIGN PREVIEW (sample) ====== -->
-    <div style="max-width:860px;margin:1.5rem auto;padding:1rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
-      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.2rem">🛠 Temporary design preview — sample data</div>
-      <div class="motm-grid">
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
-          <div class="motm-line">41 runs</div>
-        </div>
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
-          <div class="motm-line">3 wickets</div>
-        </div>
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
-          <div class="motm-line">35 runs · 2 wickets</div>
-        </div>
-      </div>
-    </div>
-    <!-- ====== END TEMP DESIGN PREVIEW ====== -->
     <% const reversedSeasons = data.seasons.slice().reverse(); %>
-    <% reversedSeasons.forEach((s, si) => { const motms = s.motms || []; %>
+    <% reversedSeasons.forEach((s, si) => { const motmList = (s.motms || []).filter(m => m && m.name); %>
       <div class="season-accordion">
         <button class="accordion-toggle <%= si === 0 ? 'open' : '' %>" onclick="toggleAcc(this)">
           <span class="acc-title">
             <span class="acc-icon"><%= si === 0 ? '▾' : '▸' %></span>
             <%= s.name %> — <%= s.year %>
-            <span class="acc-count"><%= motms.length %> award<%= motms.length !== 1 ? 's' : '' %></span>
+            <span class="acc-count"><%= motmList.length %> MOTM<%= motmList.length !== 1 ? 's' : '' %></span>
           </span>
         </button>
         <div class="accordion-body" style="<%= si === 0 ? 'display:block' : 'display:none' %>">
-          <% if (motms.length === 0) { %>
+          <% if (motmList.length === 0) { %>
             <p style="color:var(--text-light);text-align:center;padding:1.5rem 0">No matches completed yet in this season.</p>
           <% } else { %>
-            <div class="motm-grid">
-              <% motms.forEach(m => {
-                if (m.status !== 'completed' || !m.motm) return;
-                const motm = m.motm;
-                const mp = motm.points;
-              %>
-                <div class="motm-card">
-                  <div class="motm-head">
-                    <span class="motm-match"><%= m.match %></span>
-                    <span class="motm-pts"><%= mp %> pts</span>
-                  </div>
-                  <div class="motm-player">
-                    <span class="motm-name">⭐ <%= motm.name %></span>
-                    <span class="motm-team"><%= motm.team %></span>
-                  </div>
-                  <div class="motm-line"><%= motm.runs %> runs</div>
-                </div>
-              <% }) %>
-            </div>
+            <%
+              // group MOTM cards by date (like the schedule: 2 matches per day)
+              const motmByDate = {};
+              motmList.forEach(mo => { const d = mo.date || 'TBA'; if (!motmByDate[d]) motmByDate[d] = []; motmByDate[d].push(mo); });
+              const motmDates = Object.keys(motmByDate).sort();
+            %>
+            <% motmDates.forEach(dt => { %>
+              <div class="motm-table-wrap">
+                <div class="motm-table-date"><%= dt %></div>
+                <table class="standings-table motm-table">
+                  <thead><tr><th>#</th><th>Match</th><th>Player</th><th>★</th><th>Runs</th><th>4s</th><th>6s</th><th>Wkts</th><th>Ct</th><th>Pts</th></tr></thead>
+                  <tbody>
+                    <% motmByDate[dt].forEach((mo, mi) => { %>
+                      <tr>
+                        <td style="font-weight:700;color:var(--gold)"><%= mi + 1 %></td>
+                        <td><%= mo.match %></td>
+                        <td><span class="motm-name">⭐ <%= mo.name %></span><br><span class="motm-team"><%= mo.team %></span></td>
+                        <td>⭐</td>
+                        <td><%= mo.runs || 0 %></td>
+                        <td><%= mo.fours || 0 %></td>
+                        <td style="color:var(--gold)"><%= mo.sixes || 0 %></td>
+                        <td style="color:var(--accent)"><%= mo.wickets || 0 %></td>
+                        <td><%= mo.catches || 0 %></td>
+                        <td style="font-weight:800;color:var(--gold)"><%= mo.points || 0 %></td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            <% }) %>
           <% } %>
         </div>
       </div>
@@ -79,21 +68,6 @@
 
   <!-- POTM Tab -->
   <div id="potm-section" class="award-section" style="<%= typeof tab !== 'undefined' && tab === 'potm' ? '' : 'display:none' %>">
-    <!-- ====== TEMP DESIGN PREVIEW (sample) ====== -->
-    <div style="max-width:860px;margin:1.5rem auto;padding:1rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
-      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.2rem">🛠 Temporary design preview — sample data</div>
-      <div class="potm-hero">
-        <div class="potm-hero-name">🌟 Sample Player A</div>
-        <div class="potm-hero-team">Haripur</div>
-        <div class="potm-hero-stats">
-          <div class="potm-stat"><span class="potm-sv">245</span><span class="potm-sl">Points</span></div>
-          <div class="potm-stat"><span class="potm-sv">168</span><span class="potm-sl">Runs</span></div>
-          <div class="potm-stat"><span class="potm-sv">2</span><span class="potm-sl">MOTM</span></div>
-          <div class="potm-stat"><span class="potm-sv">5</span><span class="potm-sl">Matches</span></div>
-        </div>
-      </div>
-    </div>
-    <!-- ====== END TEMP DESIGN PREVIEW ====== -->
     <% reversedSeasons.forEach((s, si) => { const potm = s.playerOfSeason; %>
       <div class="season-accordion">
         <button class="accordion-toggle <%= si === 0 ? 'open' : '' %>" onclick="toggleAcc(this)">
@@ -112,6 +86,10 @@
               <div class="potm-hero-stats">
                 <div class="potm-stat"><span class="potm-sv"><%= potm.points %></span><span class="potm-sl">Points</span></div>
                 <div class="potm-stat"><span class="potm-sv"><%= potm.runs %></span><span class="potm-sl">Runs</span></div>
+                <div class="potm-stat"><span class="potm-sv"><%= potm.fours || 0 %></span><span class="potm-sl">Fours</span></div>
+                <div class="potm-stat"><span class="potm-sv"><%= potm.sixes || 0 %></span><span class="potm-sl">Sixes</span></div>
+                <div class="potm-stat"><span class="potm-sv"><%= potm.wickets || 0 %></span><span class="potm-sl">Wickets</span></div>
+                <div class="potm-stat"><span class="potm-sv"><%= potm.catches || 0 %></span><span class="potm-sl">Catches</span></div>
                 <div class="potm-stat"><span class="potm-sv"><%= potm.motmAwards %></span><span class="potm-sl">MOTM</span></div>
                 <div class="potm-stat"><span class="potm-sv"><%= potm.matches %></span><span class="potm-sl">Matches</span></div>
               </div>
@@ -132,14 +110,28 @@ function toggleAcc(btn) {
   body.style.display = isOpen ? 'none' : 'block';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const hash = window.location.hash.replace('#', '');
+function applyAwardTab(hash) {
+  var motmSec = document.getElementById('motm-section');
+  var potmSec = document.getElementById('potm-section');
+  var tabs = document.querySelectorAll('.award-tab');
   if (hash === 'potm') {
-    document.getElementById('motm-section').style.display = 'none';
-    document.getElementById('potm-section').style.display = '';
-    document.querySelectorAll('.award-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.award-tab')[1].classList.add('active');
+    motmSec.style.display = 'none';
+    potmSec.style.display = '';
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    if (tabs[1]) tabs[1].classList.add('active');
+  } else {
+    potmSec.style.display = 'none';
+    motmSec.style.display = '';
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    if (tabs[0]) tabs[0].classList.add('active');
   }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  applyAwardTab(window.location.hash.replace('#', ''));
+});
+window.addEventListener('hashchange', function () {
+  applyAwardTab(window.location.hash.replace('#', ''));
 });
 </script>
 

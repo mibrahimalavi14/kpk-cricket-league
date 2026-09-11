@@ -85,30 +85,49 @@
     <!-- ====== TEMP DESIGN: MAN OF THE MATCH ====== -->
     <div class="section-title" style="margin-top:4rem">
       <h2>⭐ Man of the <span class="highlight">Match</span></h2>
-      <p>Best performer in each match (temporary preview)</p>
+      <p>Best performer in each match — full scorecard breakdown (temporary preview)</p>
     </div>
-    <div class="motm-grid" style="max-width:860px;margin:0 auto">
-      <div class="motm-card">
-        <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
-        <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
-        <div class="motm-line">41 runs</div>
+    <%
+      const motmSampleDays = [
+        { date: 'Thursday, Sep 10', items: [
+          { match: 'Match 1', name: 'Sample Player A', team: 'Haripur', runs: 41, fours: 3, sixes: 2, wkts: 0, ct: 1, pts: 68 },
+          { match: 'Match 2', name: 'Sample Player B', team: 'Abbottabad', runs: 12, fours: 0, sixes: 1, wkts: 3, ct: 0, pts: 52 },
+        ]},
+        { date: 'Saturday, Sep 12', items: [
+          { match: 'Match 3', name: 'Sample Player C', team: 'Mansehra', runs: 35, fours: 2, sixes: 0, wkts: 2, ct: 1, pts: 77 },
+          { match: 'Match 4', name: 'Sample Player D', team: 'Muzaffarabad', runs: 28, fours: 4, sixes: 0, wkts: 1, ct: 2, pts: 55 },
+        ]},
+      ];
+    %>
+    <% motmSampleDays.forEach(day => { %>
+      <div class="motm-table-wrap" style="max-width:860px;margin:0 auto 1.2rem">
+        <div class="motm-table-date"><%= day.date %></div>
+        <table class="standings-table motm-table">
+          <thead><tr><th>#</th><th>Match</th><th>Player</th><th>★</th><th>Runs</th><th>4s</th><th>6s</th><th>Wkts</th><th>Ct</th><th>Pts</th></tr></thead>
+          <tbody>
+            <% day.items.forEach((mo, mi) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= mi + 1 %></td>
+                <td><%= mo.match %></td>
+                <td><span class="motm-name">⭐ <%= mo.name %></span><br><span class="motm-team"><%= mo.team %></span></td>
+                <td>⭐</td>
+                <td><%= mo.runs %></td>
+                <td><%= mo.fours %></td>
+                <td style="color:var(--gold)"><%= mo.sixes %></td>
+                <td style="color:var(--accent)"><%= mo.wkts %></td>
+                <td><%= mo.ct %></td>
+                <td style="font-weight:800;color:var(--gold)"><%= mo.pts %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
-      <div class="motm-card">
-        <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
-        <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
-        <div class="motm-line">3 wickets</div>
-      </div>
-      <div class="motm-card">
-        <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
-        <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
-        <div class="motm-line">35 runs · 2 wickets</div>
-      </div>
-    </div>
+    <% }) %>
 
     <!-- ====== TEMP DESIGN: PLAYER OF THE SEASON ====== -->
     <div class="section-title" style="margin-top:4rem">
       <h2>🌟 Player of the <span class="highlight">Season</span></h2>
-      <p>Top performer of the season (temporary preview)</p>
+      <p>Top performer of the season — shown only after all matches are complete (temporary preview)</p>
     </div>
     <div class="format-card" style="max-width:760px;margin:0 auto;text-align:center;padding:2rem">
       <div class="potm-head">
@@ -117,10 +136,12 @@
       <div class="potm-name" style="margin-top:0.6rem">🌟 Sample Player A</div>
       <div class="potm-team">Haripur</div>
       <div class="potm-stats-grid">
-        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">245</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Points</div></div>
-        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">168</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Runs</div></div>
-        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">2</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">MOTM</div></div>
-        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">5</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Matches</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">245</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Points</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">168</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Runs</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">6</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Sixes</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">4</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Wickets</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">2</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">MOTM</div></div>
+        <div class="stat"><div class="stat-val" style="font-weight:800;color:var(--gold)">5</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Matches</div></div>
       </div>
     </div>
 
