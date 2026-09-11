@@ -451,6 +451,11 @@ a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
 .medal-silver{color:#c0c0c0;text-shadow:0 0 10px rgba(192,192,192,0.3)}
 .medal-bronze{color:#cd7f32;text-shadow:0 0 10px rgba(205,127,50,0.3)}
 
+/* ===== Season stats section headers ===== */
+.stats-section-header{font-size:1.15rem;font-weight:800;color:var(--gold);margin:2.4rem 0 1rem;padding-bottom:0.6rem;border-bottom:2px solid rgba(245,197,24,0.25);display:flex;align-items:center;gap:0.5rem}
+.stats-section-header span{font-size:1.3rem}
+.stats-card-wide{grid-column:1/-1}
+
 /* ===== Run quick buttons (live scoring) ===== */
 .run-btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
 .run-btn{flex:1;min-width:52px;padding:0.7rem 0;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--text);font-weight:800;font-size:1rem;cursor:pointer;text-align:center;transition:all 0.15s}
