@@ -455,6 +455,7 @@ a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
 .stats-section-header{font-size:1.15rem;font-weight:800;color:var(--gold);margin:2.4rem 0 1rem;padding-bottom:0.6rem;border-bottom:2px solid rgba(245,197,24,0.25);display:flex;align-items:center;gap:0.5rem}
 .stats-section-header span{font-size:1.3rem}
 .stats-card-wide{grid-column:1/-1}
+.stats-empty-row{text-align:center;color:var(--text-light);font-style:italic;padding:1rem 0.6rem!important}
 
 /* ===== Run quick buttons (live scoring) ===== */
 .run-btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
