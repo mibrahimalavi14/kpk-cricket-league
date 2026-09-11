@@ -52,10 +52,13 @@
         <tbody>
           <% season.pointsTable.slice().sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr)).forEach((row, i) => {
             const teamData = data.teams.find(t => t.name === row.team);
-            const qualified = (i + 1) <= 3;
+            const pos = i + 1;
+            const qualified = pos <= 3;
+            const medal = qualified && pos <= 3 ? (pos === 1 ? '🥇' : pos === 2 ? '🥈' : '🥉') : '';
+            const medalCls = pos === 1 ? 'medal-gold' : pos === 2 ? 'medal-silver' : 'medal-bronze';
           %>
-            <tr>
-              <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+            <tr class="<%= qualified ? 'row-qualified' : 'row-eliminated' %>">
+              <td class="rank-medal <%= qualified ? medalCls : '' %>" style="font-weight:700;color:var(--gold)"><%= medal ? medal : pos %></td>
               <td>
                 <span style="display:inline-flex;align-items:center;gap:0.5rem">
                   <span style="width:10px;height:10px;border-radius:2px;background:<%= teamData ? teamData.color : '#666' %>"></span>

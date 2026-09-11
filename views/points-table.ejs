@@ -43,9 +43,11 @@
             const qualified = pos <= 3;
             const statusClass = qualified ? 'badge-qualified' : 'badge-eliminated';
             const statusText = qualified ? 'QUALIFIED' : 'ELIMINATED';
+            const medal = qualified && pos <= 3 ? (pos === 1 ? '🥇' : pos === 2 ? '🥈' : '🥉') : '';
+            const medalCls = pos === 1 ? 'medal-gold' : pos === 2 ? 'medal-silver' : 'medal-bronze';
           %>
             <tr class="<%= qualified ? 'row-qualified' : 'row-eliminated' %>">
-              <td style="font-weight:700;color:var(--gold)"><%= pos %></td>
+              <td class="rank-medal <%= qualified ? medalCls : '' %>" style="font-weight:700;color:var(--gold)"><%= medal ? medal : pos %></td>
               <td>
                 <div class="team-name-cell">
                   <img src="<%= teamData ? teamData.logoUrl : '' %>" alt="<%= row.team %>" class="table-logo" onerror="this.style.display='none'">

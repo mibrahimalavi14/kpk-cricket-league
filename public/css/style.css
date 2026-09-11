@@ -438,13 +438,19 @@ a.award-tab:hover{color:#fff;border-color:var(--accent);text-decoration:none}
 .points-table-wrap{max-width:860px;margin:0 auto}
 .pt-full{max-width:100%}
 .th-status{text-align:center}
-.row-qualified{background:rgba(46,204,113,0.07)}
-.row-eliminated{background:rgba(231,76,60,0.07)}
+.row-qualified{background:linear-gradient(90deg,rgba(46,204,113,0.20),rgba(46,204,113,0.07))!important;box-shadow:inset 4px 0 0 #2ecc71}
+.row-qualified td{border-color:rgba(46,204,113,0.18)!important}
+.row-eliminated{background:rgba(231,76,60,0.06)}
 .row-qualified:hover,.row-eliminated:hover{background:rgba(255,255,255,0.03)}
+.row-qualified:hover{background:linear-gradient(90deg,rgba(46,204,113,0.26),rgba(46,204,113,0.10))!important}
 .status-badge{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;font-size:0.72rem;font-weight:800;letter-spacing:1px}
 .badge-qualified{background:rgba(46,204,113,0.16);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
 .badge-eliminated{background:rgba(231,76,60,0.16);color:#ff6b6b;border:1px solid rgba(231,76,60,0.4)}
 .standings-table tr.row-qualified td,.standings-table tr.row-eliminated td{border-color:rgba(255,255,255,0.04)}
+.rank-medal{font-size:1rem;letter-spacing:0}
+.medal-gold{color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,0.35)}
+.medal-silver{color:#c0c0c0;text-shadow:0 0 10px rgba(192,192,192,0.3)}
+.medal-bronze{color:#cd7f32;text-shadow:0 0 10px rgba(205,127,50,0.3)}
 
 /* ===== Run quick buttons (live scoring) ===== */
 .run-btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
