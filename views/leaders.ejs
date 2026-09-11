@@ -82,44 +82,53 @@
       </table>
     </div>
 
-    <!-- ====== TEMPORARY PREVIEW: MOTM & POTM FORMAT ====== -->
-    <div style="max-width:860px;margin:3.5rem auto 0;padding:1.2rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
-      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.4rem">🛠 Temporary Preview — how MOTM & Player of the Season will look (sample)</div>
-
-      <h3 style="margin-bottom:0.6rem;font-size:1rem;color:var(--text-light)">⭐ Man of the Match (per match)</h3>
-      <div class="motm-grid" style="max-width:760px;margin:0 0 2rem">
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
-          <div class="motm-line">41 runs</div>
-        </div>
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
-          <div class="motm-line">3 wickets</div>
-        </div>
-        <div class="motm-card">
-          <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
-          <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
-          <div class="motm-line">35 runs · 2 wickets</div>
-        </div>
-      </div>
-
-      <h3 style="margin-bottom:0.6rem;font-size:1rem;color:var(--text-light)">🌟 Player of the Season</h3>
-      <div class="potm-hero" style="max-width:760px;margin:0 auto">
-        <div class="potm-hero-name">🌟 Sample Player A</div>
-        <div class="potm-hero-team">Haripur</div>
-        <div class="potm-hero-stats">
-          <div class="potm-stat"><span class="potm-sv">245</span><span class="potm-sl">Points</span></div>
-          <div class="potm-stat"><span class="potm-sv">168</span><span class="potm-sl">Runs</span></div>
-          <div class="potm-stat"><span class="potm-sv">2</span><span class="potm-sl">MOTM</span></div>
-          <div class="potm-stat"><span class="potm-sv">5</span><span class="potm-sl">Matches</span></div>
-        </div>
-      </div>
-
-      <p style="text-align:center;color:var(--text-light);font-size:0.8rem;margin-top:1.4rem">Points: 1/run · +1/four · +2/six · +10/fifty · +25/hundred · +25/wicket · +8/catch, run-out or stumping</p>
+    <!-- ====== TEMP DESIGN: MAN OF THE MATCH ====== -->
+    <div class="section-title" style="margin-top:4rem">
+      <h2>⭐ Man of the <span class="highlight">Match</span></h2>
+      <p>Best performer in each match (temporary preview)</p>
     </div>
-    <!-- ====== END TEMPORARY PREVIEW ====== -->
+    <div class="motm-grid" style="max-width:860px;margin:0 auto">
+      <div class="motm-card">
+        <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
+        <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
+        <div class="motm-line">41 runs</div>
+      </div>
+      <div class="motm-card">
+        <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
+        <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
+        <div class="motm-line">3 wickets</div>
+      </div>
+      <div class="motm-card">
+        <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
+        <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
+        <div class="motm-line">35 runs · 2 wickets</div>
+      </div>
+    </div>
+
+    <!-- ====== TEMP DESIGN: PLAYER OF THE SEASON ====== -->
+    <div class="section-title" style="margin-top:4rem">
+      <h2>🌟 Player of the <span class="highlight">Season</span></h2>
+      <p>Top performer of the season (temporary preview)</p>
+    </div>
+    <div class="format-card" style="max-width:760px;margin:0 auto;text-align:center;padding:2rem">
+      <div class="potm-head">
+        <span class="potm-title">🏆 Player of the Season</span>
+      </div>
+      <div class="potm-name" style="margin-top:0.6rem">🌟 Sample Player A</div>
+      <div class="potm-team">Haripur</div>
+      <div class="potm-stats-grid">
+        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">245</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Points</div></div>
+        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">168</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Runs</div></div>
+        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">2</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">MOTM</div></div>
+        <div class="stat"><div class="stat-val" style="font-size:1.6rem;font-weight:800;color:var(--gold)">5</div><div class="stat-lbl" style="font-size:0.75rem;color:var(--text-light)">Matches</div></div>
+      </div>
+    </div>
+
+    <div style="max-width:760px;margin:1.5rem auto 0;text-align:center">
+      <p style="color:var(--text-light);font-size:0.85rem">Points scheme: 1 per run · +1 four · +2 six · +10 fifty · +25 hundred · +25 wicket · +8 catch/run-out/stumping</p>
+      <p style="color:var(--accent);font-size:0.78rem;font-weight:600;margin-top:0.5rem">🛠 TEMPORARY — bata dein kaise laga, phir main delete kar doonga (aap ke points scheme batao to wohi use ho)</p>
+    </div>
+    <!-- ====== END TEMP DESIGN ====== -->
 
   <% } %>
 </section>
