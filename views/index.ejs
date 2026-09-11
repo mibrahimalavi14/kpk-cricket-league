@@ -146,48 +146,4 @@
     </div>
 </section>
 
-<section class="section">
-  <div class="section-title">
-    <h2>All <span class="highlight">Seasons</span></h2>
-    <p>Every season of the KPK Cricket League</p>
-  </div>
-  <div class="teams-grid">
-    <% data.seasons.forEach(season => {
-      const seasonColor = season.status === 'Active' ? '#2ecc71' : season.status === 'Completed' ? '#3498db' : '#f39c12';
-      const icon = season.status === 'Completed' ? (season.champion ? '🏆' : '✅') : season.status === 'Active' ? '🏏' : '📅';
-      const potm = season.playerOfSeason; %>
-      <a href="/season/<%= season.id %>" class="team-card">
-        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:<%= seasonColor %>"></div>
-        <div class="team-logo"><%= icon %></div>
-        <h3><%= season.name %></h3>
-        <div class="team-city"><%= season.year %> - T<%= season.overs %></div>
-        <div class="team-captain" style="color:<%= seasonColor %>;text-transform:uppercase;font-size:0.75rem"><%= season.status %></div>
-        <div class="season-facts">
-          <div class="sf-row">
-            <span class="sf-label">Dates</span>
-            <span class="sf-val"><%= season.dateRange || '—' %></span>
-          </div>
-          <div class="sf-row">
-            <span class="sf-label">Winner</span>
-            <span class="sf-val" style="color:<%= season.champion ? '#2ecc71' : 'var(--text-light)' %>"><%= season.champion || '—' %></span>
-          </div>
-          <div class="sf-row">
-            <span class="sf-label">Runner-Up</span>
-            <span class="sf-val"><%= season.runnerUp || '—' %></span>
-          </div>
-          <div class="sf-row">
-            <span class="sf-label">Player of Season</span>
-            <span class="sf-val"><%= potm ? potm.player + (potm.team ? ' (' + potm.team + ')' : '') : '—' %></span>
-          </div>
-        </div>
-        <div class="team-stats">
-          <div class="stat"><div class="stat-val"><%= season.matches ? season.matches.length : 0 %></div><div class="stat-label">Matches</div></div>
-          <div class="stat"><div class="stat-val"><%= season.pointsTable ? season.pointsTable.length : 0 %></div><div class="stat-label">Teams</div></div>
-          <div class="stat"><div class="stat-val"><%= season.year %></div><div class="stat-label">Year</div></div>
-        </div>
-      </a>
-    <% }) %>
-  </div>
-</section>
-
 <%- include('partials/footer') %>
