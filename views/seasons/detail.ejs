@@ -71,7 +71,7 @@
 
 <section class="section season-tab-content" id="matches-content" style="display:none">
   <div class="section-title"><h2>League <span class="highlight">Matches</span></h2></div>
-  <div class="match-grid">
+  <div class="match-grid match-grid-single">
     <% if (season.matches && season.matches.length > 0) { %>
       <% season.matches.forEach(match => { %>
         <a href="/match/<%= match.id %>" class="match-card fixture-card">
@@ -93,7 +93,7 @@
       <p style="color:var(--text-light)">Playoff spots will be filled automatically from the points table once all league matches are completed.</p>
     </div>
   <% } %>
-  <div class="match-grid">
+  <div class="match-grid match-grid-single">
     <% if (season.playoff && season.playoff.length > 0) { %>
       <% season.playoff.forEach(match => { %>
         <a href="/match/<%= match.id %>" class="match-card fixture-card">
