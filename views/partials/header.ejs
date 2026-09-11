@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= data.tournament.name %> - <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Home' %></title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=18">
+  <link rel="stylesheet" href="/css/style.css?v=19">
 </head>
 <body>
   <nav class="navbar">
@@ -21,24 +21,37 @@
         <a href="/teams" class="<%= typeof active !== 'undefined' && active === 'teams' ? 'active' : '' %>">Teams</a>
         <a href="/players" class="<%= typeof active !== 'undefined' && active === 'players' ? 'active' : '' %>">Players</a>
         <a href="/live" class="<%= typeof active !== 'undefined' && active === 'live' ? 'active' : '' %>"><span class="live-dot" style="display:inline-block;vertical-align:middle;margin-right:4px"></span>Live</a>
-        <a href="/schedule" class="<%= typeof active !== 'undefined' && active === 'schedule' ? 'active' : '' %>">Schedule</a>
+        <% const smartPages = [
+          { key:'schedule', href:'/schedule', label:'Schedule', icon:'📅' },
+          { key:'fixtures', href:'/fixtures', label:'Fixtures', icon:'📋' },
+          { key:'points-table', href:'/points-table', label:'Points Table', icon:'📊' },
+          { key:'leaders', href:'/leaders', label:'Leaders', icon:'📈' },
+          { key:'seasons', href:'/seasons', label:'Seasons', icon:'🏆' },
+          { key:'format', href:'/format', label:'Format', icon:'📋' },
+          { key:'awards', href:'/awards', label:'Awards', icon:'⭐' },
+          { key:'about', href:'/about', label:'About', icon:'ℹ️' },
+          { key:'faq', href:'/faq', label:'FAQ', icon:'❓' },
+          { key:'contact', href:'/contact', label:'Contact', icon:'📞' },
+        ]; const cur = typeof active !== 'undefined' && active !== 'home' && active !== 'teams' && active !== 'players' && active !== 'live' ? smartPages.find(p => p.key === active) : null;%>
+        <% if (cur) { %>
+          <a href="<%= cur.href %>" class="active"><%= cur.icon %> <%= cur.label %></a>
+        <% } %>
         <div class="dropdown">
-          <button class="dropdown-toggle <%= typeof active !== 'undefined' && ['fixtures','points-table','leaders','seasons','format','about','awards','contact','faq'].indexOf(active) !== -1 ? 'active' : '' %>">More ▾</button>
+          <button class="dropdown-toggle <%= cur ? '' : 'active' %>">More ▾</button>
           <div class="dropdown-menu">
-            <div class="dd-section-label">Statistics</div>
-            <a href="/fixtures" class="<%= typeof active !== 'undefined' && active === 'fixtures' ? 'active' : '' %>">📋 Fixtures</a>
-            <a href="/points-table" class="<%= typeof active !== 'undefined' && active === 'points-table' ? 'active' : '' %>">📊 Points Table</a>
-            <a href="/leaders" class="<%= typeof active !== 'undefined' && active === 'leaders' ? 'active' : '' %>">📈 Leaders</a>
-            <div class="dd-divider"></div>
-            <div class="dd-section-label">Seasons & Awards</div>
-            <a href="/seasons" class="<%= typeof active !== 'undefined' && active === 'seasons' ? 'active' : '' %>">🏆 Seasons</a>
-            <a href="/format" class="<%= typeof active !== 'undefined' && active === 'format' ? 'active' : '' %>">📋 Format</a>
-            <a href="/awards" class="<%= typeof active !== 'undefined' && active === 'awards' ? 'active' : '' %>">⭐ Awards</a>
-            <div class="dd-divider"></div>
-            <div class="dd-section-label">About</div>
-            <a href="/about" class="<%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">ℹ️ About</a>
-            <a href="/faq" class="<%= typeof active !== 'undefined' && active === 'faq' ? 'active' : '' %>">❓ FAQ</a>
-            <a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">📞 Contact</a>
+            <% const groups = [
+              { label:'Statistics', keys:['schedule','fixtures','points-table','leaders'] },
+              { label:'Seasons & Awards', keys:['seasons','format','awards'] },
+              { label:'About', keys:['about','faq','contact'] },
+            ]; groups.forEach((g, gi) => { const items = smartPages.filter(p => g.keys.indexOf(p.key) !== -1 && (!cur || p.key !== cur.key)); %>
+              <% if (items.length > 0) { %>
+                <% if (gi > 0) { %><div class="dd-divider"></div><% } %>
+                <div class="dd-section-label"><%= g.label %></div>
+                <% items.forEach(p => { %>
+                  <a href="<%= p.href %>"><%= p.icon %> <%= p.label %></a>
+                <% }) %>
+              <% } %>
+            <% }) %>
           </div>
         </div>
       </div>

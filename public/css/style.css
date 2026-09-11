@@ -154,9 +154,13 @@ a{text-decoration:none;color:inherit}
 .footer-col ul li{margin-bottom:0.7rem}
 .footer-col ul a{color:var(--text-light);font-size:0.92rem;transition:all 0.3s}
 .footer-col ul a:hover{color:var(--accent);padding-left:4px}
+.footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
+.footer-social a{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:10px;font-size:1.05rem;transition:all 0.3s}
+.footer-social a:hover{background:rgba(233,69,96,0.15);border-color:var(--accent);transform:translateY(-3px)}
 .footer-ico{margin-right:0.3rem}
 .footer-bottom{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;background:rgba(0,0,0,0.3)}
-.footer-bottom p{color:var(--text-light);font-size:0.85rem}
+.footer-bottom p{color:var(--text-light);font-size:0.85rem;margin:0}
+.footer-tag{color:var(--accent);font-weight:600;margin-top:0.4rem}
 .footer-heart{color:var(--accent)}
 @media(max-width:900px){
   .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}

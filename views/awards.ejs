@@ -16,6 +16,28 @@
 
   <!-- MOTM Tab -->
   <div id="motm-section" class="award-section" style="<%= typeof tab !== 'undefined' && tab === 'potm' ? 'display:none' : '' %>">
+    <!-- ====== TEMP DESIGN PREVIEW (sample) ====== -->
+    <div style="max-width:860px;margin:1.5rem auto;padding:1rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
+      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.2rem">🛠 Temporary design preview — sample data</div>
+      <div class="motm-grid">
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
+          <div class="motm-line">41 runs</div>
+        </div>
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
+          <div class="motm-line">3 wickets</div>
+        </div>
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
+          <div class="motm-line">35 runs · 2 wickets</div>
+        </div>
+      </div>
+    </div>
+    <!-- ====== END TEMP DESIGN PREVIEW ====== -->
     <% const reversedSeasons = data.seasons.slice().reverse(); %>
     <% reversedSeasons.forEach((s, si) => { const motms = s.motms || []; %>
       <div class="season-accordion">
@@ -57,6 +79,21 @@
 
   <!-- POTM Tab -->
   <div id="potm-section" class="award-section" style="<%= typeof tab !== 'undefined' && tab === 'potm' ? '' : 'display:none' %>">
+    <!-- ====== TEMP DESIGN PREVIEW (sample) ====== -->
+    <div style="max-width:860px;margin:1.5rem auto;padding:1rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
+      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.2rem">🛠 Temporary design preview — sample data</div>
+      <div class="potm-hero">
+        <div class="potm-hero-name">🌟 Sample Player A</div>
+        <div class="potm-hero-team">Haripur</div>
+        <div class="potm-hero-stats">
+          <div class="potm-stat"><span class="potm-sv">245</span><span class="potm-sl">Points</span></div>
+          <div class="potm-stat"><span class="potm-sv">168</span><span class="potm-sl">Runs</span></div>
+          <div class="potm-stat"><span class="potm-sv">2</span><span class="potm-sl">MOTM</span></div>
+          <div class="potm-stat"><span class="potm-sv">5</span><span class="potm-sl">Matches</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- ====== END TEMP DESIGN PREVIEW ====== -->
     <% reversedSeasons.forEach((s, si) => { const potm = s.playerOfSeason; %>
       <div class="season-accordion">
         <button class="accordion-toggle <%= si === 0 ? 'open' : '' %>" onclick="toggleAcc(this)">
