@@ -33,9 +33,8 @@ a{text-decoration:none;color:inherit}
 
 /* HERO */
 .hero{min-height:85vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);overflow:hidden}
-.hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(233,69,96,0.15) 0%,transparent 70%);top:-200px;right:-200px;border-radius:50%;animation:float 6s ease-in-out infinite}
-.hero::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(245,197,24,0.1) 0%,transparent 70%);bottom:-100px;left:-100px;border-radius:50%;animation:float 8s ease-in-out infinite reverse}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+.hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(233,69,96,0.15) 0%,transparent 70%);top:-200px;right:-200px;border-radius:50%}
+.hero::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(245,197,24,0.1) 0%,transparent 70%);bottom:-100px;left:-100px;border-radius:50%}
 .hero-content{position:relative;z-index:2;max-width:800px;padding:2rem}
 .hero-badge{display:inline-block;padding:0.5rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:50px;font-size:0.85rem;color:var(--gold);margin-bottom:1.5rem;backdrop-filter:blur(10px)}
 .hero h1{font-size:3.5rem;font-weight:900;line-height:1.1;margin-bottom:1rem}
