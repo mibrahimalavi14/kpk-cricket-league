@@ -4,7 +4,7 @@
   <div class="hero-content">
     <div class="hero-badge">📊 Stats Leaders</div>
     <h1>Season <span class="highlight">Leaders</span></h1>
-    <p>Top performers across batting and bowling categories</p>
+    <p>Top performers across batting and bowling</p>
   </div>
 </section>
 
@@ -16,15 +16,6 @@
   <% } else {
     const runsList = (stats.topRunScorers || []);
     const wktsList = (stats.topWicketTakers || []);
-    const byFours = runsList.slice().sort((a, b) => b.fours - a.fours);
-    const bySixes = runsList.slice().sort((a, b) => b.sixes - a.sixes);
-    const bySr = runsList.slice().sort((a, b) => parseFloat(b.sr) - parseFloat(a.sr));
-    const byAvg = runsList.slice().sort((a, b) => parseFloat(b.avg) - parseFloat(a.avg));
-    const byEco = wktsList.slice().sort((a, b) => parseFloat(a.eco) - parseFloat(b.eco));
-    const byBowlingSr = wktsList.slice().sort((a, b) => parseFloat(a.sr) - parseFloat(b.sr) || b.wickets - a.wickets);
-    const byBowling = wktsList.slice().sort((a, b) => b.wickets - a.wickets || parseFloat(a.avg) - parseFloat(b.avg));
-    const byFifties = runsList.filter(p => (p.fifties || 0) > 0).sort((a, b) => b.fifties - a.fifties);
-    const byCenturies = runsList.filter(p => (p.hundreds || 0) > 0).sort((a, b) => b.hundreds - a.hundreds);
 
     function playerLink(name) {
       const p = data.players.find(x => x.name === name);
@@ -41,255 +32,95 @@
       <p>Top performers in the current season</p>
     </div>
 
-    <!-- BATTING LEADERS -->
-    <div class="stats-section-header"><span>🏏</span> Batting Leaders</div>
-    <div class="stats-grid">
-
-      <div class="format-card stats-card stats-card-wide">
-        <h3>Top Run Scorers</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Runs</th><th>Avg</th><th>SR</th><th>Best</th></tr></thead>
-          <tbody>
-            <% if (runsList.length > 0) { runsList.slice(0, 10).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.matches || 0 %></td>
-                <td><%= p.innings || 0 %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
-                <td><%= p.avg %></td>
-                <td><%= p.sr %></td>
-                <td><%= p.best %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="9" class="stats-empty-row">No batting data yet — leaderboard fills as matches are scored</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>📊 Best Batting Average</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>Avg</th></tr></thead>
-          <tbody>
-            <% if (byAvg.length > 0) { byAvg.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.avg %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>⚡ Best Strike Rate</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>SR</th></tr></thead>
-          <tbody>
-            <% if (bySr.length > 0) { bySr.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.runs %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.sr %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>4️⃣ Most Fours</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>4s</th></tr></thead>
-          <tbody>
-            <% if (byFours.length > 0) { byFours.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.runs %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.fours %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>💣 Most Sixes</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>6s</th></tr></thead>
-          <tbody>
-            <% if (bySixes.length > 0) { bySixes.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.runs %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.sixes %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
+    <!-- TOP RUN SCORERS -->
+    <div class="format-card stats-card stats-card-wide" style="max-width:860px;margin:0 auto 2rem">
+      <h3>🏏 Most Runs</h3>
+      <table class="standings-table compact-table">
+        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Runs</th><th>Avg</th><th>SR</th><th>HS</th></tr></thead>
+        <tbody>
+          <% if (runsList.length > 0) { runsList.slice(0, 10).forEach((p, i) => { %>
+            <tr>
+              <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+              <td><%- playerLink(p.player) %></td>
+              <td><%- teamCell(p.team) %></td>
+              <td><%= p.matches || 0 %></td>
+              <td><%= p.innings || 0 %></td>
+              <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
+              <td><%= p.avg %></td>
+              <td><%= p.sr %></td>
+              <td><%= p.best %></td>
+            </tr>
+          <% }) } else { %>
+            <tr><td colspan="9" class="stats-empty-row">No data yet — fills as matches are scored</td></tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
 
-    <!-- BOWLING LEADERS -->
-    <div class="stats-section-header"><span>🎯</span> Bowling Leaders</div>
-    <div class="stats-grid">
-
-      <div class="format-card stats-card stats-card-wide">
-        <h3>Top Wicket Takers</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Wkts</th><th>Runs</th><th>Avg</th><th>Econ</th><th>SR</th><th>Best</th></tr></thead>
-          <tbody>
-            <% if (wktsList.length > 0) { wktsList.slice(0, 10).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.matches || 0 %></td>
-                <td><%= p.innings || 0 %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.wickets %></td>
-                <td><%= p.runs %></td>
-                <td><%= p.avg %></td>
-                <td><%= p.eco %></td>
-                <td><%= p.sr %></td>
-                <td><%= p.best %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="11" class="stats-empty-row">No bowling data yet — leaderboard fills as matches are scored</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>🏅 Best Bowling Figures</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Wkts</th><th>Best</th></tr></thead>
-          <tbody>
-            <% if (byBowling.length > 0) { byBowling.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.wickets %></td>
-                <td><%= p.best %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>🛡️ Best Economy Rate</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Wkts</th><th>Econ</th></tr></thead>
-          <tbody>
-            <% if (byEco.length > 0) { byEco.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.wickets %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.eco %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="format-card stats-card">
-        <h3>⚡ Best Bowling Strike Rate</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Wkts</th><th>SR</th></tr></thead>
-          <tbody>
-            <% if (byBowlingSr.length > 0) { byBowlingSr.slice(0, 5).forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td><%= p.wickets %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.sr %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="5" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-
+    <!-- TOP WICKET TAKERS -->
+    <div class="format-card stats-card stats-card-wide" style="max-width:860px;margin:0 auto">
+      <h3>🎯 Most Wickets</h3>
+      <table class="standings-table compact-table">
+        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Inns</th><th>Wkts</th><th>Runs</th><th>Econ</th><th>BBI</th></tr></thead>
+        <tbody>
+          <% if (wktsList.length > 0) { wktsList.slice(0, 10).forEach((p, i) => { %>
+            <tr>
+              <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+              <td><%- playerLink(p.player) %></td>
+              <td><%- teamCell(p.team) %></td>
+              <td><%= p.matches || 0 %></td>
+              <td><%= p.innings || 0 %></td>
+              <td style="font-weight:700;color:var(--accent)"><%= p.wickets %></td>
+              <td><%= p.runs %></td>
+              <td><%= p.eco %></td>
+              <td><%= p.best %></td>
+            </tr>
+          <% }) } else { %>
+            <tr><td colspan="9" class="stats-empty-row">No data yet — fills as matches are scored</td></tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
 
-    <!-- MILESTONES -->
-    <div class="stats-section-header"><span>🏆</span> Milestones</div>
-    <div class="stats-grid">
+    <!-- ====== TEMPORARY PREVIEW: MOTM & POTM FORMAT ====== -->
+    <div style="max-width:860px;margin:3.5rem auto 0;padding:1.2rem 1.4rem;border:2px dashed #f5c518;border-radius:14px;background:rgba(245,197,24,0.06)">
+      <div style="text-align:center;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-size:0.8rem;margin-bottom:1.4rem">🛠 Temporary Preview — how MOTM & Player of the Season will look (sample)</div>
 
-      <div class="format-card stats-card">
-        <h3>💯 Most Centuries</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>Avg</th><th>100s</th></tr></thead>
-          <tbody>
-            <% if (byCenturies.length > 0) { byCenturies.forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
-                <td><%= p.avg %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.hundreds %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="6" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
+      <h3 style="margin-bottom:0.6rem;font-size:1rem;color:var(--text-light)">⭐ Man of the Match (per match)</h3>
+      <div class="motm-grid" style="max-width:760px;margin:0 0 2rem">
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 1</span><span class="motm-pts">68 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player A</span><span class="motm-team">Haripur</span></div>
+          <div class="motm-line">41 runs</div>
+        </div>
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 2</span><span class="motm-pts">52 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player B</span><span class="motm-team">Abbottabad</span></div>
+          <div class="motm-line">3 wickets</div>
+        </div>
+        <div class="motm-card">
+          <div class="motm-head"><span class="motm-match">Match 3</span><span class="motm-pts">77 pts</span></div>
+          <div class="motm-player"><span class="motm-name">⭐ Sample Player C</span><span class="motm-team">Mansehra</span></div>
+          <div class="motm-line">35 runs · 2 wickets</div>
+        </div>
       </div>
 
-      <div class="format-card stats-card">
-        <h3>50️⃣ Most Fifties</h3>
-        <table class="standings-table compact-table">
-          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Runs</th><th>Avg</th><th>50s</th></tr></thead>
-          <tbody>
-            <% if (byFifties.length > 0) { byFifties.forEach((p, i) => { %>
-              <tr>
-                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
-                <td><%- playerLink(p.player) %></td>
-                <td><%- teamCell(p.team) %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.runs %></td>
-                <td><%= p.avg %></td>
-                <td style="font-weight:700;color:var(--accent)"><%= p.fifties %></td>
-              </tr>
-            <% }) } else { %>
-              <tr><td colspan="6" class="stats-empty-row">—</td></tr>
-            <% } %>
-          </tbody>
-        </table>
+      <h3 style="margin-bottom:0.6rem;font-size:1rem;color:var(--text-light)">🌟 Player of the Season</h3>
+      <div class="potm-hero" style="max-width:760px;margin:0 auto">
+        <div class="potm-hero-name">🌟 Sample Player A</div>
+        <div class="potm-hero-team">Haripur</div>
+        <div class="potm-hero-stats">
+          <div class="potm-stat"><span class="potm-sv">245</span><span class="potm-sl">Points</span></div>
+          <div class="potm-stat"><span class="potm-sv">168</span><span class="potm-sl">Runs</span></div>
+          <div class="potm-stat"><span class="potm-sv">2</span><span class="potm-sl">MOTM</span></div>
+          <div class="potm-stat"><span class="potm-sv">5</span><span class="potm-sl">Matches</span></div>
+        </div>
       </div>
 
+      <p style="text-align:center;color:var(--text-light);font-size:0.8rem;margin-top:1.4rem">Points: 1/run · +1/four · +2/six · +10/fifty · +25/hundred · +25/wicket · +8/catch, run-out or stumping</p>
     </div>
+    <!-- ====== END TEMPORARY PREVIEW ====== -->
+
   <% } %>
 </section>
 

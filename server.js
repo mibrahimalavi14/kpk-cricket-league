@@ -101,7 +101,7 @@ app.get('/fixtures', handle(async (req, res) => {
 app.get('/schedule', handle(async (req, res) => {
   const data = await loadViewData();
   const season = data.seasons[data.seasons.length - 1];
-  res.render('fixtures', { data, season });
+  res.render('schedule', { data, season });
 }));
 
 app.get('/live', handle(async (req, res) => {

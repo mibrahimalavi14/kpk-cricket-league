@@ -1,0 +1,95 @@
+<%- include('partials/header', { active: 'schedule', pageTitle: 'Schedule' }) %>
+
+<section class="hero" style="min-height:35vh">
+  <div class="hero-content">
+    <div class="hero-badge">📅 Match Schedule</div>
+    <h1><%= season.name %> <span class="highlight">Schedule</span></h1>
+    <p><%= data.tournament.name %> · T<%= season.overs %> · <%= season.format %></p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:2rem">
+  <%
+    const allMatches = (season.matches || []);
+    const playoffMatches = (season.playoff || []);
+
+    // group league matches by date
+    const dateMap = {};
+    allMatches.forEach(m => {
+      const d = m.date || 'TBA';
+      if (!dateMap[d]) dateMap[d] = [];
+      dateMap[d].push(m);
+    });
+    const sortedDates = Object.keys(dateMap).sort();
+  %>
+
+  <% if (sortedDates.length === 0 && playoffMatches.length === 0) { %>
+    <div class="format-card" style="max-width:640px;margin:0 auto 2rem;text-align:center;padding:2rem">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">📅</div>
+      <h3>No fixtures yet</h3>
+      <p style="color:var(--text-light)">Match schedule will appear here once fixtures are set.</p>
+    </div>
+  <% } %>
+
+  <% sortedDates.forEach(date => {
+    const matches = dateMap[date];
+    // format date nicely
+    let dateLabel = date;
+    try {
+      const dt = new Date(date + 'T00:00:00');
+      dateLabel = dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    } catch(e) { dateLabel = date; }
+  %>
+    <div class="schedule-date-group">
+      <div class="schedule-date-heading">
+        <span class="schedule-date-icon">📆</span>
+        <%= dateLabel %>
+        <span class="schedule-date-count"><%= matches.length %> match<%= matches.length > 1 ? 'es' : '' %></span>
+      </div>
+      <div class="schedule-date-matches">
+        <% matches.forEach(m => { %>
+          <a href="/match/<%= m.id %>" class="match-card fixture-card schedule-match">
+            <%- include('partials/match_banner', { m: m, season: season }) %>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  <% }) %>
+
+  <% if (playoffMatches.length > 0) {
+    // group playoffs by date
+    const playoffDateMap = {};
+    playoffMatches.forEach(m => {
+      const d = m.date || 'TBA';
+      if (!playoffDateMap[d]) playoffDateMap[d] = [];
+      playoffDateMap[d].push(m);
+    });
+    const playoffDates = Object.keys(playoffDateMap).sort();
+  %>
+    <div class="schedule-date-group" style="margin-top:3rem">
+      <div class="schedule-date-heading" style="color:var(--accent)">
+        <span class="schedule-date-icon">⭐</span>
+        Playoffs & Grand Final
+      </div>
+      <% playoffDates.forEach(date => {
+        const matches = playoffDateMap[date];
+        let dateLabel = date;
+        try {
+          const dt = new Date(date + 'T00:00:00');
+          dateLabel = dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        } catch(e) { dateLabel = date; }
+      %>
+        <div class="schedule-date-sub"><%= dateLabel %></div>
+        <div class="schedule-date-matches">
+          <% matches.forEach(m => { %>
+            <a href="/match/<%= m.id %>" class="match-card fixture-card schedule-match">
+              <%- include('partials/match_banner', { m: m, season: season, playoff: true }) %>
+            </a>
+          <% }) %>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer', { active: 'schedule' }) %>
