@@ -21,6 +21,7 @@
     const bySr = runsList.slice().sort((a, b) => parseFloat(b.sr) - parseFloat(a.sr));
     const byAvg = runsList.slice().sort((a, b) => parseFloat(b.avg) - parseFloat(a.avg));
     const byEco = wktsList.slice().sort((a, b) => parseFloat(a.eco) - parseFloat(b.eco));
+    const byBowlingSr = wktsList.slice().sort((a, b) => parseFloat(a.sr) - parseFloat(b.sr) || b.wickets - a.wickets);
     const byBowling = wktsList.slice().sort((a, b) => b.wickets - a.wickets || parseFloat(a.avg) - parseFloat(b.avg));
     const byFifties = data.players.filter(p => (p.fifties || 0) > 0).sort((a, b) => b.fifties - a.fifties);
     const byCenturies = data.players.filter(p => (p.centuries || 0) > 0).sort((a, b) => b.centuries - a.centuries);
@@ -171,6 +172,27 @@
                 <td><%- teamCell(p.team) %></td>
                 <td><%= p.matches || 0 %></td>
                 <td style="font-weight:700;color:var(--accent)"><%= p.eco %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <% if (byBowlingSr.length > 0) { %>
+      <div class="format-card stats-card">
+        <h3>⚡ Best Bowling Strike Rate</h3>
+        <table class="standings-table compact-table">
+          <thead><tr><th>#</th><th>Player</th><th>Team</th><th>M</th><th>Wkts</th><th>SR</th></tr></thead>
+          <tbody>
+            <% byBowlingSr.slice(0, 5).forEach((p, i) => { %>
+              <tr>
+                <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
+                <td><%- playerLink(p.player) %></td>
+                <td><%- teamCell(p.team) %></td>
+                <td><%= p.matches || 0 %></td>
+                <td><%= p.wickets %></td>
+                <td style="font-weight:700;color:var(--accent)"><%= p.sr %></td>
               </tr>
             <% }) %>
           </tbody>

@@ -120,7 +120,7 @@
     const byBowling = wktsList.slice().sort((a, b) => b.wickets - a.wickets || parseFloat(a.avg) - parseFloat(b.avg));
     const byFifties = runsList.filter(p => (p.fifties || 0) > 0).sort((a, b) => b.fifties - a.fifties);
     const byCenturies = runsList.filter(p => (p.hundreds || 0) > 0).sort((a, b) => b.hundreds - a.hundreds);
-    const byFives = wktsList.filter(p => (p.fiveW || 0) > 0).sort((a, b) => b.fiveW - a.fiveW);
+    const byBowlingSr = wktsList.slice().sort((a, b) => parseFloat(a.sr) - parseFloat(b.sr) || b.wickets - a.wickets);
 
     function teamCell(name) {
       const t = data.teams.find(x => x.name === name);
@@ -313,20 +313,21 @@
     </div>
 
     <div class="format-card stats-card">
-      <h3>🔥 Most 5-Wicket Hauls</h3>
+      <h3>⚡ Best Bowling Strike Rate</h3>
       <table class="standings-table compact-table">
-        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Wkts</th><th>5W</th></tr></thead>
+        <thead><tr><th>#</th><th>Player</th><th>Team</th><th>Wkts</th><th>Balls</th><th>SR</th></tr></thead>
         <tbody>
-          <% if (byFives.length > 0) { byFives.forEach((p, i) => { %>
+          <% if (byBowlingSr.length > 0) { byBowlingSr.slice(0, 5).forEach((p, i) => { %>
             <tr>
               <td style="font-weight:700;color:var(--gold)"><%= i + 1 %></td>
               <td><%- playerLink(p.player) %></td>
               <td class="team-name-cell"><%- teamCell(p.team) %></td>
               <td><%= p.wickets %></td>
-              <td style="font-weight:700;color:var(--accent)"><%= p.fiveW %></td>
+              <td><%= p.balls %></td>
+              <td style="font-weight:700;color:var(--accent)"><%= p.sr %></td>
             </tr>
           <% }) } else { %>
-            <tr><td colspan="5" class="stats-empty-row">—</td></tr>
+            <tr><td colspan="6" class="stats-empty-row">—</td></tr>
           <% } %>
         </tbody>
       </table>
