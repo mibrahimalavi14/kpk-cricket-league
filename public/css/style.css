@@ -275,7 +275,9 @@ a{text-decoration:none;color:inherit}
 .player-big-team{font-size:1rem;color:var(--text-light);margin-bottom:1rem}
 .player-big-tags{display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem}
 .player-big-tag{padding:0.5rem 1.2rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:50px;font-size:0.9rem}
-.player-profile-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
+.player-profile-section{max-width:900px;margin:2.5rem auto 0}
+.player-profile-heading{text-align:center;font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem}
+.player-profile-grid{max-width:900px;margin:1.2rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem}
 .player-profile-stat{text-align:center;padding:1.2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;transition:all 0.3s}
 .player-profile-stat:hover{transform:translateY(-3px);border-color:var(--accent)}
 .player-profile-stat .pp-val{font-size:1.8rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
