@@ -46,7 +46,7 @@
                       <tr>
                         <td style="font-weight:700;color:var(--gold)"><%= mi + 1 %></td>
                         <td><%= mo.match %></td>
-                        <td><span class="motm-name">⭐ <%= mo.name %></span><br><span class="motm-team"><%= mo.team %></span></td>
+                        <td><span class="motm-name">⭐ <%= mo.name %></span><br><span class="motm-team"><img src="<%= (data.teams.find(x => x.name === mo.team) || {}).logoUrl || '' %>" alt="" class="se-logo" style="width:14px;height:14px" onerror="this.style.display='none'"> <%= mo.team %></span></td>
                         <td>⭐</td>
                         <td><%= mo.runs || 0 %></td>
                         <td><%= mo.fours || 0 %></td>

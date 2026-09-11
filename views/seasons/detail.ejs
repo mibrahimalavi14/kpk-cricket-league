@@ -45,7 +45,7 @@
             <td>
               <div class="team-name-cell">
                 <img src="<%= teamData ? teamData.logoUrl : '' %>" alt="<%= s.team %>" class="table-logo" onerror="this.style.display='none'">
-                <a href="/team/<%= teamData ? teamData.id : '#' %>" style="color:var(--text)"><%= s.team %></a>
+                <span style="color:var(--text)"><%= s.team %></span>
               </div>
             </td>
             <td><%= s.played %></td>

@@ -72,14 +72,14 @@
               <span class="se-time"><%= fmtTime(m.time) %></span>
               <span class="se-venue">📍 <%= m.venue || 'Venue TBA' %></span>
             </div>
-            <div class="schedule-entry-match">
-              <div class="se-matchlabel"><%= m.match %></div>
-              <div class="se-teams">
-                <span class="se-team"><%= m.team1 %></span>
-                <span class="se-vs">vs</span>
-                <span class="se-team"><%= m.team2 %></span>
-              </div>
-            </div>
+<div class="schedule-entry-match">
+                  <div class="se-matchlabel"><%= m.match %></div>
+                  <div class="se-teams">
+                    <span class="se-team"><img src="<%= (data.teams.find(x => x.name === m.team1) || {}).logoUrl || '' %>" alt="" class="se-logo" onerror="this.style.display='none'"><%= m.team1 %></span>
+                    <span class="se-vs">vs</span>
+                    <span class="se-team"><%= m.team2 %><img src="<%= (data.teams.find(x => x.name === m.team2) || {}).logoUrl || '' %>" alt="" class="se-logo" onerror="this.style.display='none'"></span>
+                  </div>
+                </div>
             <div class="schedule-entry-day"><%= fmtMD(date) %></div>
           </div>
         <% }) %>
@@ -118,9 +118,9 @@
                   <% if (m.team1 === 'TBD' || m.team2 === 'TBD') { %>
                     <span class="se-team se-tbd">Qualifier teams TBD</span>
                   <% } else { %>
-                    <span class="se-team"><%= m.team1 %></span>
+                    <span class="se-team"><img src="<%= (data.teams.find(x => x.name === m.team1) || {}).logoUrl || '' %>" alt="" class="se-logo" onerror="this.style.display='none'"><%= m.team1 %></span>
                     <span class="se-vs">vs</span>
-                    <span class="se-team"><%= m.team2 %></span>
+                    <span class="se-team"><%= m.team2 %><img src="<%= (data.teams.find(x => x.name === m.team2) || {}).logoUrl || '' %>" alt="" class="se-logo" onerror="this.style.display='none'"></span>
                   <% } %>
                 </div>
               </div>

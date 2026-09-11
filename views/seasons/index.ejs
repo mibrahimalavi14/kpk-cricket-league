@@ -9,7 +9,7 @@
 </section>
 
 <section class="section">
-  <div class="teams-grid">
+  <div class="seasons-grid">
     <% data.seasons.forEach(season => {
       const matchCount = (season.matches ? season.matches.length : 0) + (season.playoff ? season.playoff.length : 0);
       const seasonColor = season.status === 'Active' ? '#2ecc71' : season.status === 'Completed' ? '#3498db' : '#f39c12';
