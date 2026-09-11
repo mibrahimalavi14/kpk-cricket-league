@@ -51,7 +51,7 @@
                 <td><%= b.balls %></td>
                 <td><%= b.fours %></td>
                 <td><%= b.sixes %></td>
-                <td><%= b.sr.toFixed(2) %></td>
+                <td><%= b.sr %></td>
               </tr>
             <% }) %>
             <% if (inn.legalBalls > 0 && inn.batting.length === 0) { %>
@@ -73,7 +73,7 @@
                 <td><%= b.overs || b.balls / 6 %></td>
                 <td><%= b.maidens %></td>
                 <td><%= b.runs %></td>
-                <td><%= Number(b.eco || 0).toFixed(2) %></td>
+                <td><%= Number(b.eco || 0) %></td>
               </tr>
             <% }) %>
           </tbody>

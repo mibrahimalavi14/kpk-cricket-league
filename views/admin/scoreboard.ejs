@@ -213,7 +213,7 @@
                   <% curInn.batting.forEach(b => { %>
                     <tr>
                       <td><%= b.player %></td>
-                      <td><%= b.runs %></td><td><%= b.balls %></td><td><%= b.fours %></td><td><%= b.sixes %></td><td><%= b.sr.toFixed(2) %></td>
+                      <td><%= b.runs %></td><td><%= b.balls %></td><td><%= b.fours %></td><td><%= b.sixes %></td><td><%= b.sr %></td>
                       <td style="color:<%= b.out ? '#e74c3c' : '#2ecc71' %>"><%= b.out ? b.howOut : 'Not out' %></td>
                     </tr>
                   <% }) %>
@@ -230,7 +230,7 @@
                 <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Econ</th></tr></thead>
                 <tbody>
                   <% curInn.bowling.forEach(b => { %>
-                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.wickets %></td><td><%= b.eco.toFixed(2) %></td></tr>
+                    <tr><td><%= b.player %></td><td><%= b.overs %></td><td><%= b.runs %></td><td><%= b.wickets %></td><td><%= b.eco %></td></tr>
                   <% }) %>
                 </tbody>
               </table>

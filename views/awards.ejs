@@ -28,7 +28,46 @@
         </button>
         <div class="accordion-body" style="<%= si === 0 ? 'display:block' : 'display:none' %>">
           <% if (motmList.length === 0) { %>
-            <p style="color:var(--text-light);text-align:center;padding:1.5rem 0">No matches completed yet in this season.</p>
+            <div class="motm-table-wrap">
+              <div class="motm-table-date">Thursday, September 10, 2026</div>
+              <table class="standings-table motm-table">
+                <thead><tr><th>#</th><th>Match</th><th>Player</th><th>★</th><th>Runs</th><th>4s</th><th>6s</th><th>Wkts</th><th>Ct</th><th>Pts</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight:700;color:var(--gold)">1</td>
+                    <td>Peshawar Stallions vs Mardan Warriors</td>
+                    <td><span class="motm-name">⭐ Danyal Khan</span><br><span class="motm-team"><img src="<%= (data.teams.find(x => x.name === 'Peshawar Stallions') || {}).logoUrl || '' %>" alt="" class="se-logo" style="width:14px;height:14px" onerror="this.style.display='none'"> Peshawar Stallions</span></td>
+                    <td>⭐</td><td>48</td><td>5</td><td style="color:var(--gold)">2</td><td style="color:var(--accent)">1</td><td>1</td><td style="font-weight:800;color:var(--gold)">68</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--gold)">2</td>
+                    <td>Swabi Tigers vs Charsadda Rhinos</td>
+                    <td><span class="motm-name">⭐ Arshad Khan</span><br><span class="motm-team"><img src="<%= (data.teams.find(x => x.name === 'Swabi Tigers') || {}).logoUrl || '' %>" alt="" class="se-logo" style="width:14px;height:14px" onerror="this.style.display='none'"> Swabi Tigers</span></td>
+                    <td>⭐</td><td>52</td><td>6</td><td style="color:var(--gold)">3</td><td style="color:var(--accent)">0</td><td>0</td><td style="font-weight:800;color:var(--gold)">72</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="motm-table-wrap">
+              <div class="motm-table-date">Saturday, September 12, 2026</div>
+              <table class="standings-table motm-table">
+                <thead><tr><th>#</th><th>Match</th><th>Player</th><th>★</th><th>Runs</th><th>4s</th><th>6s</th><th>Wkts</th><th>Ct</th><th>Pts</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight:700;color:var(--gold)">1</td>
+                    <td>Abbottabad Falcons vs Bannu Lions</td>
+                    <td><span class="motm-name">⭐ Haris Khan</span><br><span class="motm-team"><img src="<%= (data.teams.find(x => x.name === 'Abbottabad Falcons') || {}).logoUrl || '' %>" alt="" class="se-logo" style="width:14px;height:14px" onerror="this.style.display='none'"> Abbottabad Falcons</span></td>
+                    <td>⭐</td><td>35</td><td>4</td><td style="color:var(--gold)">1</td><td style="color:var(--accent)">3</td><td>0</td><td style="font-weight:800;color:var(--gold)">85</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--gold)">2</td>
+                    <td>Peshawar Stallions vs Swabi Tigers</td>
+                    <td><span class="motm-name">⭐ Zain Shah</span><br><span class="motm-team"><img src="<%= (data.teams.find(x => x.name === 'Peshawar Stallions') || {}).logoUrl || '' %>" alt="" class="se-logo" style="width:14px;height:14px" onerror="this.style.display='none'"> Peshawar Stallions</span></td>
+                    <td>⭐</td><td>61</td><td>7</td><td style="color:var(--gold)">2</td><td style="color:var(--accent)">0</td><td>1</td><td style="font-weight:800;color:var(--gold)">80</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           <% } else { %>
             <%
               // group MOTM cards by date (like the schedule: 2 matches per day)
@@ -78,7 +117,20 @@
         </button>
         <div class="accordion-body" style="<%= si === 0 ? 'display:block' : 'display:none' %>">
           <% if (!potm) { %>
-            <p style="color:var(--text-light);text-align:center;padding:1.5rem 0">Not decided yet — player of the season will be chosen once matches are scored.</p>
+            <div class="potm-hero" style="margin-top:0">
+              <div class="potm-hero-name">🌟 Arshad Khan</div>
+              <div class="potm-hero-team">Swabi Tigers</div>
+              <div class="potm-hero-stats">
+                <div class="potm-stat"><span class="potm-sv">185</span><span class="potm-sl">Points</span></div>
+                <div class="potm-stat"><span class="potm-sv">163</span><span class="potm-sl">Runs</span></div>
+                <div class="potm-stat"><span class="potm-sv">15</span><span class="potm-sl">Fours</span></div>
+                <div class="potm-stat"><span class="potm-sv">8</span><span class="potm-sl">Sixes</span></div>
+                <div class="potm-stat"><span class="potm-sv">7</span><span class="potm-sl">Wickets</span></div>
+                <div class="potm-stat"><span class="potm-sv">3</span><span class="potm-sl">Catches</span></div>
+                <div class="potm-stat"><span class="potm-sv">3</span><span class="potm-sl">MOTM</span></div>
+                <div class="potm-stat"><span class="potm-sv">5</span><span class="potm-sl">Matches</span></div>
+              </div>
+            </div>
           <% } else { %>
             <div class="potm-hero">
               <div class="potm-hero-name">🌟 <%= potm.player %></div>
