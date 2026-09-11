@@ -90,6 +90,12 @@
     }
   });
   const rankedTeams = data.teams.filter(t => ts[t.name].m > 0).sort((a, b) => ts[b.name].runs - ts[a.name].runs);
+  const totals = data.teams.reduce((a, t) => {
+    const s = ts[t.name] || { m: 0, runs: 0, wkts: 0, fours: 0, sixes: 0 };
+    a.m += s.m; a.runs += s.runs; a.wkts += s.wkts; a.fours += s.fours; a.sixes += s.sixes;
+    return a;
+  }, { m: 0, runs: 0, wkts: 0, fours: 0, sixes: 0 });
+  totals.m = Math.round(totals.m / 2);
 %>
 
 <section class="section" style="background:rgba(0,0,0,0.2)">
@@ -122,6 +128,17 @@
             </tr>
           <% }) %>
         </tbody>
+        <tfoot>
+          <tr style="background:rgba(233,69,96,0.12);font-weight:800">
+            <td style="color:var(--gold);width:40px"></td>
+            <td>TOTAL</td>
+            <td style="color:var(--gold)"><%= totals.m %></td>
+            <td style="font-weight:800;color:var(--accent)"><%= totals.runs %></td>
+            <td style="font-weight:800;color:#e74c3c"><%= totals.wkts %></td>
+            <td style="color:#3498db"><%= totals.fours %></td>
+            <td style="color:var(--gold)"><%= totals.sixes %></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <div style="text-align:center;margin-top:1.5rem">
