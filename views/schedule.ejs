@@ -13,7 +13,33 @@
     const allMatches = (season.matches || []);
     const playoffMatches = (season.playoff || []);
 
-    // group league matches by date
+    function fmtDate(d) {
+      try {
+        const dt = new Date(d + 'T00:00:00');
+        return dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      } catch(e) { return d; }
+    }
+    function fmtDay(d) {
+      try {
+        const dt = new Date(d + 'T00:00:00');
+        return dt.toLocaleDateString('en-US', { weekday: 'long' });
+      } catch(e) { return ''; }
+    }
+    function fmtMD(d) {
+      try {
+        const dt = new Date(d + 'T00:00:00');
+        return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      } catch(e) { return d; }
+    }
+    function fmtTime(t) {
+      if (!t) return 'TBA';
+      const parts = t.split(':');
+      let h = parseInt(parts[0], 10), m = parts[1] || '00';
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; if (h === 0) h = 12;
+      return h + ':' + m + ' ' + ampm;
+    }
+
     const dateMap = {};
     allMatches.forEach(m => {
       const d = m.date || 'TBA';
@@ -33,31 +59,35 @@
 
   <% sortedDates.forEach(date => {
     const matches = dateMap[date];
-    // format date nicely
-    let dateLabel = date;
-    try {
-      const dt = new Date(date + 'T00:00:00');
-      dateLabel = dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    } catch(e) { dateLabel = date; }
   %>
-    <div class="schedule-date-group">
-      <div class="schedule-date-heading">
-        <span class="schedule-date-icon">📆</span>
-        <%= dateLabel %>
-        <span class="schedule-date-count"><%= matches.length %> match<%= matches.length > 1 ? 'es' : '' %></span>
+    <div class="schedule-day">
+      <div class="schedule-day-head">
+        <div class="schedule-day-date"><%= fmtDate(date) %></div>
+        <div class="schedule-day-meta"><%= matches.length %> match<%= matches.length > 1 ? 'es' : '' %> · <%= fmtDay(date) %></div>
       </div>
-      <div class="schedule-date-matches">
+      <div class="schedule-fixtures">
         <% matches.forEach(m => { %>
-          <a href="/match/<%= m.id %>" class="match-card fixture-card schedule-match">
-            <%- include('partials/match_banner', { m: m, season: season }) %>
-          </a>
+          <div class="schedule-entry">
+            <div class="schedule-entry-time">
+              <span class="se-time"><%= fmtTime(m.time) %></span>
+              <span class="se-venue">📍 <%= m.venue || 'Venue TBA' %></span>
+            </div>
+            <div class="schedule-entry-match">
+              <div class="se-matchlabel"><%= m.match %></div>
+              <div class="se-teams">
+                <span class="se-team"><%= m.team1 %></span>
+                <span class="se-vs">vs</span>
+                <span class="se-team"><%= m.team2 %></span>
+              </div>
+            </div>
+            <div class="schedule-entry-day"><%= fmtMD(date) %></div>
+          </div>
         <% }) %>
       </div>
     </div>
   <% }) %>
 
   <% if (playoffMatches.length > 0) {
-    // group playoffs by date
     const playoffDateMap = {};
     playoffMatches.forEach(m => {
       const d = m.date || 'TBA';
@@ -66,25 +96,36 @@
     });
     const playoffDates = Object.keys(playoffDateMap).sort();
   %>
-    <div class="schedule-date-group" style="margin-top:3rem">
-      <div class="schedule-date-heading" style="color:var(--accent)">
-        <span class="schedule-date-icon">⭐</span>
-        Playoffs & Grand Final
+    <div class="schedule-day" style="margin-top:3rem">
+      <div class="schedule-day-head schedule-playoff-head">
+        <div class="schedule-day-date" style="color:var(--accent)">⭐ <b><%= season.champion ? 'Playoffs & Grand Final — Champions: ' + season.champion : 'Playoffs & Grand Final' %></b></div>
+        <div class="schedule-day-meta"><%= playoffMatches.length %> match<%= playoffMatches.length > 1 ? 'es' : '' %> · Knockout Stage</div>
       </div>
       <% playoffDates.forEach(date => {
         const matches = playoffDateMap[date];
-        let dateLabel = date;
-        try {
-          const dt = new Date(date + 'T00:00:00');
-          dateLabel = dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        } catch(e) { dateLabel = date; }
       %>
-        <div class="schedule-date-sub"><%= dateLabel %></div>
-        <div class="schedule-date-matches">
+        <div class="schedule-day-sub"><%= fmtDate(date) %></div>
+        <div class="schedule-fixtures">
           <% matches.forEach(m => { %>
-            <a href="/match/<%= m.id %>" class="match-card fixture-card schedule-match">
-              <%- include('partials/match_banner', { m: m, season: season, playoff: true }) %>
-            </a>
+            <div class="schedule-entry">
+              <div class="schedule-entry-time">
+                <span class="se-time"><%= fmtTime(m.time) %></span>
+                <span class="se-venue">📍 <%= m.venue || 'Venue TBA' %></span>
+              </div>
+              <div class="schedule-entry-match">
+                <div class="se-matchlabel">⭐ <%= m.match %></div>
+                <div class="se-teams">
+                  <% if (m.team1 === 'TBD' || m.team2 === 'TBD') { %>
+                    <span class="se-team se-tbd">Qualifier teams TBD</span>
+                  <% } else { %>
+                    <span class="se-team"><%= m.team1 %></span>
+                    <span class="se-vs">vs</span>
+                    <span class="se-team"><%= m.team2 %></span>
+                  <% } %>
+                </div>
+              </div>
+              <div class="schedule-entry-day"><%= fmtMD(date) %></div>
+            </div>
           <% }) %>
         </div>
       <% }) %>
