@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Score - <%= match.match %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=25">
+  <link rel="stylesheet" href="/css/style.css?v=26">
 </head>
 <body>
   <div class="admin-layout">
@@ -154,10 +154,10 @@
                 <input type="hidden" name="fielder" id="fielder" value="">
 
                 <div class="sb-form-row">
-                  <div class="sb-field sb-wicket">
+                  <div class="sb-field sb-wicket" style="grid-column:1/-1">
                     <label>Wicket</label>
                     <div class="wicket-row" style="display:flex;gap:0.5rem;flex-wrap:wrap">
-                      <select id="wicketTypeSelect" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                      <select id="wicketTypeSelect" style="flex:2;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
                         <option value="bowled">Bowled</option>
                         <option value="caught">Caught</option>
                         <option value="lbw">LBW</option>
@@ -166,7 +166,7 @@
                         <option value="hitwicket">Hit Wicket</option>
                         <option value="other">Other</option>
                       </select>
-                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:2;min-width:160px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
                       <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
                     </div>
                   </div>
