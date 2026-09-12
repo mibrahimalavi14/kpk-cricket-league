@@ -154,6 +154,25 @@
                 <input type="hidden" name="fielder" id="fielder" value="">
 
                 <div class="sb-form-row">
+                  <div class="sb-field sb-wicket">
+                    <label>Wicket</label>
+                    <div class="wicket-row" style="display:flex;gap:0.5rem;flex-wrap:wrap">
+                      <select id="wicketTypeSelect" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                        <option value="bowled">Bowled</option>
+                        <option value="caught">Caught</option>
+                        <option value="lbw">LBW</option>
+                        <option value="runout">Run Out</option>
+                        <option value="stumped">Stumped</option>
+                        <option value="hitwicket">Hit Wicket</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sb-form-row">
                   <div class="sb-field">
                     <label>Runs off bat</label>
                     <div class="run-btn-row">
@@ -172,25 +191,6 @@
                       <button type="button" class="run-btn run-nb" onclick="addExtra('nb',1)">No Ball +1</button>
                       <button type="button" class="run-btn run-by" onclick="addExtra('by',1)">Byes +1</button>
                       <button type="button" class="run-btn run-lb" onclick="addExtra('lb',1)">Leg Byes +1</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="sb-form-row">
-                  <div class="sb-field sb-wicket">
-                    <label>Wicket</label>
-                    <div class="wicket-row" style="display:flex;gap:0.5rem;flex-wrap:wrap">
-                      <select id="wicketTypeSelect" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
-                        <option value="bowled">Bowled</option>
-                        <option value="caught">Caught</option>
-                        <option value="lbw">LBW</option>
-                        <option value="runout">Run Out</option>
-                        <option value="stumped">Stumped</option>
-                        <option value="hitwicket">Hit Wicket</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:1;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
-                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
                     </div>
                   </div>
                 </div>
