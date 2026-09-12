@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Score - <%= match.match %> - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=26">
+  <link rel="stylesheet" href="/css/style.css?v=27">
 </head>
 <body>
   <div class="admin-layout">
@@ -48,7 +48,7 @@
           <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/start" method="POST" style="text-align:center;padding:1.5rem">
             <h3 style="margin-bottom:1rem">Start Match Scoring</h3>
             <label style="margin-right:0.5rem">Winning the toss:</label>
-            <select name="toss" style="padding:0.5rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+            <select name="toss" class="admin-select">
               <option value="<%= match.team1 %>"><%= match.team1 %></option>
               <option value="<%= match.team2 %>"><%= match.team2 %></option>
             </select>
@@ -125,22 +125,28 @@
               const bowlerPref = curInn.bowling.length ? curInn.bowling[curInn.bowling.length - 1].player : (bowlPlayers[0] ? bowlPlayers[0].name : '');
             %>
             <div class="sb-form">
-              <h3>
-                <%= soLabel ? (soLabel + ' — ') : '' %>Add Ball - <%= battTeam %> batting
-                <% if (match.toss) { %><span class="sb-rules" style="font-weight:400">· Toss: <b><%= match.toss %></b> won</span><% } %>
-              </h3>
+              <div class="sb-form-title">
+                <h3 style="margin:0">
+                  <%= soLabel ? (soLabel + ' — ') : '' %>Add Ball · <%= battTeam %> batting
+                  <% if (match.toss) { %><span class="sb-toss" style="font-weight:400;font-size:0.85rem">· Toss: <b><%= match.toss %></b> won</span><% } %>
+                </h3>
+                <span class="sb-badges">
+                  <span class="sb-chip">Target: T<%= season.overs %> ov</span>
+                  <span class="sb-chip sb-chip-red"><span class="live-dot" style="background:#e74c3c"></span> Live Scoring</span>
+                </span>
+              </div>
               <div class="sb-rules sb-rules-box">
-                <strong>Scoring rules:</strong> 0 / 1 / 2 / 3 off the bat · <span style="color:#b07ce0">FOUR</span> = 4 runs (boundary) · <span style="color:var(--gold)">SIX</span> = 6 runs (over the rope). <b>Wide</b> = +1 run (no extra ball does not count as a legal ball) · <b>No Ball</b> = +1 run + a free hit next delivery · <b>Byes</b> = runs taken without touching the bat · <b>Leg Byes</b> = runs when the ball hits the pad. Overs: T<%= season.overs %> per innings; the team batting second must beat the target to avoid a tie.
+                <strong>Scoring rules:</strong> 0 / 1 / 2 / 3 off the bat · <span style="color:#b07ce0">FOUR</span> = 4 runs (boundary) · <span style="color:var(--gold)">SIX</span> = 6 runs (over the rope). <b>Wide</b> = +1 run (no extra ball does not count as a legal ball) · <b>No Ball</b> = +1 run + a free hit next delivery · <b>Byes</b> = runs taken without touching the bat · <b>Leg Byes</b> = runs when the ball hits the pad. The team batting second must beat the target to avoid a tie.
               </div>
               <form id="ballForm" action="/admin/season/<%= season.id %>/match/<%= match.id %>/ball" method="POST">
                 <div class="sb-form-row">
                   <div class="sb-field">
                     <label>Striker</label>
-                    <input type="text" name="striker" list="batters" value="<%= strikerPref ? strikerPref.player : '' %>" placeholder="Striker" required style="width:100%">
+                    <input type="text" name="striker" list="batters" value="<%= strikerPref ? strikerPref.player : '' %>" placeholder="Select striker" required style="width:100%">
                   </div>
                   <div class="sb-field">
                     <label>Bowler</label>
-                    <input type="text" name="bowler" list="bowlers" value="<%= bowlerPref %>" placeholder="Bowler" required style="width:100%">
+                    <input type="text" name="bowler" list="bowlers" value="<%= bowlerPref %>" placeholder="Select bowler" required style="width:100%">
                   </div>
                 </div>
                 <datalist id="batters"><% battPlayers.forEach(p => { %><option value="<%= p.name %>"><% }) %></datalist>
@@ -152,25 +158,6 @@
                 <input type="hidden" name="isWicket" id="isWicket" value="0">
                 <input type="hidden" name="wicketType" id="wicketType" value="">
                 <input type="hidden" name="fielder" id="fielder" value="">
-
-                <div class="sb-form-row">
-                  <div class="sb-field sb-wicket" style="grid-column:1/-1">
-                    <label>Wicket</label>
-                    <div class="wicket-row" style="display:flex;gap:0.5rem;flex-wrap:wrap">
-                      <select id="wicketTypeSelect" style="flex:2;min-width:130px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
-                        <option value="bowled">Bowled</option>
-                        <option value="caught">Caught</option>
-                        <option value="lbw">LBW</option>
-                        <option value="runout">Run Out</option>
-                        <option value="stumped">Stumped</option>
-                        <option value="hitwicket">Hit Wicket</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <input type="text" id="fielderInput" placeholder="Fielder (caught/stumped)" style="flex:2;min-width:160px;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
-                      <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
-                    </div>
-                  </div>
-                </div>
 
                 <div class="sb-form-row">
                   <div class="sb-field">
@@ -187,7 +174,7 @@
                   <div class="sb-field">
                     <label>Extras</label>
                     <div class="run-btn-row">
-                      <button type="button" class="run-btn run-wd" onclick="addExtra('wd',<%= match.inn2 && match.inn2.legalBalls > 0 ? 1 : 1 %>)">Wide +1</button>
+                      <button type="button" class="run-btn run-wd" onclick="addExtra('wd',1)">Wide +1</button>
                       <button type="button" class="run-btn run-nb" onclick="addExtra('nb',1)">No Ball +1</button>
                       <button type="button" class="run-btn run-by" onclick="addExtra('by',1)">Byes +1</button>
                       <button type="button" class="run-btn run-lb" onclick="addExtra('lb',1)">Leg Byes +1</button>
@@ -195,10 +182,25 @@
                   </div>
                 </div>
 
-                <div class="sb-form-row" style="margin-top:0.5rem">
-                  <button type="button" class="btn btn-primary" style="width:100%" onclick="submitDot()">➕ Add Dot Ball (0 runs)</button>
-                  <div style="color:var(--text-light);text-align:center;width:100%;margin-top:0.4rem;font-weight:500">Tip: click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
+                <div class="sb-sect" style="border-color:rgba(231,76,60,0.35)">
+                  <label>🦴 Wicket (optional)</label>
+                  <div class="sb-wicket-row">
+                    <select id="wicketTypeSelect">
+                      <option value="bowled">Bowled</option>
+                      <option value="caught">Caught</option>
+                      <option value="lbw">LBW</option>
+                      <option value="runout">Run Out</option>
+                      <option value="stumped">Stumped</option>
+                      <option value="hitwicket">Hit Wicket</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <input type="text" id="fielderInput" placeholder="Fielder (caught / stumped)">
+                    <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
+                  </div>
                 </div>
+
+                <button type="button" class="btn btn-primary sb-dot-btn" onclick="submitDot()">➕ Add Dot Ball (0 runs)</button>
+                <div class="sb-tip">Tip: click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
               </form>
             </div>
           <% } %>

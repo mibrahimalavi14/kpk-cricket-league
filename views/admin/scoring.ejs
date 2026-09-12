@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Scoring - Admin</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="/css/style.css?v=26">
+  <link rel="stylesheet" href="/css/style.css?v=27">
 </head>
 <body>
   <div class="admin-layout">
@@ -76,7 +76,7 @@
                   <a href="<%= url %>" class="btn btn-sm btn-gold">⚡ Score</a>
                 <% } else if (!hasInnings) { %>
                   <form action="/admin/season/<%= x.seasonId %>/match/<%= m.id %>/start" method="POST" style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
-                    <select name="toss" style="padding:0.35rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text)">
+                    <select name="toss" class="admin-select-sm">
                       <option value="<%= m.team1 %>">🏏 <%= m.team1 %> won</option>
                       <option value="<%= m.team2 %>">🏏 <%= m.team2 %> won</option>
                     </select>
