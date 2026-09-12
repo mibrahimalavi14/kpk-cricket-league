@@ -45,14 +45,25 @@
         </div>
 
         <% if (match.status === 'upcoming' && (!match.innings || match.innings.length === 0 || match.innings[0].length === 0)) { %>
-          <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/start" method="POST" style="text-align:center;padding:1.5rem">
-            <h3 style="margin-bottom:1rem">Start Match Scoring</h3>
-            <label style="margin-right:0.5rem">Winning the toss:</label>
-            <select name="toss" class="admin-select">
-              <option value="<%= match.team1 %>"><%= match.team1 %></option>
-              <option value="<%= match.team2 %>"><%= match.team2 %></option>
-            </select>
-            <button type="submit" class="btn btn-primary" style="margin-left:0.5rem">▶ Start Match</button>
+          <form action="/admin/season/<%= season.id %>/match/<%= match.id %>/start" method="POST" class="sb-toss-form">
+            <h3 style="margin-bottom:0.75rem">🎲 Start Match Scoring — Toss</h3>
+            <div class="sb-toss-fields">
+              <div class="sb-field" style="margin:0">
+                <label>🏏 Winning the toss</label>
+                <select name="toss" class="admin-select">
+                  <option value="<%= match.team1 %>"><%= match.team1 %></option>
+                  <option value="<%= match.team2 %>"><%= match.team2 %></option>
+                </select>
+              </div>
+              <div class="sb-field" style="margin:0">
+                <label>🏆 Winner chose to</label>
+                <select name="tossChoice" class="admin-select">
+                  <option value="bat">🟢 Bat first</option>
+                  <option value="bowl">🔴 Bowl first</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" style="align-self:flex-end">▶ Start Match</button>
+            </div>
           </form>
         <% } else { %>
 
@@ -128,7 +139,7 @@
               <div class="sb-form-title">
                 <h3 style="margin:0">
                   <%= soLabel ? (soLabel + ' — ') : '' %>Add Ball · <%= battTeam %> batting
-                  <% if (match.toss) { %><span class="sb-toss" style="font-weight:400;font-size:0.85rem">· Toss: <b><%= match.toss %></b> won</span><% } %>
+                  <% if (match.toss) { %><span class="sb-toss" style="font-weight:400;font-size:0.85rem">· Toss: <b><%= match.toss %></b> won & chose to <%= match.tossChoice === 'bowl' ? 'bowl' : 'bat' %></span><% } %>
                 </h3>
                 <span class="sb-badges">
                   <span class="sb-chip">Target: T<%= season.overs %> ov</span>

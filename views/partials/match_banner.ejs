@@ -24,7 +24,7 @@
       <div class="banner-date">📅 <%= m.date %></div>
       <div class="banner-time">⏰ <%= m.time %></div>
       <% if (m.toss) { %>
-        <div class="banner-toss">🏏 Toss: <b><%= m.toss %></b> won</div>
+        <div class="banner-toss">🏏 Toss: <b><%= m.toss %></b> won<%= m.tossChoice ? ' & chose to ' + (m.tossChoice === 'bat' ? 'bat' : 'bowl') + ' first' : '' %></div>
       <% } %>
     </div>
     <div class="banner-team">

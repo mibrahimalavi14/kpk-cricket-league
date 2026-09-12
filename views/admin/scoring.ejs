@@ -80,6 +80,10 @@
                       <option value="<%= m.team1 %>">🏏 <%= m.team1 %> won</option>
                       <option value="<%= m.team2 %>">🏏 <%= m.team2 %> won</option>
                     </select>
+                    <select name="tossChoice" class="admin-select-sm">
+                      <option value="bat">chose Batting</option>
+                      <option value="bowl">chose Bowling</option>
+                    </select>
                     <button type="submit" class="btn btn-sm btn-gold">▶ Start + Score</button>
                   </form>
                 <% } else { %>
@@ -90,7 +94,7 @@
           <% }) %>
         </tbody>
       </table>
-      <p style="color:var(--text-light);font-size:0.85rem">Select the toss winner, then press Start — the toss is shown on the public match page and scoreboards.</p>
+      <p style="color:var(--text-light);font-size:0.85rem">Select the toss winner + their choice (bat/bowl), then press Start — batting order is set automatically and the toss shows on the public match page.</p>
     </main>
   </div>
 </body>
