@@ -119,7 +119,7 @@
             const curQuota = isSO ? 1 : season.overs;
             const curInn = c.inningsSummary(curRaw, curQuota, c.squadSizeFor(battTeam, data));
             const battPlayers = (data.players || []).filter(p => p.teamName === battTeam);
-            const bowlPlayers = (data.players || []).filter(p => p.teamName === bowlTeam);
+            const bowlPlayers = (data.players || []).filter(p => p.teamName !== battTeam);
             const quota = season.overs;
           %>
 
@@ -145,9 +145,6 @@
                   <span class="sb-chip">Target: T<%= season.overs %> ov</span>
                   <span class="sb-chip sb-chip-red"><span class="live-dot" style="background:#e74c3c"></span> Live Scoring</span>
                 </span>
-              </div>
-              <div class="sb-rules sb-rules-box">
-                <strong>Scoring rules:</strong> 0 / 1 / 2 / 3 off the bat · <span style="color:#b07ce0">FOUR</span> = 4 runs (boundary) · <span style="color:var(--gold)">SIX</span> = 6 runs (over the rope). <b>Wide</b> = +1 run (no extra ball does not count as a legal ball) · <b>No Ball</b> = +1 run + a free hit next delivery · <b>Byes</b> = runs taken without touching the bat · <b>Leg Byes</b> = runs when the ball hits the pad. The team batting second must beat the target to avoid a tie.
               </div>
               <form id="ballForm" action="/admin/season/<%= season.id %>/match/<%= match.id %>/ball" method="POST">
                 <div class="sb-form-row">
@@ -209,9 +206,6 @@
                     <button type="button" id="wicketBtn" class="btn btn-sm btn-danger" style="background:#e74c3c">🦴 Take Wicket</button>
                   </div>
                 </div>
-
-                <button type="button" class="btn btn-primary sb-dot-btn" onclick="submitDot()">➕ Add Dot Ball (0 runs)</button>
-                <div class="sb-tip">Tip: click any run (0/1/2/3/FOUR/SIX) or extra (Wide/No Ball/Byes/Leg Byes) button above — that ball is added instantly.</div>
               </form>
             </div>
           <% } %>
@@ -321,9 +315,6 @@
     }
     function addExtra(type, runs) {
       readySubmit('0', type, runs, false, '', '');
-    }
-    function submitDot() {
-      readySubmit('0', '', '0', false, '', '');
     }
     var wicketArmed = false;
     function submitWicket() {
