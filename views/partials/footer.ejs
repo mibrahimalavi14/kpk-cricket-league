@@ -110,5 +110,24 @@
       setInterval(pulse, 3000);
     })();
   </script>
+  <script>
+    (function () {
+      var lastRev = -1;
+      setInterval(function () {
+        fetch('/api/live', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            var r = res.rev || 0;
+            if (lastRev === -1) { lastRev = r; return; }
+            if (r !== lastRev) {
+              if (document.hidden) { lastRev = r; return; }
+              location.reload();
+            }
+            lastRev = r;
+          })
+          .catch(function () {});
+      }, 4000);
+    })();
+  </script>
 </body>
 </html>

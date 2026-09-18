@@ -118,7 +118,9 @@ app.get('/live', handle(async (req, res) => {
 app.get('/api/live', handle(async (req, res) => {
   const data = await loadViewData();
   const live = [];
+  let rev = 0;
   function collect(m, season, isPlayoff) {
+    rev += (m.innings || []).reduce((s, a) => s + (a || []).length, 0) + (m.inSuperOver ? 1000 : 0);
     live.push({
       id: m.id,
       key: season.id + '-' + (isPlayoff ? 'p' : 'm') + '-' + m.id,
@@ -137,7 +139,7 @@ app.get('/api/live', handle(async (req, res) => {
     (season.matches || []).forEach(m => { if (m.status === 'live') collect(m, season, false); });
     (season.playoff || []).forEach(m => { if (m.status === 'live') collect(m, season, true); });
   });
-  res.json({ live });
+  res.json({ live, rev });
 }));
 
 app.get('/match/:id', handle(async (req, res) => {
