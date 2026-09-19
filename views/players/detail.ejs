@@ -9,7 +9,6 @@
       <div class="player-big-role" style="color:<%= player.teamColor %>"><%= player.role %></div>
       <div class="player-big-team">🔹 <a href="/team/<%= player.teamId %>" style="border-bottom:1px dashed var(--text-light)"><%= player.teamName %></a></div>
       <div class="player-big-tags">
-        <span class="player-big-tag">Jersey #<%= player.jerseyNo %></span>
         <span class="player-big-tag">🎂 Age: <%= player.age %></span>
         <span class="player-big-tag">🏏 <%= player.battingStyle %></span>
         <% if (player.bowlingStyle !== 'N/A') { %>

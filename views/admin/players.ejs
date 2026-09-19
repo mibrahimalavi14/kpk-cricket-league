@@ -37,7 +37,6 @@
             <th>Team</th>
             <th>Role</th>
             <th>Date of Birth</th>
-            <th>Jersey</th>
             <th>Batting</th>
             <th>Bowling</th>
             <th>Bio</th>
@@ -51,7 +50,6 @@
               <td style="color:var(--text-light)"><%= player.teamName %></td>
               <td><input type="text" name="role" form="playerForm_<%= player.id %>" value="<%= player.role %>" style="width:110px"></td>
               <td><input type="date" name="dob" form="playerForm_<%= player.id %>" value="<%= player.dob %>" style="width:150px"></td>
-              <td><input type="number" name="jerseyNo" form="playerForm_<%= player.id %>" value="<%= player.jerseyNo %>" style="width:55px"></td>
               <td><input type="text" name="battingStyle" form="playerForm_<%= player.id %>" value="<%= player.battingStyle %>" style="width:100px"></td>
               <td><input type="text" name="bowlingStyle" form="playerForm_<%= player.id %>" value="<%= player.bowlingStyle %>" style="width:120px"></td>
               <td><input type="text" name="bio" form="playerForm_<%= player.id %>" value="<%= player.bio %>" style="width:230px"></td>
