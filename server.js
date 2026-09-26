@@ -119,25 +119,25 @@ app.get('/api/live', handle(async (req, res) => {
   const data = await loadViewData();
   const live = [];
   let rev = 0;
-  function collect(m, season, isPlayoff) {
-    rev += (m.innings || []).reduce((s, a) => s + (a || []).length, 0) + (m.inSuperOver ? 1000 : 0);
-    live.push({
-      id: m.id,
-      key: season.id + '-' + (isPlayoff ? 'p' : 'm') + '-' + m.id,
-      match: m.match,
-      team1: m.team1,
-      team2: m.team2,
-      seasonId: season.id,
-      inn1: { runs: m.inn1.runs, wickets: m.inn1.wickets, overs: m.inn1.ballStr, crr: m.inn1.crr },
-      inn2: m.innings.length > 1 ? { runs: m.inn2.runs, wickets: m.inn2.wickets, overs: m.inn2.ballStr, crr: m.inn2.crr, target: m.target } : null,
-      target: m.target,
-      inSuperOver: !!m.inSuperOver,
-      superOver: m.innings.length > 2 ? m.superOverLegs.map(l => ({ leg: l.leg, team: l.team, runs: l.inn.runs, wickets: l.inn.wickets, overs: l.inn.ballStr })) : []
-    });
-  }
   (data.seasons || []).forEach(season => {
-    (season.matches || []).forEach(m => { if (m.status === 'live') collect(m, season, false); });
-    (season.playoff || []).forEach(m => { if (m.status === 'live') collect(m, season, true); });
+    [[season.matches || [], false], [season.playoff || [], true]].forEach(pair => {
+      pair[0].forEach(m => {
+        // rev changes only when a match starts or completes, so public pages
+        // refresh exactly when new results become publishable (never ball-by-ball).
+        const balls = (m.innings || []).reduce((s, a) => s + (a || []).length, 0);
+        if (m.status === 'completed') rev += 1000 + balls;
+        else if (m.status === 'live') rev += 500;
+        if (m.status !== 'live') return;
+        live.push({
+          id: m.id,
+          key: season.id + '-' + (pair[1] ? 'p' : 'm') + '-' + m.id,
+          match: m.match,
+          team1: m.team1,
+          team2: m.team2,
+          seasonId: season.id
+        });
+      });
+    });
   });
   res.json({ live, rev });
 }));

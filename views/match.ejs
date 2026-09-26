@@ -8,15 +8,20 @@
     <%- include('partials/match_banner', { m: match, season: season }) %>
   </div>
 
-  <% if (!match.innings || match.innings.length === 0 || match.innings[0].length === 0) { %>
+  <% if (match.status !== 'completed') { %>
     <div class="format-card" style="text-align:center;padding:3rem;max-width:640px;margin:2rem auto">
-      <div style="font-size:3rem;margin-bottom:1rem">📅</div>
-      <h3>Match has not started yet</h3>
-      <p style="color:var(--text-light)">Scorecard will appear here once the match begins.</p>
+      <div style="font-size:3rem;margin-bottom:1rem"><%= match.status === 'live' ? '🔴' : '📅' %></div>
+      <% if (match.status === 'live') { %>
+        <h3>Match in progress</h3>
+        <p style="color:var(--text-light)">The scorecard stays hidden while the match is being played. The full scorecard, statistics and awards are published automatically as soon as the match is completed.</p>
+      <% } else { %>
+        <h3>Match has not started yet</h3>
+        <p style="color:var(--text-light)">Scorecard will appear here once the match is completed.</p>
+      <% } %>
     </div>
   <% } else { %>
     <% if (match.inSuperOver) { %>
-      <div class="target-line">🏏 Match tied after regulation — ⭐ Super Over in progress</div>
+      <div class="target-line">🏏 Match tied after regulation — decided in the ⭐ Super Over</div>
     <% } else if (match.target) { %>
       <div class="target-line">🏁 Target: <strong><%= match.target %></strong> runs for <%= match.team2 %></div>
     <% } %>

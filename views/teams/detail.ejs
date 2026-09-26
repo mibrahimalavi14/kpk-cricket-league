@@ -35,7 +35,7 @@
   <div class="schedule-container">
     <% const activeSeason = data.seasons.find(s => s.status === 'Active') || data.seasons[0]; %>
     <% if (activeSeason && activeSeason.matches) { %>
-      <% activeSeason.matches.filter(m => (m.team1 === team.name || m.team2 === team.name) && !m.result).forEach(match => { %>
+      <% activeSeason.matches.filter(m => (m.team1 === team.name || m.team2 === team.name) && m.status !== 'completed').forEach(match => { %>
         <div class="match-card">
           <div class="match-info">
             <div class="match-label"><%= match.match %></div>
@@ -45,10 +45,14 @@
               <span>⏰ <%= match.time %></span>
             </div>
           </div>
-          <span class="match-status status-upcoming">Upcoming</span>
+          <% if (match.status === 'live') { %>
+            <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
+          <% } else { %>
+            <span class="match-status status-upcoming">Upcoming</span>
+          <% } %>
         </div>
       <% }) %>
-      <% if (!activeSeason.matches.some(m => (m.team1 === team.name || m.team2 === team.name) && !m.result)) { %>
+      <% if (!activeSeason.matches.some(m => (m.team1 === team.name || m.team2 === team.name) && m.status !== 'completed')) { %>
         <p style="text-align:center;color:var(--text-light)">No upcoming matches scheduled.</p>
       <% } %>
     <% } else { %>

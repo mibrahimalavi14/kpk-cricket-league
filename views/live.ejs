@@ -4,7 +4,7 @@
   <div class="hero-content">
     <div class="hero-badge"><span class="live-dot" style="display:inline-block;vertical-align:middle;margin-right:6px"></span> Live Scoring</div>
     <h1>Live <span class="highlight">Matches</span></h1>
-    <p>Real-time scores, updated ball by ball</p>
+    <p>Matches in progress — results publish the moment a match finishes</p>
   </div>
 </section>
 
@@ -17,47 +17,32 @@
       <div style="margin-top:1.5rem"><a href="/fixtures" class="btn btn-primary">View Fixtures</a></div>
     </div>
   <% } else { %>
-    <p style="text-align:center;color:var(--text-light);margin-bottom:2rem">Auto-refreshing every 3 seconds — live updates</p>
+    <p style="text-align:center;color:var(--text-light);margin-bottom:2rem">This page updates automatically — results appear here as soon as each match is completed</p>
   <% } %>
 
   <div id="live-matches" class="teams-grid">
     <% liveMatches.forEach(m => { %>
       <div class="match-card live-match-card" data-matchid="<%= m.id %>">
         <div class="match-info">
-          <div class="match-label"><%= m.match %> <span style="color:var(--text-light);font-weight:400">· <%= m.seasonName %></span></div>
-          <div class="match-teams">
+          <div class="match-label"><%= m.match %> <span style="color:var(--text-light);font-weight:400">· <%= m.seasonName %></span></div>          <div class="match-teams">
             <span class="match-team"><%= m.team1 %></span>
             <span class="vs">vs</span>
             <span class="match-team"><%= m.team2 %></span>
           </div>
           <div class="live-scores">
-            <div class="live-score-row" id="score-<%= m.id %>-1">
+            <div class="live-score-row">
               <span class="ls-team"><%= m.team1 %></span>
-              <span class="ls-val"><%= m.inn1.runs %>/<%= m.inn1.wickets %></span>
-              <span class="ls-overs">(<%= m.inn1.ballStr %>)</span>
+              <span class="ls-overs">Score hidden</span>
             </div>
-            <% if (m.inn2) { %>
-              <div class="live-score-row" id="score-<%= m.id %>-2">
-                <span class="ls-team"><%= m.team2 %></span>
-                <span class="ls-val"><%= m.inn2.runs %>/<%= m.inn2.wickets %></span>
-                <span class="ls-overs">(<%= m.inn2.ballStr %>)</span>
-              </div>
-            <% } %>
+            <div class="live-score-row">
+              <span class="ls-team"><%= m.team2 %></span>
+              <span class="ls-overs">Score hidden</span>
+            </div>
           </div>
-          <% if (m.inSuperOver && m.superOverLegs && m.superOverLegs.length) { %>
-            <div class="live-so-legs" id="so-legs-<%= m.id %>">
-              <% m.superOverLegs.forEach(leg => { %>
-                <div class="live-score-row">
-                  <span class="ls-team">⭐ SO<%= leg.leg %>: <%= leg.team %></span>
-                  <span class="ls-val"><%= leg.inn.runs %>/<%= leg.inn.wickets %></span>
-                  <span class="ls-overs">(<%= leg.inn.ballStr %>)</span>
-                </div>
-              <% }) %>
-            </div>
-          <% } %>
-          <a href="/match/<%= m.id %>" class="btn btn-sm btn-primary" style="margin-top:1rem">Full Scorecard →</a>
+          <p style="color:var(--text-light);font-size:0.85rem;margin:0.75rem 0 0">Live score is kept private. The scorecard, statistics and awards are published here automatically once the match finishes.</p>
+          <a href="/match/<%= m.id %>" class="btn btn-sm btn-primary" style="margin-top:1rem">Match Details →</a>
         </div>
-        <span class="match-status live-badge<%= m.inSuperOver ? ' superover' : '' %>"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
+        <span class="match-status live-badge"><span class="live-dot"></span> LIVE</span>
       </div>
     <% }) %>
   </div>
@@ -67,31 +52,18 @@
 (function () {
   var container = document.getElementById('live-matches');
   if (!container) return;
-  var emptyBox = document.querySelector('.format-card.d-none');
+  function currentKeys() {
+    return [].slice.call(container.querySelectorAll('.live-match-card'))
+      .map(function (c) { return c.getAttribute('data-matchid'); })
+      .sort().join(',');
+  }
+  var known = currentKeys();
   setInterval(function () {
     fetch('/api/live', { headers: { 'Accept': 'application/json' } })
       .then(function (r) { return r.json(); })
       .then(function (res) {
-        var live = res.live || [];
-        live.forEach(function (m) {
-          var row1 = document.getElementById('score-' + m.id + '-1');
-          var row2 = document.getElementById('score-' + m.id + '-2');
-          if (row1) {
-            row1.innerHTML = '<span class="ls-team">' + m.team1 + '</span><span class="ls-val">' + m.inn1.runs + '/' + m.inn1.wickets + '</span><span class="ls-overs">(' + m.inn1.overs + ')</span>';
-          }
-          if (row2 && m.inn2) {
-            row2.innerHTML = '<span class="ls-team">' + m.team2 + '</span><span class="ls-val">' + m.inn2.runs + '/' + m.inn2.wickets + '</span><span class="ls-overs">(' + m.inn2.overs + ')</span>';
-          }
-          var soBox = document.getElementById('so-legs-' + m.id);
-          if (soBox) {
-            soBox.innerHTML = (m.superOver || []).map(function (leg) {
-              return '<div class="live-score-row"><span class="ls-team">⭐ SO' + leg.leg + ': ' + leg.team + '</span><span class="ls-val">' + leg.runs + '/' + leg.wickets + '</span><span class="ls-overs">(' + leg.overs + ')</span></div>';
-            }).join('');
-          }
-        });
-        if (live.length === 0 && container.querySelectorAll('.live-match-card').length > 0) {
-          location.reload();
-        }
+        var now = (res.live || []).map(function (m) { return String(m.id); }).sort().join(',');
+        if (now !== known) location.reload();
       }).catch(function () {});
   }, 3000);
 })();

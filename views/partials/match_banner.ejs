@@ -1,8 +1,9 @@
 <% 
   const t1l = data.teams.find(x => x.name === m.team1);
   const t2l = data.teams.find(x => x.name === m.team2);
-  const s1 = m.inn1 && m.inn1.legalBalls > 0;
-  const s2 = m.inn2 && m.inn2.legalBalls > 0;
+  const completed = m.status === 'completed';
+  const s1 = completed && m.inn1 && m.inn1.legalBalls > 0;
+  const s2 = completed && m.inn2 && m.inn2.legalBalls > 0;
   const live = m.status === 'live';
   if (!Array.isArray(m.innings)) m.innings = [];
   const isPlayoff = typeof playoff !== 'undefined' && playoff;
@@ -37,15 +38,9 @@
   </div>
   <div class="banner-result">
     <% if (live) { %>
-      <span class="live-badge"><span class="live-dot"></span> LIVE<%= m.inSuperOver ? ' · ⭐ SUPER OVER' : '' %></span>
-      <% if (m.superOverLegs && m.superOverLegs.length) { %>
-        <div class="banner-so so-live">
-          <% m.superOverLegs.forEach(leg => { %>
-            <span class="banner-so-leg">⭐ SO<%= leg.leg %>: <%= leg.team %> <%= leg.inn.runs %>/<%= leg.inn.wickets %> (<%= leg.inn.ballStr %>)</span>
-          <% }) %>
-        </div>
-      <% } %>
-    <% } else if (m.result) { %>
+      <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+      <span class="banner-noscore">Score will be published after the match is completed</span>
+    <% } else if (completed && m.result) { %>
       ✅ <span style="color:#2ecc71"><%= m.result %></span>
       <% if (m.superOverLegs && m.superOverLegs.length) { %>
         <div class="banner-so">
