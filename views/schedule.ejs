@@ -116,7 +116,7 @@
                 <div class="se-matchlabel">⭐ <%= m.match %></div>
                 <div class="se-teams">
                   <% if (m.team1 === 'TBD' || m.team2 === 'TBD') { %>
-                    <span class="se-team se-tbd">Qualifier teams TBD</span>
+                    <span class="se-team se-tbd"><%= m.match %> teams TBD</span>
                   <% } else { %>
                     <span class="se-team"><img src="<%= (data.teams.find(x => x.name === m.team1) || {}).logoUrl || '' %>" alt="" class="se-logo" onerror="this.style.display='none'"><%= m.team1 %></span>
                     <span class="se-vs">vs</span>

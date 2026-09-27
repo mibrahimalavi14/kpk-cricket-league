@@ -140,7 +140,7 @@
       "playoff": [
         {
           "id": 1,
-          "match": "Qualifier 1",
+          "match": "Qualifier",
           "team1": "TBD",
           "team2": "TBD",
           "date": "2026-09-20",
@@ -152,6 +152,18 @@
         },
         {
           "id": 2,
+          "match": "Eliminator",
+          "team1": "TBD",
+          "team2": "TBD",
+          "date": "2026-09-21",
+          "time": "16:00",
+          "result": "",
+          "venue": "KPK Ground",
+          "status": "upcoming",
+          "innings": []
+        },
+        {
+          "id": 3,
           "match": "Grand Final",
           "team1": "TBD",
           "team2": "TBD",
